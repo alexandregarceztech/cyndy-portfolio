@@ -736,6 +736,7 @@ body.editing-mode .slide > *:hover {
     inset: auto !important;
     width: 100% !important;
     height: 100% !important;
+    min-height: 100% !important;
     transform: none !important;
     box-sizing: border-box !important;
     overflow-y: auto !important;
@@ -743,7 +744,7 @@ body.editing-mode .slide > *:hover {
     padding: 20px 20px 76px !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: flex-start !important;
+    justify-content: space-between !important;
   }
 
   .slide .abs {
@@ -756,18 +757,18 @@ body.editing-mode .slide > *:hover {
   }
 
   @keyframes rise {
-    from { opacity: 0; transform: translateY(18px); }
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes fromLeft {
-    from { opacity: 0; transform: translateX(-18px); }
+    from { opacity: 0; transform: translateX(-16px); }
     to { opacity: 1; transform: translateX(0); }
   }
 
-  /* --- SLIDE 01: CAPA --- */
+  /* --- SLIDE 01: CAPA (TELA CHEIA IMERSIVA) --- */
   .s-cover {
-    justify-content: center !important;
-    padding-top: 20px !important;
+    justify-content: space-between !important;
+    padding: 24px 20px 76px !important;
   }
   .s-cover .ghost-by { display: none !important; }
   .s-cover .arch-outline { display: none !important; }
@@ -780,42 +781,48 @@ body.editing-mode .slide > *:hover {
     font-size: 20px !important;
   }
   .s-cover .arch {
-    width: 155px !important;
-    height: 215px !important;
+    width: 170px !important;
+    height: 235px !important;
     border-radius: 999px 999px 0 0 !important;
-    margin: 0 auto 14px !important;
-    border: 3px solid var(--pimenta) !important;
+    margin: 8px auto 10px !important;
+    border: 3.5px solid var(--pimenta) !important;
     overflow: hidden !important;
     flex-shrink: 0 !important;
+    box-shadow: 0 16px 40px rgba(194, 59, 42, 0.35) !important;
+  }
+  .s-cover .arch img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
   }
   .s-cover h1 {
-    font-size: 46px !important;
+    font-size: 48px !important;
     font-weight: 900 !important;
     text-align: center !important;
     line-height: 1 !important;
-    margin-bottom: 4px !important;
+    margin-bottom: 2px !important;
     letter-spacing: -.03em !important;
   }
   .s-cover .by {
     font-size: 24px !important;
     text-align: center !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important;
   }
   .s-cover .roles {
-    font-size: 13.5px !important;
+    font-size: 14px !important;
     font-weight: 700 !important;
     text-align: center !important;
     line-height: 1.35 !important;
     color: var(--paper-2) !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 10px !important;
   }
   .s-cover .tools {
     display: flex !important;
     flex-direction: row !important;
     justify-content: center !important;
     gap: 16px !important;
-    font-size: 12.5px !important;
-    margin-bottom: 12px !important;
+    font-size: 13px !important;
+    margin-bottom: 10px !important;
     padding: 0 !important;
   }
   .s-cover .tools li { gap: 6px !important; }
@@ -825,7 +832,7 @@ body.editing-mode .slide > *:hover {
     justify-content: center !important;
     align-items: center !important;
     gap: 8px !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important;
   }
   .s-cover .dots span {
     width: 10px !important;
@@ -840,7 +847,7 @@ body.editing-mode .slide > *:hover {
   }
   .s-cover .handle {
     text-align: center !important;
-    font-size: 11.5px !important;
+    font-size: 12px !important;
     letter-spacing: .2em !important;
     color: var(--muted) !important;
     text-transform: uppercase !important;
@@ -848,15 +855,15 @@ body.editing-mode .slide > *:hover {
 
   /* --- SLIDE 02: APRESENTAÇÃO --- */
   .s-about {
-    justify-content: flex-start !important;
-    padding-top: 18px !important;
+    justify-content: space-between !important;
+    padding: 20px 20px 76px !important;
   }
   .s-about .fade-portrait { display: none !important; }
   .s-about .corner { display: none !important; }
   .s-about h2 {
     font-size: 30px !important;
     font-weight: 900 !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important;
     text-align: left !important;
   }
   .s-about .id-card {
@@ -868,7 +875,7 @@ body.editing-mode .slide > *:hover {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 10px !important;
     box-shadow: 0 10px 25px -10px rgba(15, 14, 14, 0.4) !important;
   }
   .s-about .id-card .photo {
@@ -905,7 +912,7 @@ body.editing-mode .slide > *:hover {
     line-height: 1.35 !important;
     padding-left: 12px !important;
     border-left: 3px solid var(--pimenta) !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 10px !important;
     width: 100% !important;
   }
   .s-about .quote small { font-size: 11.5px !important; margin-top: 4px !important; }
@@ -914,96 +921,124 @@ body.editing-mode .slide > *:hover {
   .s-about .chips { gap: 6px !important; }
   .s-about .chip { padding: 5px 12px !important; font-size: 11.5px !important; }
 
-  /* --- SLIDE 03: O QUE EU FAÇO --- */
+  /* --- SLIDE 03: O QUE EU FAÇO (PREVIEW DE CELULAR REAL) --- */
   .s-services {
-    justify-content: flex-start !important;
-    padding-top: 18px !important;
+    justify-content: space-between !important;
+    padding: 18px 20px 76px !important;
+    align-items: center !important;
+    text-align: center !important;
   }
   .s-services .fade-portrait { display: none !important; }
   .s-services h2 {
-    font-size: 30px !important;
+    font-size: 28px !important;
     text-align: center !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 6px !important;
   }
   .s-services .cols {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 9px !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
     width: 100% !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 8px !important;
   }
   .s-services .col {
     display: flex !important;
     flex-direction: column !important;
-    align-items: flex-start !important;
-    text-align: left !important;
+    align-items: center !important;
+    text-align: center !important;
     gap: 3px !important;
-    padding: 10px 14px !important;
+    padding: 8px 6px !important;
     background: rgba(0, 0, 0, 0.03) !important;
-    border-left: 3px solid var(--pimenta) !important;
-    border-radius: 12px !important;
+    border-top: 2.5px solid var(--pimenta) !important;
+    border-left: none !important;
+    border-radius: 10px !important;
   }
   .s-services .col .tri { display: none !important; }
-  .s-services .col h3 { font-size: 15px !important; font-weight: 800 !important; }
-  .s-services .col p { font-size: 12px !important; line-height: 1.35 !important; color: #4a4442 !important; }
+  .s-services .col h3 { font-size: 12px !important; font-weight: 800 !important; }
+  .s-services .col p { font-size: 9.5px !important; line-height: 1.25 !important; color: #4a4442 !important; }
+
+  /* Preview Real de Celular com Vídeo */
+  .s-services .phone {
+    display: block !important;
+    width: 145px !important;
+    height: 270px !important;
+    border-radius: 28px !important;
+    padding: 7px !important;
+    background: #121111 !important;
+    box-shadow: 0 0 0 2px #2b2928 inset, 0 20px 40px -10px rgba(0, 0, 0, 0.6) !important;
+    margin: 6px auto !important;
+    rotate: 0deg !important;
+    flex-shrink: 0 !important;
+    transition: transform 0.2s ease !important;
+  }
+  .s-services .phone:active {
+    transform: scale(0.97) !important;
+  }
+  .s-services .phone .screen {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 22px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    background: #000 !important;
+  }
+  .s-services .phone .screen img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  .s-services .phone .play {
+    position: absolute !important;
+    inset: 0 !important;
+    margin: auto !important;
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 50% !important;
+    display: grid !important;
+    place-items: center !important;
+    background: rgba(15, 14, 14, 0.5) !important;
+    backdrop-filter: blur(6px) !important;
+    border: 2px solid rgba(255, 255, 255, 0.7) !important;
+    color: #fff !important;
+    font-size: 20px !important;
+  }
+  .s-services .phone::before { display: none !important; }
+
   .s-services .dif {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 5px !important;
     width: 100% !important;
-    text-align: center !important;
+    margin-top: 4px !important;
   }
-  .s-services .dif h4 {
-    font-size: 14px !important;
-    font-weight: 800 !important;
-    text-transform: uppercase !important;
-    color: var(--pimenta) !important;
-    text-decoration: none !important;
-  }
+  .s-services .dif h4 { display: none !important; }
   .s-services .dif .pill {
-    font-size: 11.5px !important;
-    padding: 9px 16px !important;
-    line-height: 1.35 !important;
+    font-size: 11px !important;
+    padding: 7px 14px !important;
+    line-height: 1.3 !important;
     text-align: center !important;
-  }
-  .s-services .phone {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 8px !important;
-    padding: 9px 16px !important;
     border-radius: 999px !important;
-    background: var(--pimenta) !important;
-    color: #fff !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    rotate: 0deg !important;
-    width: fit-content !important;
-    height: auto !important;
-    margin: 10px auto 0 !important;
-    box-shadow: 0 4px 15px rgba(194, 59, 42, 0.3) !important;
   }
-  .s-services .phone .screen { display: none !important; }
-  .s-services .phone::before { content: "▶ Assistir vídeo no TikTok"; }
 
-  /* --- SLIDES 04 E 07: DIVISORES --- */
+  /* --- SLIDES 04 E 07: DIVISORES (TELA CHEIA ELEGANTE) --- */
   .s-divider {
-    justify-content: center !important;
+    justify-content: space-evenly !important;
+    padding: 24px 20px 76px !important;
   }
   .s-divider .num {
-    font-size: 110px !important;
+    font-size: 130px !important;
     line-height: 1 !important;
     text-align: center !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 4px !important;
     color: transparent !important;
     -webkit-text-stroke: 2px var(--ink-3) !important;
   }
-  .s-divider .tri { margin: 0 auto 10px !important; }
+  .s-divider .tri { margin: 0 auto 8px !important; }
   .s-divider h2 {
     font-size: 32px !important;
     text-align: center !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important;
     text-transform: uppercase !important;
   }
   .s-divider .sub {
@@ -1012,11 +1047,11 @@ body.editing-mode .slide > *:hover {
     text-align: center !important;
     width: 100% !important;
     max-width: 320px !important;
-    margin: 0 auto 16px !important;
+    margin: 0 auto 12px !important;
     color: rgba(243, 240, 235, 0.85) !important;
   }
   .s-divider .by {
-    font-size: 20px !important;
+    font-size: 22px !important;
     text-align: center !important;
     color: var(--pimenta-2) !important;
   }
@@ -1026,10 +1061,11 @@ body.editing-mode .slide > *:hover {
     height: 100% !important;
   }
 
-  /* --- SLIDES 05 E 06: VÍDEOS REELS (PARTE SUPERIOR ALINHADA AO TOPO) --- */
+  /* --- SLIDES 05 E 06: VÍDEOS REELS (MOCKUPS GRANDES E IMPACTANTES) --- */
   .s-videos {
     justify-content: flex-start !important;
     padding-top: 16px !important;
+    padding-bottom: 76px !important;
   }
   .s-videos .bg-block, .s-videos .bg-arch { display: none !important; }
   .s-videos .tag {
@@ -1068,18 +1104,19 @@ body.editing-mode .slide > *:hover {
   .reels-row {
     display: flex !important;
     flex-direction: row !important;
-    gap: 14px !important;
+    gap: 16px !important;
     overflow-x: auto !important;
     overflow-y: hidden !important;
     scroll-snap-type: x mandatory !important;
-    padding: 4px 4px 14px !important;
+    padding: 6px 4px 18px !important;
     width: 100% !important;
+    margin-top: 4px !important;
     -webkit-overflow-scrolling: touch;
   }
   .reels-row::-webkit-scrollbar { height: 4px; }
   .reels-row::-webkit-scrollbar-thumb { background: var(--pimenta); border-radius: 999px; }
   .reels-row .reel {
-    flex: 0 0 175px !important;
+    flex: 0 0 195px !important;
     scroll-snap-align: center !important;
     display: flex !important;
     flex-direction: column !important;
@@ -1087,20 +1124,26 @@ body.editing-mode .slide > *:hover {
     gap: 8px !important;
   }
   .reels-row .reel .phone {
-    width: 175px !important;
-    height: 315px !important;
-    border-radius: 20px !important;
-    box-shadow: 0 8px 22px -8px rgba(0, 0, 0, 0.4) !important;
+    width: 195px !important;
+    height: 350px !important;
+    border-radius: 24px !important;
+    box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.45) !important;
+    padding: 7px !important;
+    background: #121111 !important;
+  }
+  .reels-row .reel .phone .screen {
+    border-radius: 18px !important;
   }
   .reels-row .reel .phone .play {
-    width: 58px !important;
-    height: 58px !important;
-    font-size: 22px !important;
+    width: 62px !important;
+    height: 62px !important;
+    font-size: 24px !important;
   }
   .reels-row .reel figcaption {
     font-size: 12px !important;
     line-height: 1.25 !important;
     color: #4a4442 !important;
+    text-align: center !important;
   }
   .reels-row .reel figcaption b {
     font-size: 13px !important;
@@ -1109,24 +1152,24 @@ body.editing-mode .slide > *:hover {
 
   /* --- SLIDE 08: CASO STORE PHONE --- */
   .s-store {
-    justify-content: flex-start !important;
-    padding-top: 18px !important;
+    justify-content: space-between !important;
+    padding: 18px 20px 76px !important;
   }
   .s-store .panel { display: none !important; }
-  .s-store .tag { font-size: 12px !important; margin-bottom: 4px !important; }
+  .s-store .tag { font-size: 12px !important; margin-bottom: 2px !important; }
   .s-store .client {
     font-size: 11.5px !important;
     padding: 5px 12px !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
     display: inline-flex !important;
     width: fit-content !important;
   }
-  .s-store h2 { font-size: 26px !important; line-height: 1.05 !important; margin-bottom: 6px !important; }
+  .s-store h2 { font-size: 26px !important; line-height: 1.05 !important; margin-bottom: 4px !important; }
   .s-store h2 small { font-size: 11px !important; margin-bottom: 2px !important; }
   .s-store .text {
-    font-size: 12.5px !important;
+    font-size: 12px !important;
     line-height: 1.35 !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important;
     width: 100% !important;
     color: #4a4442 !important;
   }
@@ -1137,20 +1180,20 @@ body.editing-mode .slide > *:hover {
     justify-content: space-around !important;
     gap: 10px !important;
     width: 100% !important;
-    padding: 10px 12px !important;
+    padding: 8px 12px !important;
     background: rgba(0, 0, 0, 0.03) !important;
-    border-radius: 16px !important;
-    margin-bottom: 10px !important;
+    border-radius: 14px !important;
+    margin-bottom: 8px !important;
   }
   .s-store .donut-box {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 5px !important;
+    gap: 4px !important;
   }
-  .s-store .donut { width: 76px !important; height: 76px !important; }
-  .s-store .donut .val { font-size: 15px !important; }
-  .s-store .legend { font-size: 9.5px !important; gap: 3px !important; }
+  .s-store .donut { width: 72px !important; height: 72px !important; }
+  .s-store .donut .val { font-size: 14px !important; }
+  .s-store .legend { font-size: 9px !important; gap: 2px !important; }
   .s-store .growth {
     display: flex !important;
     align-items: flex-end !important;
@@ -1163,60 +1206,93 @@ body.editing-mode .slide > *:hover {
   .s-store .growth .delta { font-size: 10px !important; padding: 3px 6px !important; margin-bottom: 2px !important; }
   .s-store .ig-post {
     width: 100% !important;
-    max-width: 190px !important;
+    max-width: 200px !important;
     margin: 0 auto !important;
     border-radius: 14px !important;
     box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.4) !important;
   }
-  .s-store .ig-post header { padding: 7px 10px !important; font-size: 11px !important; gap: 8px !important; }
+  .s-store .ig-post header { padding: 6px 10px !important; font-size: 11px !important; gap: 8px !important; }
   .s-store .ig-post header img { width: 26px !important; height: 26px !important; }
-  .s-store .ig-post footer { padding: 7px 10px !important; font-size: 17px !important; gap: 10px !important; }
+  .s-store .ig-post footer { padding: 6px 10px !important; font-size: 16px !important; gap: 10px !important; }
   .s-store .caption { font-size: 11px !important; text-align: center !important; margin-top: 4px !important; color: #4a4442 !important; }
   .s-store .caption b { font-size: 13px !important; }
 
-  /* --- SLIDE 09: CASO VIRAL TIKTOK --- */
+  /* --- SLIDE 09: CASO VIRAL TIKTOK (PREVIEW REAL DE VÍDEO) --- */
   .s-viral {
-    justify-content: flex-start !important;
-    padding-top: 16px !important;
+    justify-content: space-between !important;
+    padding: 18px 20px 76px !important;
+    align-items: center !important;
+    text-align: center !important;
   }
   .s-viral .tag { font-size: 12px !important; margin-bottom: 2px !important; }
   .s-viral .obj { font-size: 11.5px !important; margin-bottom: 2px !important; color: var(--paper-2) !important; }
-  .s-viral h2.big { font-size: 52px !important; line-height: 0.95 !important; margin-bottom: 2px !important; }
-  .s-viral .big-sub { font-size: 12px !important; line-height: 1.35 !important; margin-bottom: 10px !important; color: var(--paper-2) !important; }
+  .s-viral h2.big { font-size: 48px !important; line-height: 0.95 !important; margin-bottom: 2px !important; }
+  .s-viral .big-sub { font-size: 12px !important; line-height: 1.35 !important; margin-bottom: 6px !important; color: var(--paper-2) !important; }
+
+  /* Celular com Preview do Vídeo Real */
+  .s-viral .phone {
+    display: block !important;
+    width: 145px !important;
+    height: 260px !important;
+    border-radius: 28px !important;
+    padding: 7px !important;
+    background: #121111 !important;
+    box-shadow: 0 0 0 2px #2b2928 inset, 0 20px 40px -10px rgba(0, 0, 0, 0.7) !important;
+    margin: 6px auto !important;
+    flex-shrink: 0 !important;
+    transition: transform 0.2s ease !important;
+  }
+  .s-viral .phone:active {
+    transform: scale(0.97) !important;
+  }
+  .s-viral .phone .screen {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 22px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    background: #000 !important;
+  }
+  .s-viral .phone .screen img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  .s-viral .phone .play {
+    position: absolute !important;
+    inset: 0 !important;
+    margin: auto !important;
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 50% !important;
+    display: grid !important;
+    place-items: center !important;
+    background: rgba(15, 14, 14, 0.5) !important;
+    backdrop-filter: blur(6px) !important;
+    border: 2px solid rgba(255, 255, 255, 0.7) !important;
+    color: #fff !important;
+    font-size: 20px !important;
+  }
+  .s-viral .phone::before { display: none !important; }
+
   .s-viral .stats {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(3, 1fr) !important;
     gap: 6px !important;
     width: 100% !important;
-    margin-bottom: 10px !important;
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
   }
   .s-viral .stat {
-    padding: 7px 10px !important;
+    padding: 6px 8px !important;
     border-radius: 10px !important;
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    text-align: center !important;
   }
-  .s-viral .stat strong { font-size: 15.5px !important; }
-  .s-viral .stat span { font-size: 9px !important; }
-  .s-viral .phone {
-    width: 100% !important;
-    max-width: 230px !important;
-    height: 44px !important;
-    border-radius: 999px !important;
-    margin: 0 auto 8px !important;
-    background: var(--pimenta) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    color: #fff !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    box-shadow: 0 4px 15px rgba(194, 59, 42, 0.4) !important;
-    gap: 6px !important;
-  }
-  .s-viral .phone .screen { display: none !important; }
-  .s-viral .phone .play { display: none !important; }
-  .s-viral .phone::before { content: "▶ Assistir vídeo no TikTok"; }
+  .s-viral .stat strong { font-size: 13.5px !important; }
+  .s-viral .stat span { font-size: 8.5px !important; margin-top: 2px !important; }
   .s-viral .side { display: none !important; }
   .s-viral .badge {
     display: inline-flex !important;
@@ -1225,16 +1301,16 @@ body.editing-mode .slide > *:hover {
     gap: 6px !important;
     padding: 4px 12px !important;
     font-size: 10.5px !important;
-    margin: 0 auto 6px !important;
+    margin: 2px auto 4px !important;
     background: rgba(255, 255, 255, 0.08) !important;
     border-radius: 999px !important;
   }
   .s-viral .foot { font-size: 9.5px !important; line-height: 1.35 !important; text-align: center !important; color: var(--muted) !important; }
 
-  /* --- SLIDE 10: CLIENTES ATENDIDOS (100% CORRIGIDO E ELEGANTE) --- */
+  /* --- SLIDE 10: CLIENTES ATENDIDOS (TELA PREENCHIDA E HARMONIOSA) --- */
   .s-clients {
-    justify-content: flex-start !important;
-    padding-top: 18px !important;
+    justify-content: space-between !important;
+    padding: 20px 20px 76px !important;
   }
   .s-clients .a1,
   .s-clients .a2,
@@ -1249,19 +1325,19 @@ body.editing-mode .slide > *:hover {
     font-size: 12px !important;
     font-weight: 800 !important;
     color: var(--pimenta) !important;
-    margin-bottom: 4px !important;
+    margin-bottom: 2px !important;
   }
   .s-clients .tag .tri { display: none !important; }
   .s-clients h2 {
     font-size: 30px !important;
     line-height: 1.05 !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
     letter-spacing: -.03em !important;
   }
   .s-clients .lead {
     font-size: 13px !important;
     line-height: 1.35 !important;
-    margin-bottom: 14px !important;
+    margin-bottom: 8px !important;
     color: #4a4442 !important;
   }
   .s-clients .grid {
@@ -1269,11 +1345,14 @@ body.editing-mode .slide > *:hover {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 12px !important;
     width: 100% !important;
+    flex: 1 !important;
+    margin-top: 4px !important;
   }
   .s-clients .client-logo {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    justify-content: center !important;
     gap: 10px !important;
     padding: 16px 12px !important;
     background: #ffffff !important;
@@ -1283,8 +1362,8 @@ body.editing-mode .slide > *:hover {
     text-decoration: none !important;
   }
   .s-clients .client-logo .c {
-    width: 74px !important;
-    height: 74px !important;
+    width: 78px !important;
+    height: 78px !important;
     border-radius: 50% !important;
     overflow: hidden !important;
     box-shadow: 0 0 0 3px var(--pimenta-2), 0 4px 10px rgba(0,0,0,0.12) !important;
@@ -1301,10 +1380,10 @@ body.editing-mode .slide > *:hover {
     text-align: center !important;
   }
 
-  /* --- SLIDE 11: CONTATO (ESTÉTICA PREMIUM COM FOTO EM DESTAQUE) --- */
+  /* --- SLIDE 11: CONTATO (PREENCHIDO COM FOTO EM DESTAQUE) --- */
   .s-contact {
-    justify-content: flex-start !important;
-    padding-top: 18px !important;
+    justify-content: space-between !important;
+    padding: 20px 20px 76px !important;
     align-items: center !important;
     text-align: center !important;
   }
@@ -1313,16 +1392,16 @@ body.editing-mode .slide > *:hover {
   .s-contact .glow { display: none !important; }
   .s-contact .doodle-wrap { display: none !important; }
 
-  /* Foto em moldura clássica de arco (não mais círculo pequeno comprimido) */
+  /* Foto em moldura clássica de arco (grande e imersiva) */
   .s-contact .arch {
     order: 1 !important;
-    width: 135px !important;
-    height: 175px !important;
-    border-radius: 999px 999px 24px 24px !important;
-    margin: 0 auto 12px !important;
-    border: 3px solid var(--pimenta) !important;
+    width: 145px !important;
+    height: 190px !important;
+    border-radius: 999px 999px 28px 28px !important;
+    margin: 0 auto 6px !important;
+    border: 3.5px solid var(--pimenta) !important;
     overflow: hidden !important;
-    box-shadow: 0 12px 28px rgba(194, 59, 42, 0.35) !important;
+    box-shadow: 0 16px 36px rgba(194, 59, 42, 0.4) !important;
     flex-shrink: 0 !important;
   }
   .s-contact .arch img {
@@ -1344,14 +1423,14 @@ body.editing-mode .slide > *:hover {
     order: 3 !important;
     font-size: 30px !important;
     line-height: 1.05 !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
     letter-spacing: -.03em !important;
   }
   .s-contact .lead {
     order: 4 !important;
     font-size: 13px !important;
     line-height: 1.35 !important;
-    margin-bottom: 14px !important;
+    margin-bottom: 12px !important;
     color: var(--paper-2) !important;
     max-width: 320px !important;
     margin-left: auto !important;
@@ -1368,9 +1447,9 @@ body.editing-mode .slide > *:hover {
   }
   .s-contact .c-box {
     width: 100% !important;
-    padding: 12px 18px !important;
+    padding: 13px 18px !important;
     border-radius: 14px !important;
-    font-size: 14.5px !important;
+    font-size: 15px !important;
     font-weight: 700 !important;
     gap: 12px !important;
     background: var(--ink-2) !important;
@@ -1383,7 +1462,7 @@ body.editing-mode .slide > *:hover {
     background: var(--pimenta) !important;
   }
   .s-contact .c-box svg { font-size: 22px !important; color: var(--pimenta-2) !important; }
-  .s-contact .c-box.email { font-size: 12.5px !important; }
+  .s-contact .c-box.email { font-size: 13px !important; }
 
   /* --- DOCK FLUTUANTE NO MOBILE --- */
   .dock {
