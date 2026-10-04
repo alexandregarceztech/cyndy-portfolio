@@ -1,0 +1,718 @@
+/* ==========================================================================
+   PORTFÓLIO CYNDY PIMENTEL — APRESENTAÇÃO EM SLIDES 16:9
+   Cada slide é desenhado em proporção 1920×1080 e escalado automaticamente.
+
+   SUMÁRIO DE ESTILOS:
+   00. Variáveis, Cores e Tipografia (--ink, --paper, --pimenta)
+   01. Reset Global & Deck 16:9
+   02. Componentes e Elementos Comuns (Triângulos, Pílulas, Mockup Celular)
+   03. Animações de Entrada dos Slides
+   04. Slide 01 — Capa (.s-cover)
+   05. Slide 02 — Apresentação (.s-about)
+   06. Slide 03 — O que eu faço (.s-services)
+   07. Slides 04 e 07 — Divisores de Seção (.s-divider)
+   08. Slides 05 e 06 — Vídeos e Reels (.s-videos)
+   09. Slide 08 — Caso: Store Phone (.s-store)
+   10. Slide 09 — Caso: TikTok Viral (.s-viral)
+   11. Slide 10 — Clientes Atendidos (.s-clients)
+   12. Slide 11 — Contato (.s-contact)
+   13. Interface Flutuante de Navegação (.dock)
+   14. Modo de Edição Visual Turbinado (Mover, Redimensionar e Texto)
+   15. Regras para Impressão e Exportação em PDF
+   ========================================================================== */
+
+
+/* ==========================================================================
+   00. VARIÁVEIS, CORES E TIPOGRAFIA
+   ========================================================================== */
+:root {
+  /* Paleta de Cores */
+  --ink: #0f0e0e;          /* Preto quente (fundo principal escuro) */
+  --ink-2: #1b1918;        /* Preto elevado (cards, sombras) */
+  --ink-3: #2a2625;        /* Bordas / caixas no escuro */
+  --paper: #f3f0eb;        /* Off-white / fundo claro */
+  --paper-2: #e7e2da;      /* Off-white secundário (arcos e fundos) */
+  --paper-3: #d8d1c7;
+  --muted: #8d8580;        /* Texto secundário / cinza suave */
+  --pimenta: #c23b2a;      /* Cor de destaque oficial — "pimenta" de Pimentel */
+  --pimenta-2: #e0563f;    /* Destaque vivo / hover */
+  --pimenta-deep: #6e1f16; /* Vermelho escuro profundo */
+
+  /* Famílias Tipográficas */
+  --f-sans: "Montserrat", system-ui, sans-serif;
+  --f-inter: "Inter", var(--f-sans);
+  --f-serif: "Cormorant Garamond", Georgia, serif;
+  --f-display: "Italiana", "Cormorant Garamond", serif;
+  --f-script: "Pinyon Script", cursive;
+
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+
+/* ==========================================================================
+   01. RESET GLOBAL & DECK 16:9
+   ========================================================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #080707;
+  color: var(--paper);
+  font-family: var(--f-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: none; }
+
+/* Ícones vetoriais genéricos */
+svg.i {
+  width: 1em; height: 1em;
+  fill: none; stroke: currentColor;
+  stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+  flex-shrink: 0;
+}
+svg.i.fill { fill: currentColor; stroke: none; }
+
+/* Deck: Centraliza a coluna de slides */
+.deck {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 40px 20px 140px;
+}
+
+/* Moldura que mantém a proporção 16:9 em qualquer resolução */
+.slide-wrap {
+  position: relative;
+  width: min(100%, 1600px);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .8);
+  scroll-margin-top: 40px;
+  container-type: inline-size;
+}
+
+/* Canvas fixo de 1920×1080 escalado pelo Javascript */
+.slide {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  transform-origin: top left;
+  transform: scale(var(--scale, .5));
+  transform: scale(var(--scale, calc(100cqw / 1920px)));
+}
+
+.slide.dark  { background: var(--ink);   color: var(--paper); }
+.slide.light { background: var(--paper); color: var(--ink); }
+
+.abs { position: absolute; }
+
+
+/* ==========================================================================
+   02. COMPONENTES E ELEMENTOS COMUNS
+   ========================================================================== */
+
+/* Triângulo decorativo vermelho */
+.tri {
+  width: 0; height: 0;
+  border-left: 46px solid transparent;
+  border-right: 46px solid transparent;
+  border-top: 46px solid var(--pimenta);
+}
+.tri.sm { border-left-width: 26px; border-right-width: 26px; border-top-width: 26px; }
+
+/* Tag de categoria */
+.tag {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 6px;
+  font-weight: 800; font-size: 32px; letter-spacing: .02em; text-transform: uppercase;
+}
+
+/* Assinatura clássica em serifa itálica */
+.sign {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -.01em;
+}
+
+/* Títulos pesados e modernos */
+.h-black {
+  font-weight: 900;
+  letter-spacing: -.035em;
+  line-height: .92;
+}
+
+.accent { color: var(--pimenta); }
+
+/* Pílula / Botão de destaque */
+.pill {
+  display: inline-flex; align-items: center; gap: 16px;
+  padding: 18px 40px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 26px;
+}
+.pill.ink   { background: var(--ink); color: var(--paper); }
+.pill.paper { background: var(--paper); color: var(--ink); }
+
+.doodle { stroke: var(--pimenta); fill: none; stroke-width: 2.5; stroke-linecap: round; }
+
+/* Arco de foto */
+.arch {
+  overflow: hidden;
+  border-radius: 999px 999px 0 0;
+  background: var(--paper);
+}
+.arch img { width: 100%; height: 100%; object-fit: cover; }
+.arch-outline {
+  border: 2px solid var(--pimenta);
+  border-radius: 999px 999px 0 0;
+}
+
+/* Mockup de celular realista */
+.phone {
+  display: block;
+  border-radius: 46px;
+  padding: 12px;
+  background: #121111;
+  box-shadow:
+    0 0 0 2px #2b2928 inset,
+    0 40px 70px -25px rgba(0, 0, 0, .55);
+  transition: scale .5s var(--ease), box-shadow .5s var(--ease);
+}
+.phone .screen {
+  position: relative;
+  width: 100%; height: 100%;
+  border-radius: 36px;
+  overflow: hidden;
+  background: #000;
+}
+.phone .screen img { width: 100%; height: 100%; object-fit: cover; transition: scale .8s var(--ease); }
+.phone .screen::before { /* dynamic island */
+  content: ""; position: absolute; z-index: 2;
+  top: 14px; left: 50%; translate: -50% 0;
+  width: 34%; height: 30px; border-radius: 20px; background: #000;
+}
+.phone .play {
+  position: absolute; z-index: 2; inset: 0; margin: auto;
+  width: 104px; height: 104px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(15, 14, 14, .45);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(255, 255, 255, .6);
+  color: #fff; font-size: 40px;
+  transition: background .4s var(--ease), scale .4s var(--ease);
+}
+a.phone:hover { scale: 1.035; box-shadow: 0 0 0 2px #2b2928 inset, 0 60px 90px -30px rgba(194, 59, 42, .55); }
+a.phone:hover .screen img { scale: 1.06; }
+a.phone:hover .play { background: var(--pimenta); scale: 1.08; border-color: transparent; }
+
+
+/* ==========================================================================
+   03. ANIMAÇÕES DE ENTRADA DOS SLIDES
+   ========================================================================== */
+[data-anim] { opacity: 1; }
+
+.js-anim .slide:not(.in) [data-anim] {
+  opacity: 0;
+}
+
+.slide.in [data-anim] {
+  animation: rise 1s var(--ease) both;
+  animation-delay: var(--d, 0s);
+}
+.slide.in [data-anim="fade"] { animation-name: fade; }
+.slide.in [data-anim="left"] { animation-name: fromLeft; }
+.slide.in [data-anim="zoom"] { animation-name: zoom; }
+
+@keyframes rise     { from { opacity: 0; translate: 0 40px; }  to { opacity: 1; translate: 0 0; } }
+@keyframes fade     { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fromLeft { from { opacity: 0; translate: -60px 0; } to { opacity: 1; translate: 0 0; } }
+@keyframes zoom     { from { opacity: 0; scale: .9; }          to { opacity: 1; scale: 1; } }
+
+.slide.in .draw { stroke-dasharray: 2600; stroke-dashoffset: 2600; animation: draw 3s var(--ease) .3s forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+
+/* ==========================================================================
+   04. SLIDE 01 — CAPA (.s-cover)
+   ========================================================================== */
+.s-cover .ghost-by {
+  left: -30px; top: -260px;
+  font-family: var(--f-serif); font-style: italic; font-weight: 500;
+  font-size: 1050px; line-height: 1;
+  color: var(--ink-2);
+  user-select: none;
+}
+.s-cover .arch-outline { left: 430px; top: 120px; width: 580px; height: 960px; }
+.s-cover .arch          { left: 470px; top: 160px; width: 580px; height: 920px; }
+.s-cover .arch img      { object-position: center 35%; }
+
+.s-cover .tools { left: 100px; top: 500px; display: grid; gap: 34px; font-size: 26px; color: rgba(243, 240, 235, .75); }
+.s-cover .tools li { list-style: none; display: flex; align-items: center; gap: 22px; }
+.s-cover .tools svg { font-size: 40px; color: var(--paper); }
+
+.s-cover .ig { right: 130px; top: 130px; display: flex; gap: 46px; font-size: 62px; }
+.s-cover .ig svg { stroke-width: 1.3; transition: color .3s, scale .3s; }
+.s-cover .ig svg:hover { color: var(--pimenta-2); scale: 1.1; }
+
+.s-cover h1 {
+  left: 960px; top: 345px; z-index: 3;
+  font-size: 182px; font-weight: 900; letter-spacing: -.05em; line-height: 1;
+}
+.s-cover h1 .o { color: transparent; -webkit-text-stroke: 3px var(--paper); }
+.s-cover .by   { left: 1270px; top: 555px; font-size: 128px; z-index: 3; }
+.s-cover .by b { font-weight: 600; color: var(--pimenta-2); }
+.s-cover .roles { left: 1370px; top: 790px; font-size: 42px; font-weight: 800; line-height: 1.2; letter-spacing: -.01em; }
+.s-cover .handle { right: 110px; bottom: 60px; font-size: 22px; letter-spacing: .25em; text-transform: uppercase; color: var(--muted); }
+
+.s-cover .dots { left: 560px; bottom: 70px; z-index: 3; display: flex; align-items: center; gap: 26px; }
+.s-cover .dots span { width: 80px; height: 80px; border-radius: 50%; }
+.s-cover .dots span:nth-child(1) { width: 62px; height: 62px; background: var(--pimenta-deep); opacity: .85; }
+.s-cover .dots span:nth-child(2) { background: #96291d; }
+.s-cover .dots span:nth-child(3) { width: 100px; height: 100px; background: var(--paper); box-shadow: 0 0 0 8px var(--paper), 0 0 0 14px var(--pimenta) ; border: 6px solid var(--ink); }
+.s-cover .dots span:nth-child(4) { background: var(--pimenta); }
+.s-cover .dots span:nth-child(5) { width: 62px; height: 62px; background: var(--pimenta-2); opacity: .7; }
+
+
+/* ==========================================================================
+   05. SLIDE 02 — APRESENTAÇÃO (.s-about)
+   ========================================================================== */
+.fade-portrait {
+  mix-blend-mode: multiply;
+  opacity: .22;
+  -webkit-mask-image: linear-gradient(to right, #000 35%, transparent 95%);
+          mask-image: linear-gradient(to right, #000 35%, transparent 95%);
+}
+.fade-portrait img { width: 100%; height: 100%; object-fit: cover; }
+.fade-portrait.r {
+  -webkit-mask-image: linear-gradient(to left, #000 35%, transparent 95%);
+          mask-image: linear-gradient(to left, #000 35%, transparent 95%);
+}
+
+.s-about .fade-portrait { left: -60px; top: 160px; width: 600px; height: 920px; }
+.s-about h2 { left: 160px; top: 120px; font-size: 176px; }
+.s-about .corner { right: 100px; top: 120px; text-align: right; font-weight: 800; font-size: 26px; line-height: 1.25; }
+.s-about .corner .sign { font-size: 44px; font-weight: 600; display: block; margin-bottom: 4px; }
+
+.id-card {
+  left: 190px; top: 380px; width: 880px; height: 440px;
+  display: flex; gap: 44px; padding: 44px;
+  border-radius: 48px;
+  background: var(--ink); color: var(--paper);
+  box-shadow: 0 40px 60px -30px rgba(15, 14, 14, .55);
+}
+.id-card .photo { width: 230px; height: 312px; border-radius: 20px; overflow: hidden; flex-shrink: 0; }
+.id-card .photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.id-card dl { flex: 1; display: grid; gap: 16px; align-content: start; padding-top: 18px; }
+.id-card .row { display: grid; grid-template-columns: 160px 1fr; align-items: end; font-size: 24px; white-space: nowrap; }
+.id-card dt { font-weight: 700; }
+.id-card dd { border-bottom: 1.5px solid rgba(243, 240, 235, .6); padding: 0 0 4px 14px; font-weight: 400; }
+.id-card .kit-title { font-weight: 700; font-size: 26px; margin-top: 22px; }
+.id-card .kit { display: flex; gap: 30px; font-size: 52px; margin-top: 4px; }
+.id-card .kit span { display: grid; justify-items: center; gap: 8px; font-size: 15px; letter-spacing: .08em; text-transform: uppercase; color: rgba(243, 240, 235, .65); }
+.id-card .kit svg { font-size: 52px; color: var(--paper); stroke-width: 1.4; }
+
+.s-about .quote { left: 200px; top: 860px; width: 760px; padding-left: 36px; border-left: 4px solid var(--pimenta); font-family: var(--f-serif); font-style: italic; font-size: 42px; line-height: 1.2; color: #3a3533; }
+.s-about .quote small { display: block; margin-top: 12px; font-size: 26px; color: var(--muted); }
+
+.s-about .text { left: 1170px; top: 350px; width: 650px; font-size: 35px; line-height: 1.3; }
+.s-about .text p + p { margin-top: 34px; }
+.s-about .text u { text-decoration-color: var(--pimenta); text-decoration-thickness: 3px; text-underline-offset: 8px; }
+.s-about .skills { left: 1170px; top: 830px; width: 700px; }
+.s-about .skills h3 { font-size: 22px; letter-spacing: .25em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 22px; }
+.chips { display: flex; flex-wrap: wrap; gap: 16px; }
+.chip {
+  padding: 16px 30px; border-radius: 999px;
+  border: 2px solid var(--ink); font-size: 26px; font-weight: 600;
+  transition: background .3s, color .3s, border-color .3s;
+}
+.chip:hover, .chip.on { background: var(--pimenta); border-color: var(--pimenta); color: var(--paper); }
+
+
+/* ==========================================================================
+   06. SLIDE 03 — O QUE EU FAÇO (.s-services)
+   ========================================================================== */
+.s-services .fade-portrait { right: -220px; top: 0; width: 680px; height: 1080px; opacity: .13; }
+.s-services h2 { left: 0; right: 0; top: 150px; text-align: center; font-size: 168px; }
+.s-services .cols { left: 90px; top: 410px; width: 1740px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 70px; text-align: center; }
+.s-services .col { display: grid; justify-items: center; gap: 22px; }
+.s-services .col h3 { font-size: 54px; font-weight: 800; letter-spacing: -.02em; }
+.s-services .col p { font-size: 29px; line-height: 1.45; font-weight: 500; color: #2c2725; }
+.s-services .col p b { font-weight: 800; }
+
+.s-services .dif { left: 0; right: 0; top: 790px; display: grid; justify-items: center; gap: 22px; }
+.s-services .dif h4 { font-size: 92px; font-weight: 900; letter-spacing: -.04em; text-decoration: underline; text-decoration-thickness: 6px; text-underline-offset: 14px; text-decoration-color: var(--pimenta); }
+.s-services .dif .pill { font-size: 28px; text-transform: uppercase; text-align: center; line-height: 1.35; padding: 22px 60px; }
+
+.s-services .phone { left: 1370px; top: 770px; width: 250px; height: 520px; rotate: 9deg; }
+
+
+/* ==========================================================================
+   07. SLIDES 04 E 07 — DIVISORES DE SEÇÃO (.s-divider)
+   ========================================================================== */
+.s-divider .num {
+  right: 110px; top: 40px;
+  font-size: 620px; font-weight: 900; letter-spacing: -.06em; line-height: 1;
+  color: transparent; -webkit-text-stroke: 2px var(--ink-3);
+}
+.s-divider .tri { left: 232px; top: 600px; }
+.s-divider h2 { left: 200px; top: 660px; font-size: 170px; text-transform: uppercase; }
+.s-divider .sub { left: 206px; top: 840px; width: 900px; font-size: 34px; line-height: 1.3; color: rgba(243, 240, 235, .85); }
+.s-divider .sub b { color: var(--paper); }
+.s-divider .by { left: 190px; bottom: 60px; font-size: 70px; }
+.s-divider .doodle-wrap { right: -40px; bottom: -60px; width: 900px; height: 700px; }
+
+
+/* ==========================================================================
+   08. SLIDES 05 E 06 — VÍDEOS E REELS (.s-videos)
+   ========================================================================== */
+.s-videos .bg-arch { left: 1040px; top: 120px; width: 600px; height: 1000px; border-radius: 999px 999px 0 0; background: var(--paper-2); }
+.s-videos .bg-block { right: -120px; top: -160px; width: 520px; height: 620px; border-radius: 0 0 0 999px; background: var(--ink); }
+.s-videos .tag { left: 110px; top: 90px; align-items: flex-start; }
+.s-videos .tag .tri { margin-left: 30px; }
+.s-videos h2 { left: 110px; top: 290px; font-size: 108px; }
+.s-videos .lead { left: 116px; top: 640px; width: 500px; font-size: 30px; line-height: 1.4; color: #3a3533; }
+.s-videos .pill { left: 110px; top: 850px; }
+.s-videos .pill svg { font-size: 30px; color: var(--pimenta-2); }
+
+.s-videos .reel { display: grid; justify-items: center; gap: 22px; }
+.s-videos .reel .phone { width: 330px; height: 690px; }
+.s-videos .reel figcaption { text-align: center; font-size: 22px; font-weight: 600; color: #4a4442; line-height: 1.3; }
+.s-videos .reel figcaption b { display: block; color: var(--ink); font-size: 24px; font-weight: 800; }
+.s-videos .r1 { left: 700px; top: 150px; }
+.s-videos .r2 { left: 1110px; top: 250px; }
+.s-videos .r3 { left: 1520px; top: 180px; }
+
+
+/* ==========================================================================
+   09. SLIDE 08 — CASO: STORE PHONE (.s-store)
+   ========================================================================== */
+.s-store .panel { right: 0; top: 0; width: 800px; height: 1080px; background: var(--ink); }
+.s-store .panel::after { content: ""; position: absolute; inset: 0; background: radial-gradient(600px 500px at 70% 30%, rgba(194, 59, 42, .35), transparent 70%); }
+.s-store .tag { left: 110px; top: 90px; align-items: flex-start; }
+.s-store .tag .tri { margin-left: 30px; }
+.s-store .client { left: 110px; top: 250px; }
+.s-store h2 { left: 110px; top: 330px; font-size: 88px; line-height: .98; }
+.s-store h2 small { display: block; font-size: 34px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+.s-store .text { left: 114px; top: 610px; width: 600px; font-size: 25px; line-height: 1.42; color: #3a3533; }
+
+.growth { left: 110px; top: 860px; display: flex; align-items: flex-end; gap: 34px; }
+.growth .n { display: grid; }
+.growth .n small { font-size: 22px; text-transform: uppercase; letter-spacing: .2em; color: var(--muted); font-weight: 700; }
+.growth .n strong { font-size: 112px; font-weight: 900; letter-spacing: -.05em; line-height: .95; }
+.growth .n.before strong { color: var(--paper-3); -webkit-text-stroke: 2px #b9b0a5; color: transparent; }
+.growth .n.after strong { color: var(--pimenta); }
+.growth .arrow { font-size: 74px; color: var(--ink); margin-bottom: 18px; }
+.growth .delta { margin-bottom: 18px; padding: 12px 24px; border-radius: 999px; background: var(--ink); color: var(--paper); font-weight: 700; font-size: 24px; }
+
+.donut-box { left: 760px; top: 300px; display: grid; justify-items: center; gap: 28px; }
+.donut {
+  --p: 0;
+  width: 290px; height: 290px; border-radius: 50%;
+  background: conic-gradient(var(--pimenta) calc(var(--p) * 1%), var(--ink) 0);
+  display: grid; place-items: center;
+  transition: --p 2s var(--ease);
+}
+.donut::after { content: ""; width: 62%; height: 62%; border-radius: 50%; background: var(--paper); }
+.donut .val { position: absolute; z-index: 1; font-size: 54px; font-weight: 900; letter-spacing: -.03em; }
+.slide.in .donut { --p: var(--target); }
+.legend { display: grid; gap: 10px; font-size: 22px; font-weight: 600; }
+.legend span { display: flex; align-items: center; gap: 12px; }
+.legend i { width: 18px; height: 18px; border-radius: 50%; display: inline-block; }
+
+@property --p { syntax: "<number>"; inherits: false; initial-value: 0; }
+
+.ig-post {
+  left: 1240px; top: 150px; width: 560px; z-index: 1;
+  border-radius: 28px; overflow: hidden;
+  background: #121111; border: 1px solid #2b2827; color: var(--paper);
+  box-shadow: 0 50px 80px -30px rgba(0, 0, 0, .7);
+}
+.ig-post header { display: flex; align-items: center; gap: 16px; padding: 22px 24px; font-weight: 700; font-size: 24px; }
+.ig-post header img { width: 54px; height: 54px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 3px #121111, 0 0 0 5px var(--pimenta); }
+.ig-post header span { margin-left: auto; font-size: 30px; color: var(--muted); }
+.ig-post > img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.ig-post footer { display: flex; gap: 28px; padding: 22px 24px 26px; font-size: 40px; }
+.ig-post footer svg:first-child { color: var(--pimenta-2); fill: var(--pimenta-2); }
+.ig-post footer svg:last-child { margin-left: auto; }
+.s-store .caption { left: 1240px; top: 900px; width: 560px; z-index: 1; color: var(--paper); text-align: center; font-size: 26px; }
+.s-store .caption b { display: block; font-size: 38px; font-weight: 800; letter-spacing: -.01em; }
+
+
+/* ==========================================================================
+   10. SLIDE 09 — CASO: TIKTOK VIRAL (.s-viral)
+   ========================================================================== */
+.s-viral .glow { right: 120px; top: 120px; width: 700px; height: 840px; border-radius: 50%; background: radial-gradient(closest-side, rgba(194, 59, 42, .45), transparent); filter: blur(20px); }
+.s-viral .tag { left: 110px; top: 90px; align-items: flex-start; }
+.s-viral .tag .tri { margin-left: 30px; }
+.s-viral .obj { left: 110px; top: 250px; font-size: 30px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.s-viral .obj b { color: var(--paper); }
+.s-viral .big { left: 96px; top: 300px; font-size: 300px; }
+.s-viral .big span { font-size: 150px; letter-spacing: -.03em; }
+.s-viral .big-sub { left: 112px; top: 590px; font-size: 38px; font-weight: 500; }
+.s-viral .big-sub b { font-weight: 800; color: var(--pimenta-2); }
+
+.stats { left: 110px; top: 680px; width: 1050px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.stat {
+  padding: 26px 30px; border-radius: 26px;
+  background: var(--ink-2); border: 1px solid var(--ink-3);
+  transition: border-color .3s, translate .3s var(--ease);
+}
+.stat:hover { border-color: var(--pimenta); translate: 0 -4px; }
+.stat strong { display: block; font-size: 52px; font-weight: 900; letter-spacing: -.03em; line-height: 1; }
+.stat span { display: block; margin-top: 8px; font-size: 21px; color: rgba(243, 240, 235, .7); font-weight: 500; }
+.s-viral .foot { left: 110px; top: 990px; width: 1100px; font-size: 22px; color: var(--muted); }
+.s-viral .foot b { color: var(--paper); font-weight: 700; }
+
+.s-viral .phone { left: 1320px; top: 110px; width: 420px; height: 860px; }
+.s-viral .side { left: 1770px; top: 470px; display: grid; gap: 34px; justify-items: center; font-size: 54px; text-align: center; }
+.s-viral .side small { display: block; font-size: 18px; font-weight: 700; margin-top: 4px; }
+.s-viral .side svg.fill { color: var(--pimenta-2); }
+.s-viral .badge { left: 1250px; top: 860px; z-index: 3; padding: 18px 28px; border-radius: 20px; background: var(--paper); color: var(--ink); font-size: 22px; font-weight: 600; box-shadow: 0 20px 40px -10px rgba(0, 0, 0, .6); }
+.s-viral .badge b { display: block; font-size: 40px; font-weight: 900; color: var(--pimenta); letter-spacing: -.02em; }
+
+
+/* ==========================================================================
+   11. SLIDE 10 — CLIENTES ATENDIDOS (.s-clients)
+   ========================================================================== */
+.s-clients .tag { left: 110px; top: 90px; align-items: flex-start; }
+.s-clients .tag .tri { margin-left: 30px; }
+.s-clients h2 { left: 110px; top: 330px; font-size: 150px; }
+.s-clients .lead { left: 116px; top: 640px; width: 560px; font-size: 32px; line-height: 1.4; color: #3a3533; }
+.s-clients .doodle-wrap { left: 40px; top: 760px; width: 700px; height: 340px; }
+.s-clients .a1 { left: 900px; top: 300px; width: 480px; height: 900px; border-radius: 999px 999px 0 0; background: var(--paper-2); }
+.s-clients .a2 { left: 1330px; top: 80px; width: 480px; height: 1100px; border-radius: 999px 999px 0 0; background: var(--paper-3); }
+.s-clients .grid { left: 920px; top: 90px; width: 900px; display: grid; grid-template-columns: 1fr 1fr; row-gap: 70px; column-gap: 40px; }
+
+.client-logo { display: grid; justify-items: center; gap: 22px; }
+.client-logo .c {
+  width: 300px; height: 300px; border-radius: 50%; overflow: hidden;
+  box-shadow: 0 0 0 8px var(--paper), 0 30px 50px -20px rgba(15, 14, 14, .45);
+  transition: box-shadow .4s var(--ease), scale .4s var(--ease);
+}
+.client-logo .c img { width: 100%; height: 100%; object-fit: cover; }
+.client-logo span { font-size: 28px; font-weight: 700; letter-spacing: -.01em; transition: color .3s; }
+.client-logo:hover .c { scale: 1.05; box-shadow: 0 0 0 8px var(--paper), 0 0 0 12px var(--pimenta), 0 40px 60px -20px rgba(194, 59, 42, .5); }
+.client-logo:hover span { color: var(--pimenta); }
+.grid .client-logo:nth-child(2), .grid .client-logo:nth-child(4) { translate: 0 60px; }
+
+
+/* ==========================================================================
+   12. SLIDE 11 — CONTATO (.s-contact)
+   ========================================================================== */
+.s-contact .glow { left: 1250px; top: 200px; width: 800px; height: 800px; border-radius: 50%; background: radial-gradient(closest-side, rgba(194, 59, 42, .35), transparent); }
+.s-contact .small-by { left: 110px; top: 130px; font-size: 26px; font-weight: 800; }
+.s-contact h2 { left: 100px; top: 180px; font-size: 156px; line-height: .9; }
+.s-contact .lead { left: 114px; top: 700px; width: 580px; font-size: 30px; line-height: 1.35; color: rgba(243, 240, 235, .85); }
+.s-contact .script { left: 830px; top: 250px; width: 560px; text-align: center; font-family: var(--f-script); font-size: 120px; line-height: 1; }
+.s-contact .boxes { left: 830px; top: 440px; width: 560px; display: grid; gap: 26px; }
+
+.c-box {
+  display: flex; align-items: center; gap: 26px;
+  padding: 26px 34px; border-radius: 8px;
+  background: var(--ink-3);
+  font-size: 32px; font-weight: 700; letter-spacing: -.01em;
+  transition: background .35s var(--ease), translate .35s var(--ease);
+}
+.c-box svg { font-size: 58px; color: var(--pimenta-2); transition: color .35s; }
+.c-box.email { font-size: 25px; }
+.c-box:hover { background: var(--pimenta); translate: 8px 0; }
+.c-box:hover svg { color: var(--paper); }
+
+.s-contact .arch-outline { left: 1430px; top: 150px; width: 430px; height: 930px; }
+.s-contact .arch { left: 1460px; top: 190px; width: 430px; height: 890px; }
+.s-contact .arch img { object-position: 52% 40%; }
+.s-contact .doodle-wrap { left: 1380px; top: 560px; width: 560px; height: 560px; z-index: 2; }
+
+
+/* ==========================================================================
+   13. INTERFACE FLUTUANTE DE NAVEGAÇÃO (.dock)
+   ========================================================================== */
+.dock {
+  position: fixed; left: 50%; bottom: 26px; translate: -50% 0; z-index: 10;
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px;
+  border-radius: 999px;
+  background: rgba(27, 25, 24, .72);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, .08);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, .6);
+  font-size: 14px;
+}
+.dock button {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 42px; padding: 0 16px; border: 0; border-radius: 999px;
+  background: transparent; color: var(--paper);
+  font: 600 14px var(--f-sans); cursor: pointer;
+  transition: background .25s;
+}
+.dock button:hover { background: rgba(255, 255, 255, .08); }
+.dock button svg { font-size: 18px; }
+.dock .count { min-width: 74px; text-align: center; font-variant-numeric: tabular-nums; color: rgba(243, 240, 235, .75); }
+.dock .count b { color: var(--paper); }
+.dock #btn-pdf { background: var(--pimenta); }
+.dock #btn-pdf:hover { background: var(--pimenta-2); }
+.dock #btn-edit { background: rgba(255, 255, 255, .1); }
+.dock #btn-edit.active { background: #2e7d32; color: #fff; box-shadow: 0 0 12px rgba(46, 125, 50, .6); }
+.dock #btn-save { background: #1976d2; color: #fff; font-weight: 700; animation: pulse 2s infinite; }
+.dock #btn-save:hover { background: #2196f3; }
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(33, 150, 243, .4); }
+  50% { box-shadow: 0 0 0 8px rgba(33, 150, 243, 0); }
+}
+
+
+/* ==========================================================================
+   14. MODO DE EDIÇÃO VISUAL TURBINADO (Mover, Redimensionar e Texto)
+   ========================================================================== */
+body.editing-mode {
+  user-select: none;
+}
+body.editing-mode .slide-wrap {
+  overflow: visible !important;
+  box-shadow: 0 0 0 3px var(--pimenta-2), 0 30px 80px -30px rgba(0, 0, 0, .8);
+}
+body.editing-mode [data-anim] {
+  opacity: 1 !important;
+  animation: none !important;
+  transition: none !important;
+}
+body.editing-mode .slide > * {
+  cursor: pointer;
+  transition: outline 0.15s ease;
+}
+body.editing-mode .slide > *:hover {
+  outline: 2px dashed rgba(224, 86, 63, 0.6) !important;
+  outline-offset: 4px;
+}
+
+/* Caixa delimitadora de Seleção / Gizmo */
+.editor-gizmo {
+  position: absolute;
+  pointer-events: auto;
+  border: 2px solid var(--pimenta-2);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.6), 0 10px 30px rgba(0,0,0,0.35);
+  z-index: 9999;
+  box-sizing: border-box;
+  cursor: move;
+}
+
+.gizmo-bar {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #181615;
+  color: #f3f0eb;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #3d3735;
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  pointer-events: auto;
+  user-select: none;
+}
+.gizmo-coords {
+  color: var(--pimenta-2);
+  font-family: monospace;
+  font-size: 13px;
+}
+.gizmo-btn {
+  background: #2b2725;
+  border: 1px solid #48403d;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.gizmo-btn:hover {
+  background: var(--pimenta);
+  color: #fff;
+}
+
+/* Alças nos 4 cantos e 4 lados */
+.gizmo-handle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+  border: 2.5px solid var(--pimenta-2);
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  box-sizing: border-box;
+  z-index: 10000;
+}
+.handle-nw { top: -7px; left: -7px; cursor: nwse-resize; }
+.handle-ne { top: -7px; right: -7px; cursor: nesw-resize; }
+.handle-se { bottom: -7px; right: -7px; cursor: nwse-resize; }
+.handle-sw { bottom: -7px; left: -7px; cursor: nesw-resize; }
+.handle-n  { top: -7px; left: calc(50% - 7px); cursor: ns-resize; }
+.handle-s  { bottom: -7px; left: calc(50% - 7px); cursor: ns-resize; }
+.handle-w  { top: calc(50% - 7px); left: -7px; cursor: ew-resize; }
+.handle-e  { top: calc(50% - 7px); right: -7px; cursor: ew-resize; }
+
+/* Destaque quando o texto está sendo editado diretamente */
+.elem-editing-text {
+  outline: 2px solid #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.12) !important;
+  cursor: text !important;
+  user-select: text !important;
+}
+
+.edit-toast {
+  position: fixed; top: 20px; left: 50%; translate: -50% 0; z-index: 100001;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 24px; border-radius: 999px;
+  background: rgba(20, 18, 18, .95); color: #fff;
+  border: 1px solid var(--pimenta-2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .7);
+  font-size: 14px; font-weight: 600;
+  line-height: 1.4;
+  animation: slideDown .3s ease-out;
+  pointer-events: none;
+}
+@keyframes slideDown {
+  from { opacity: 0; translate: -50% -20px; }
+  to { opacity: 1; translate: -50% 0; }
+}
+
+
+/* ==========================================================================
+   15. REGRAS PARA IMPRESSÃO E EXPORTAÇÃO EM PDF (1 slide por página)
+   ========================================================================== */
+@page { size: 1920px 1080px; margin: 0; }
+
+@media print {
+  body { background: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .dock { display: none !important; }
+  .deck { padding: 0; gap: 0; display: block; }
+  .slide-wrap { width: 1920px; height: 1080px; aspect-ratio: auto; border-radius: 0; box-shadow: none; break-after: page; page-break-after: always; }
+  .slide { transform: none !important; }
+  [data-anim] { opacity: 1 !important; animation: none !important; }
+  .donut { --p: var(--target) !important; transition: none; }
+  .draw { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; animation: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-anim] { opacity: 1; animation: none !important; }
+  .slide.in .draw { animation: none; stroke-dasharray: none; }
+  .donut { transition: none; }
+}

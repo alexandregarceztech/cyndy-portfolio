@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfólio | Cyndy Pimentel — Social Media, Estratégia & Edição de Vídeos</title>
+  <meta name="description"
+    content="Portfólio de Cyndy Pimentel (@cyndy.pimenttel): estrategista de mídias sociais e editora de vídeos. Reels, estratégia de conteúdo e resultados reais para marcas.">
+
+  <!-- ==========================================================================
+       FONTES DO GOOGLE FONTS
+       - Inter / Montserrat: Modernas e sem serifa para textos e números
+       - Cormorant Garamond / Italiana: Elegantes e sofisticadas para títulos
+       - Pinyon Script: Manuscrita / assinatura para detalhes autorais
+       ========================================================================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Inter:wght@400;500;600;700;800&family=Italiana&family=Montserrat:wght@400;500;600;700;800;900&family=Pinyon+Script&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ==========================================================================
+       ÍCONES (SPRITE SVG VETORIAL)
+       Todos os ícones usados no portfólio estão centralizados aqui.
+       Para usar um ícone no HTML: <svg class="i"><use href="#id-do-icone" /></svg>
+       ========================================================================== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-heart" viewBox="0 0 24 24">
+      <path
+        d="M12 20.5s-7.5-4.6-9.5-9.3C1.2 8 3 4.5 6.6 4.5c2.1 0 3.6 1.2 5.4 3.2 1.8-2 3.3-3.2 5.4-3.2 3.6 0 5.4 3.5 4.1 6.7-2 4.7-9.5 9.3-9.5 9.3z" />
+    </symbol>
+    <symbol id="i-comment" viewBox="0 0 24 24">
+      <path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5A8.5 8.5 0 1 1 21 11.5z" />
+    </symbol>
+    <symbol id="i-repost" viewBox="0 0 24 24">
+      <path d="M17 2l3 3-3 3M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3M20 13v2a4 4 0 0 1-4 4H4" />
+    </symbol>
+    <symbol id="i-send" viewBox="0 0 24 24">
+      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+    </symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24">
+      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+    </symbol>
+    <symbol id="i-play" viewBox="0 0 24 24">
+      <path d="M8 5.5v13l10.5-6.5z" />
+    </symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24">
+      <rect x="6" y="2" width="12" height="20" rx="3" />
+      <path d="M10.5 18.5h3" />
+    </symbol>
+    <symbol id="i-gimbal" viewBox="0 0 24 24">
+      <rect x="7" y="2.5" width="10" height="6" rx="1.5" />
+      <path d="M12 8.5v2.5h3v3l-3 2v5.5M9.5 21.5h5" />
+    </symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24">
+      <rect x="9" y="2" width="6" height="12" rx="3" />
+      <path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4M8.5 22h7" />
+    </symbol>
+    <symbol id="i-ring" viewBox="0 0 24 24">
+      <circle cx="12" cy="8.5" r="6.5" />
+      <circle cx="12" cy="8.5" r="3.6" />
+      <path d="M12 15v7M8 22l4-2.5 4 2.5" />
+    </symbol>
+    <symbol id="i-cut" viewBox="0 0 24 24">
+      <circle cx="6" cy="6" r="3" />
+      <circle cx="6" cy="18" r="3" />
+      <path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12" />
+    </symbol>
+    <symbol id="i-text" viewBox="0 0 24 24">
+      <path d="M3 18L8 6l5 12M4.8 14h6.4M18 11.5a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4zM20.7 11.5V17" />
+    </symbol>
+    <symbol id="i-reel" viewBox="0 0 24 24">
+      <rect x="3" y="3" width="18" height="18" rx="4.5" />
+      <path d="M3 8.5h18M8.5 3l3 5.5M14.5 3l3 5.5M10.5 12v6l5-3z" />
+    </symbol>
+    <symbol id="i-target" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1.2" />
+    </symbol>
+    <symbol id="i-whats" viewBox="0 0 24 24">
+      <path d="M3 21l1.6-4.8A8.6 8.6 0 1 1 8 19.6z" />
+      <path d="M9 8.3c0 3.6 3.1 6.7 6.7 6.7l1-1.7-2.1-1-1 .9a5 5 0 0 1-2.5-2.5l.9-1-1-2.1z" />
+    </symbol>
+    <symbol id="i-insta" viewBox="0 0 24 24">
+      <rect x="3" y="3" width="18" height="18" rx="5.2" />
+      <circle cx="12" cy="12" r="4.2" />
+      <circle cx="17.4" cy="6.6" r=".7" />
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="14" rx="2.5" />
+      <path d="M3.5 7l8.5 6 8.5-6" />
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24">
+      <path d="M4 12h16M14 6l6 6-6 6" />
+    </symbol>
+    <symbol id="i-share" viewBox="0 0 24 24">
+      <path d="M14 5l7 7-7 7v-4c-6 0-9 2-11 5 1-6 4-10 11-11z" />
+    </symbol>
+    <symbol id="i-up" viewBox="0 0 24 24">
+      <path d="M6 15l6-6 6 6" />
+    </symbol>
+    <symbol id="i-down" viewBox="0 0 24 24">
+      <path d="M6 9l6 6 6-6" />
+    </symbol>
+    <symbol id="i-download" viewBox="0 0 24 24">
+      <path d="M12 3v12M7 10l5 5 5-5M5 21h14" />
+    </symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24">
+      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+    </symbol>
+    <symbol id="i-save" viewBox="0 0 24 24">
+      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+      <polyline points="17 21 17 13 7 13 7 21" />
+      <polyline points="7 3 7 8 15 8" />
+    </symbol>
+  </svg>
+
+  <!-- ==========================================================================
+       CONTAINER PRINCIPAL DOS SLIDES (DECK)
+       Cada <section class="slide-wrap"> representa 1 slide em formato 16:9
+       ========================================================================== -->
+  <main class="deck" id="deck">
+
+    <!-- ==========================================================================
+         01 · SLIDE DE CAPA (#slide-capa)
+         Conteúdo: Nome, especialidades, foto de estúdio com arco, título e redes
+         ========================================================================== -->
+    <section class="slide-wrap" id="slide-capa" aria-label="Capa">
+      <div class="slide dark s-cover">
+
+        <!-- Letreiro "by" gigante no fundo -->
+        <div class="abs ghost-by" aria-hidden="true">by</div>
+
+        <!-- Arco com a foto principal de Cyndy Pimentel -->
+        <div class="abs arch-outline" data-anim="fade" style="--d:.35s"></div>
+        <div class="abs arch" data-anim style="--d:.5s">
+          <img src="assets/img/cyndy-retrato.jpg"
+            alt="Cyndy Pimentel cercada por equipamentos de gravação: celular, gimbal, microfone e iluminação">
+        </div>
+
+        <!-- Lista lateral de serviços rápidos -->
+        <ul class="abs tools" data-anim="left" style="--d:.5s">
+          <li><svg class="i">
+              <use href="#i-text" />
+            </svg>Estratégia</li>
+          <li><svg class="i">
+              <use href="#i-reel" />
+            </svg>Reels</li>
+          <li><svg class="i">
+              <use href="#i-target" />
+            </svg>Resultados</li>
+        </ul>
+
+        <!-- Ícones de ação estilo Instagram (canto superior direito) -->
+        <div class="abs ig" data-anim style="--d:.6s" aria-hidden="true">
+          <svg class="i">
+            <use href="#i-heart" />
+          </svg>
+          <svg class="i">
+            <use href="#i-comment" />
+          </svg>
+          <svg class="i">
+            <use href="#i-repost" />
+          </svg>
+          <svg class="i">
+            <use href="#i-send" />
+          </svg>
+        </div>
+
+        <!-- Título principal com letra 'p' vazada -->
+        <h1 class="abs" data-anim style="--d:.3s"><span class="o">p</span>ortfólio</h1>
+
+        <!-- Assinatura "by Cyndy" -->
+        <p class="abs sign by" data-anim style="--d:.45s">by <b>Cyndy</b></p>
+
+        <!-- Especialidades / Áreas de atuação -->
+        <p class="abs roles" data-anim style="--d:.6s">Social media<br>Estrategista digital<br>&amp; Edição de vídeos
+        </p>
+
+        <!-- Paleta decorativa de pontos circulares -->
+        <div class="abs dots" data-anim style="--d:.8s" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <!-- Arroba oficial do Instagram -->
+        <p class="abs handle" data-anim="fade" style="--d:1s">@cyndy.pimenttel</p>
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         02 · SLIDE DE APRESENTAÇÃO (#slide-apresentacao)
+         Conteúdo: Mini bio, formação, crachá ID com kit de criação e skills
+         ========================================================================== -->
+    <section class="slide-wrap" id="slide-apresentacao" aria-label="Apresentação">
+      <div class="slide light s-about">
+
+        <!-- Foto de fundo em transparência sutil -->
+        <div class="abs fade-portrait" data-anim="fade"><img src="assets/img/cyndy-retrato.jpg" alt=""></div>
+
+        <!-- Título do slide -->
+        <h2 class="abs h-black" data-anim>Apresentação</h2>
+        <p class="abs corner" data-anim="fade" style="--d:.2s"><span class="sign">by Cyndy</span>Social
+          media<br>Estrategista digital<br>&amp; Edição de vídeos</p>
+
+        <!-- Cartão de Identificação (ID Card) -->
+        <div class="abs id-card" data-anim style="--d:.2s">
+          <div class="photo">
+            <img src="assets/img/cyndy-estudio-recorte.jpg" alt="Cyndy Pimentel em seu estúdio de gravação">
+          </div>
+          <dl>
+            <div class="row">
+              <dt>Nome:</dt>
+              <dd>Cyndy Pimentel</dd>
+            </div>
+            <div class="row">
+              <dt>Formação:</dt>
+              <dd>Publicidade e Propaganda</dd>
+            </div>
+            <div class="row">
+              <dt>Experiência:</dt>
+              <dd>1 ano em mídias sociais</dd>
+            </div>
+            <p class="kit-title">Kit básico de criação:</p>
+            <div class="kit">
+              <span><svg class="i">
+                  <use href="#i-phone" />
+                </svg>celular</span>
+              <span><svg class="i">
+                  <use href="#i-gimbal" />
+                </svg>gimbal</span>
+              <span><svg class="i">
+                  <use href="#i-mic" />
+                </svg>áudio</span>
+              <span><svg class="i">
+                  <use href="#i-ring" />
+                </svg>luz</span>
+              <span><svg class="i">
+                  <use href="#i-cut" />
+                </svg>edição</span>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Citação inspiracional -->
+        <blockquote class="abs quote" data-anim style="--d:.4s">
+          “Toda marca tem uma história. O meu trabalho é fazer com que ela seja vista.”
+          <small>— Cyndy Pimentel</small>
+        </blockquote>
+
+        <!-- Texto descritivo / Bio -->
+        <div class="abs text" data-anim style="--d:.3s">
+          <p>Estudante de <b>Publicidade e Propaganda</b> e estrategista de mídias sociais, com <b>1 ano de
+              experiência</b> criando conteúdo para empresas.</p>
+          <p>Apaixonada por <u>contar histórias</u> e transformar marcas em conteúdos que <b>geram resultado.</b></p>
+        </div>
+
+        <!-- Chips de habilidades comportamentais -->
+        <div class="abs skills" data-anim style="--d:.5s">
+          <h3>Principais skills</h3>
+          <div class="chips">
+            <span class="chip on">Criativa</span>
+            <span class="chip">Organizada</span>
+            <span class="chip">Contadora de histórias</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         03 · SLIDE SERVIÇOS — O QUE EU FAÇO (#slide-servicos)
+         Conteúdo: 3 pilares de trabalho, diferencial estratégico e mockup TikTok
+         ========================================================================== -->
+    <section class="slide-wrap" id="slide-servicos" aria-label="O que eu faço">
+      <div class="slide light s-services">
+
+        <div class="abs fade-portrait r" data-anim="fade"><img src="assets/img/cyndy-retrato.jpg" alt=""></div>
+
+        <h2 class="abs h-black" data-anim>O que eu faço?</h2>
+
+        <!-- As 3 colunas de serviços principais -->
+        <div class="abs cols">
+          <article class="col" data-anim style="--d:.15s">
+            <div class="tri sm"></div>
+            <h3>Estratégia</h3>
+            <p>Planejo conteúdos por <b>etapa do funil</b> para levar o perfil a novos públicos e transformar
+              visualizações em seguidores.</p>
+          </article>
+          <article class="col" data-anim style="--d:.3s">
+            <div class="tri sm"></div>
+            <h3>Edição de vídeos</h3>
+            <p>Edito reels e vídeos curtos com <b>ritmo, legendas e ganchos</b> que prendem a atenção já nos primeiros
+              segundos.</p>
+          </article>
+          <article class="col" data-anim style="--d:.45s">
+            <div class="tri sm"></div>
+            <h3>Storytelling</h3>
+            <p>Conto a história da marca de um jeito <b>humano e próximo</b>, para que o público se identifique e volte
+              sempre.</p>
+          </article>
+        </div>
+
+        <!-- Pílula de diferencial -->
+        <div class="abs dif" data-anim style="--d:.6s">
+          <h4>diferencial:</h4>
+          <p class="pill ink">Conteúdo com estratégia: cada vídeo é<br>pensado para gerar resultado.</p>
+        </div>
+
+        <!-- Celular com link para assistir no TikTok -->
+        <a class="abs phone" href="https://vm.tiktok.com/ZMApbHSpj/" target="_blank" rel="noopener"
+          id="link-servicos-tiktok" data-anim="zoom" style="--d:.8s" aria-label="Assistir vídeo viral no TikTok">
+          <div class="screen"><img src="assets/img/tiktok-iphone.jpg" alt="Vídeo comparando iPhone 14 e iPhone 13">
+          </div>
+        </a>
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         04 · SLIDE DIVISOR — EDIÇÃO DE VÍDEOS (#slide-div-videos)
+         Conteúdo: Abertura da seção 01 com número gigante e arte decorativa
+         ========================================================================== -->
+    <section class="slide-wrap" id="slide-div-videos" aria-label="Seção: Edição de vídeos">
+      <div class="slide dark s-divider">
+        <div class="abs num" data-anim="fade" aria-hidden="true">01</div>
+        <svg class="abs doodle-wrap" viewBox="0 0 900 700" aria-hidden="true">
+          <path class="doodle draw" d="M20 680C140 560 60 330 280 300S560 520 420 570 290 320 520 200 850 140 890 10" />
+        </svg>
+        <div class="abs tri" data-anim style="--d:.1s"></div>
+        <h2 class="abs h-black" data-anim style="--d:.2s">Edição de vídeos</h2>
+        <p class="abs sub" data-anim style="--d:.35s">Os <b>reels</b> são ideais para quem quer alcançar novos públicos
+          contando uma boa história.</p>
+        <p class="abs sign by" data-anim="fade" style="--d:.5s">by Cyndy</p>
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         05 · SLIDE VÍDEOS — PARTE 1 (#slide-videos-1)
+         Conteúdo: 3 Reels institucionais com links clicáveis para o Instagram
+         ========================================================================== -->
+    <section class="slide-wrap" id="slide-videos-1" aria-label="Edição de vídeos — parte 1">
+      <div class="slide light s-videos">
+        <div class="abs bg-block" data-anim="fade"></div>
+        <div class="abs bg-arch" data-anim="fade" style="--d:.1s"></div>
+
+        <div class="abs tag" data-anim>
+          <div class="tri sm"></div>Edição de vídeos
+        </div>
+        <h2 class="abs h-black" data-anim style="--d:.1s">Reels que<br>prendem<br><span class="accent">atenção.</span>
+        </h2>
+        <p class="abs lead" data-anim style="--d:.2s">Ganchos fortes, legendas dinâmicas e cortes no ritmo certo para o
+          público assistir até o fim.</p>
+        <p class="abs pill ink" data-anim style="--d:.3s"></svg>Clique no vídeo para assistir</p>
+
+        <!-- Vídeo 1: Feirão Shineray -->
+        <figure class="abs reel r1" data-anim style="--d:.25s">
+          <a class="phone" href="https://www.instagram.com/reel/DR2lf2hjgGJ/" target="_blank" rel="noopener"
+            id="link-reel-1">
+            <div class="screen">
+              <img src="assets/img/video-01-feirao-shineray.jpg" alt="Reels Feirão de Fábrica Shineray">
+              <span class="play"><svg class="i fill">
+                  <use href="#i-play" />
+                </svg></span>
+            </div>
+          </a>
+          <figcaption><b>Shineray Hiper Motors</b>Feirão de fábrica</figcaption>
+        </figure>
+
+        <!-- Vídeo 2: Lifestyle -->
+        <figure class="abs reel r2" data-anim style="--d:.4s">
+          <a class="phone" href="https://www.instagram.com/reel/DQ0CTsBEffW/" target="_blank" rel="noopener"
+            id="link-reel-2">
+            <div class="screen">
+              <img src="assets/img/video-02-reels.jpg" alt="Reels lifestyle" style="object-position:38% center">
+              <span class="play"><svg class="i fill">
+                  <use href="#i-play" />
+                </svg></span>
+            </div>
+          </a>
+          <figcaption><b>Reels lifestyle</b>Narrativa &amp; estética</figcaption>
+        </figure>
+
+        <!-- Vídeo 3: Só Letrados -->
+        <figure class="abs reel r3" data-anim style="--d:.55s">
+          <a class="phone" href="https://www.instagram.com/reel/DTP3iYekdBo/" target="_blank" rel="noopener"
+            id="link-reel-3">
+            <div class="screen">
+              <img src="assets/img/video-03-so-letrados.jpg" alt="Reels de boas-vindas Só Letrados">
+              <span class="play"><svg class="i fill">
+                  <use href="#i-play" />
+                </svg></span>
+            </div>
+          </a>
+          <figcaption><b>Só Letrados</b>Vídeo de boas-vindas</figcaption>
+        </figure>
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         06 · SLIDE VÍDEOS — PARTE 2 (#slide-videos-2)
+         Conteúdo: 3 Vídeos com foco comercial / vendas com links para o Instagram
+         ========================================================================== -->
+    <section class="slide-wrap" id="slide-videos-2" aria-label="Edição de vídeos — parte 2">
+      <div class="slide light s-videos">
+        <div class="abs bg-block" data-anim="fade"></div>
+        <div class="abs bg-arch" data-anim="fade" style="--d:.1s"></div>
+
+        <div class="abs tag" data-anim>
+          <div class="tri sm"></div>Edição de vídeos
+        </div>
+        <h2 class="abs h-black" data-anim style="--d:.1s">Vídeos<br>que<br><span class="accent">vendem.</span></h2>
+        <p class="abs lead" data-anim style="--d:.2s">Campanhas, ofertas e lançamentos com a cara da marca e uma chamada
+          clara para a ação.</p>
+        <p class="abs pill ink" data-anim style="--d:.3s">
+          </svg>Clique no vídeo para assistir</p>
+
+        <!-- Vídeo 4: Operação Fecha Mês -->
+        <figure class="abs reel r1" data-anim style="--d:.25s">
+          <a class="phone" href="https://www.instagram.com/reel/DQO8AnpjgJJ/" target="_blank" rel="noopener"
+            id="link-reel-4">
+            <div class="screen">
+              <img src="assets/img/video-04-fecha-mes.jpg" alt="Reels Operação Fecha Mês Shineray">
+              <span class="play"><svg class="i fill">
+                  <use href="#i-play" />
+                </svg></span>
+            </div>
+          </a>
+          <figcaption><b>Shineray Hiper Motors</b>Operação Fecha Mês</figcaption>
+        </figure>
+
+        <!-- Vídeo 5: Concessionária Honda -->
+        <figure class="abs reel r2" data-anim style="--d:.4s">
+          <a class="phone" href="https://www.instagram.com/reel/DSX3L6TDp2f/" target="_blank" rel="noopener"
+            id="link-reel-5">
+            <div class="screen">
+              <img src="assets/img/video-05-honda.jpg" alt="Reels Por que todo mundo escolhe Honda?">
+              <span class="play"><svg class="i fill">
+                  <use href="#i-play" />
+                </svg></span>
+            </div>
+          </a>
+          <figcaption><b>Concessionária Honda</b>Por que todo mundo escolhe Honda?</figcaption>
+        </figure>
+
+        <!-- Vídeo 6: Moda Midi -->
+        <figure class="abs reel r3" data-anim style="--d:.55s">
+          <a class="phone" href="https://www.instagram.com/reel/DNfp533TcAE/" target="_blank" rel="noopener"
+            id="link-reel-6">
+            <div class="screen">
+              <img src="assets/img/video-06-midi.jpg" alt="Reels de moda Midi ao longo">
+              <span class="play"><svg class="i fill">
+                  <use href="#i-play" />
+                </svg></span>
+            </div>
+          </a>
+          <figcaption><b>Moda</b>Midi ao longo — puro impacto</figcaption>
+        </figure>
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         07 · SLIDE DIVISOR — RESULTADOS (#slide-div-resultados)
+         Conteúdo: Abertura da seção 02 com números de métricas reais
+         ========================================================================== -->
+    <section class="slide-wrap" id="slide-div-resultados" aria-label="Seção: Resultados">
+      <div class="slide dark s-divider">
+        <div class="abs num" data-anim="fade" aria-hidden="true">02</div>
+        <svg class="abs doodle-wrap" viewBox="0 0 900 700" aria-hidden="true">
+          <path class="doodle draw" d="M10 600C200 640 260 420 160 360S60 160 300 170 520 420 640 330 600 80 890 60" />
+        </svg>
+        <div class="abs tri" data-anim style="--d:.1s"></div>
+        <h2 class="abs h-black" data-anim style="--d:.2s">Resultados</h2>
+        <p class="abs sub" data-anim style="--d:.35s">Números que mostram que <b>estratégia e criatividade</b> andam
+          juntas.</p>
+        <p class="abs sign by" data-anim="fade" style="--d:.5s">by Cyndy</p>
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         08 · SLIDE CASO REAL — STORE PHONE (#slide-storephone)
+         Conteúdo: Donut de novos seguidores, comparativo 18K -> 25K e post do feed
+         ========================================================================== -->
+    <section class="slide-wrap" id="slide-storephone" aria-label="Resultado: Store Phone">
+      <div class="slide light s-store">
+        <div class="abs panel" data-anim="fade"></div>
+
+        <div class="abs tag" data-anim>
+          <div class="tri sm"></div>Resultados
+        </div>
+        <p class="abs client pill ink" data-anim style="--d:.1s"><svg class="i">
+            <use href="#i-insta" />
+          </svg>@storephonebelem</p>
+        <h2 class="abs h-black" data-anim style="--d:.15s"><small>Objetivo</small>Crescer<br>o <span
+            class="accent">perfil.</span></h2>
+        <p class="abs text" data-anim style="--d:.25s">Foi aplicada uma estratégia de conteúdo de <b>topo de funil</b>
+          para descoberta do perfil. Os conteúdos passaram a ser entregues para novos públicos, trazendo novos
+          seguidores — resultado alcançado em <b>6 meses de trabalho.</b></p>
+
+        <!-- Gráfico Donut Animado (CSS conic-gradient) -->
+        <div class="abs donut-box" data-anim="zoom" style="--d:.35s">
+          <div class="donut" style="--target:58.1"><span class="val">58,1%</span></div>
+          <div class="legend">
+            <span><i style="background:var(--pimenta)"></i>Novos seguidores — 58,1%</span>
+            <span><i style="background:var(--ink)"></i>Seguidores — 41,9%</span>
+          </div>
+        </div>
+
+        <!-- Indicador de Crescimento: 18K para 25K -->
+        <div class="abs growth" data-anim style="--d:.45s">
+          <div class="n before"><small>antes</small><strong>18K</strong></div>
+          <svg class="i arrow">
+            <use href="#i-arrow" />
+          </svg>
+          <div class="n after"><small>depois</small><strong data-count="25" data-suffix="K">25K</strong></div>
+          <span class="delta">+7 mil seguidores</span>
+        </div>
+
+        <!-- Mockup do post do Instagram -->
+        <article class="abs ig-post" data-anim style="--d:.3s">
+          <header><img src="assets/img/cliente-storephone.jpg" alt="Logo Store Phone">storephonebelem<span>•••</span>
+          </header>
+          <img src="assets/img/storephone-post.jpg" alt="Post Store Phone Exclusive Store">
+          <footer>
+            <svg class="i">
+              <use href="#i-heart" />
+            </svg>
+            <svg class="i">
+              <use href="#i-comment" />
+            </svg>
+            <svg class="i">
+              <use href="#i-send" />
+            </svg>
+            <svg class="i">
+              <use href="#i-bookmark" />
+            </svg>
+          </footer>
+        </article>
+        <p class="abs caption" data-anim="fade" style="--d:.6s"><b>18K → 25K seguidores</b>em 6 meses</p>
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         09 · SLIDE CASO REAL — VÍDEO VIRAL TIKTOK (#slide-viral)
+         Conteúdo: 17 Milhões de visualizações, métricas de engajamento e mockup
+         ========================================================================== -->
+    <section class="slide-wrap" id="slide-viral" aria-label="Resultado: vídeo viral no TikTok">
+      <div class="slide dark s-viral">
+        <div class="abs glow" data-anim="fade"></div>
+
+        <div class="abs tag" data-anim>
+          <div class="tri sm"></div>Resultados
+        </div>
+        <p class="abs obj" data-anim style="--d:.1s">Objetivo: <b>engajamento orgânico</b></p>
+        <h2 class="abs h-black big" data-anim style="--d:.15s"><span data-count="17">17</span><span> mi</span></h2>
+        <p class="abs big-sub" data-anim style="--d:.25s">de views no TikTok com um vídeo de <b>apenas 17 segundos.</b>
+        </p>
+
+        <!-- Grade com os números de impacto -->
+        <div class="abs stats">
+          <div class="stat" data-anim style="--d:.30s"><strong>453,2 mil</strong><span>curtidas</span></div>
+          <div class="stat" data-anim style="--d:.36s"><strong>4,1 mil</strong><span>comentários</span></div>
+          <div class="stat" data-anim style="--d:.42s"><strong>24 mil</strong><span>compartilhamentos</span></div>
+          <div class="stat" data-anim style="--d:.48s"><strong class="accent">7,6%</strong><span>de engajamento</span>
+          </div>
+          <div class="stat" data-anim style="--d:.54s"><strong>+5 mil</strong><span>novos seguidores</span></div>
+          <div class="stat" data-anim style="--d:.60s"><strong>+10 mil</strong><span>visitas no perfil</span></div>
+        </div>
+        <p class="abs foot" data-anim="fade" style="--d:.8s"><b>80%</b> do tráfego via “For You” · tempo médio de <b>17
+            s</b> assistidos · público <b>Brasil/EUA, 18–24 anos</b></p>
+
+        <!-- Celular com o vídeo viral do TikTok -->
+        <a class="abs phone" href="https://vm.tiktok.com/ZMApbHSpj/" target="_blank" rel="noopener"
+          id="link-viral-tiktok" data-anim="zoom" style="--d:.3s" aria-label="Assistir vídeo no TikTok">
+          <div class="screen">
+            <img src="assets/img/tiktok-iphone.jpg" alt="Vídeo iPhone 14 vs iPhone 13">
+            <span class="play"><svg class="i fill">
+                <use href="#i-play" />
+              </svg></span>
+          </div>
+        </a>
+
+        <!-- Contador lateral do TikTok -->
+        <div class="abs side" data-anim="fade" style="--d:.6s" aria-hidden="true">
+          <div><svg class="i fill">
+              <use href="#i-heart" />
+            </svg><small>453K</small></div>
+          <div><svg class="i">
+              <use href="#i-comment" />
+            </svg><small>4,1K</small></div>
+          <div><svg class="i">
+              <use href="#i-share" />
+            </svg><small>24K</small></div>
+        </div>
+        <div class="abs badge" data-anim style="--d:.7s"><b>99,8%</b>novos seguidores</div>
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         10 · SLIDE CLIENTES ATENDIDOS (#slide-clientes)
+         Conteúdo: Logos dos clientes com links diretos para seus perfis sociais
+         ========================================================================== -->
+    <section class="slide-wrap" id="slide-clientes" aria-label="Clientes atendidos">
+      <div class="slide light s-clients">
+        <div class="abs a1" data-anim="fade"></div>
+        <div class="abs a2" data-anim="fade" style="--d:.1s"></div>
+        <svg class="abs doodle-wrap" viewBox="0 0 700 340" aria-hidden="true">
+          <path class="doodle draw" d="M0 330C120 300 90 160 200 150S300 290 380 250 320 60 460 70 640 200 700 120" />
+        </svg>
+
+        <div class="abs tag" data-anim>
+          <div class="tri sm"></div>Portfólio
+        </div>
+        <h2 class="abs h-black" data-anim style="--d:.1s">Clientes<br><span class="accent">atendidos</span></h2>
+        <p class="abs lead" data-anim style="--d:.2s">Marcas que confiaram no meu trabalho para contar suas histórias
+          nas redes.</p>
+
+        <!-- Grade com 4 clientes -->
+        <div class="abs grid">
+          <a class="client-logo" href="https://www.instagram.com/storephonebelem" target="_blank" rel="noopener"
+            id="link-cliente-storephone" data-anim="zoom" style="--d:.2s">
+            <div class="c"><img src="assets/img/cliente-storephone.jpg" alt="Logo Store Phone"></div>
+            <span>@storephonebelem</span>
+          </a>
+          <a class="client-logo" href="https://www.instagram.com/soletrados" target="_blank" rel="noopener"
+            id="link-cliente-soletrados" data-anim="zoom" style="--d:.3s">
+            <div class="c"><img src="assets/img/cliente-soletrados.jpg" alt="Logo Só Letrados"></div>
+            <span>@soletrados</span>
+          </a>
+          <a class="client-logo" href="https://www.instagram.com/shineraybelem" target="_blank" rel="noopener"
+            id="link-cliente-shineray" data-anim="zoom" style="--d:.4s">
+            <div class="c"><img src="assets/img/cliente-shineray.jpg" alt="Logo Shineray Belém"></div>
+            <span>@shineraybelem</span>
+          </a>
+          <a class="client-logo" href="https://www.instagram.com/shineraybelemtj" target="_blank" rel="noopener"
+            id="link-cliente-shineraytj" data-anim="zoom" style="--d:.5s">
+            <div class="c"><img src="assets/img/cliente-shineraytj.jpg" alt="Logo Shineray Belém TJ"></div>
+            <span>@shineraybelemtj</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         11 · SLIDE CONTATO (#slide-contato)
+         Conteúdo: Chamada para ação, caixas de WhatsApp, Instagram, E-mail e foto
+         ========================================================================== -->
+    <section class="slide-wrap" id="slide-contato" aria-label="Contato">
+      <div class="slide dark s-contact">
+        <div class="abs glow" data-anim="fade"></div>
+
+        <p class="abs small-by" data-anim>by Cyndy</p>
+        <h2 class="abs h-black" data-anim style="--d:.1s">Vamos<br>trabalhar<br><span class="accent">juntos!</span></h2>
+        <p class="abs lead" data-anim style="--d:.2s">Será um prazer trabalhar para o seu negócio. Entre em contato e
+          vamos conversar sobre o seu projeto.</p>
+
+        <p class="abs script" data-anim style="--d:.25s">Contatos</p>
+
+        <!-- Caixas de Contato com links diretos -->
+        <div class="abs boxes">
+          <a class="c-box" href="https://wa.me/5591991177958" target="_blank" rel="noopener" id="link-whatsapp"
+            data-anim style="--d:.35s"><svg class="i">
+              <use href="#i-whats" />
+            </svg>(91) 99117-7958</a>
+          <a class="c-box" href="https://www.instagram.com/cyndy.pimenttel" target="_blank" rel="noopener"
+            id="link-instagram" data-anim style="--d:.45s"><svg class="i">
+              <use href="#i-insta" />
+            </svg>@cyndy.pimenttel</a>
+          <a class="c-box email" href="mailto:Pimentelcryssy@gmail.com" id="link-email" data-anim style="--d:.55s">
+            <svg class="i">
+              <use href="#i-mail" />
+            </svg>pimentelcryssy@gmail.com</a>
+        </div>
+
+        <!-- Arco de foto final -->
+        <div class="abs arch-outline" data-anim="fade" style="--d:.4s"></div>
+        <div class="abs arch" data-anim style="--d:.2s">
+          <img src="assets/img/cyndy-retrato.jpg" alt="Retrato de Cyndy Pimentel">
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       BARRA FLUTUANTE DE NAVEGAÇÃO E FERRAMENTAS (DOCK)
+       Fica fixada na parte inferior da tela (não sai na impressão do PDF)
+       ========================================================================== -->
+  <nav class="dock" aria-label="Navegação e ferramentas">
+    <button id="btn-prev" aria-label="Slide anterior" title="Voltar slide"><svg class="i">
+        <use href="#i-up" />
+      </svg></button>
+    <span class="count" id="slide-count"><b>01</b> / 11</span>
+    <button id="btn-next" aria-label="Próximo slide" title="Avançar slide"><svg class="i">
+        <use href="#i-down" />
+      </svg></button>
+    <button id="btn-pdf" title="Exportar portfólio como PDF"><svg class="i">
+        <use href="#i-download" />
+      </svg>Baixar PDF</button>
+    <button id="btn-edit" title="Ativa o modo de edição visual na tela"><svg class="i">
+        <use href="#i-edit" />
+      </svg><span id="txt-edit">Editar</span></button>
+    <button id="btn-save" style="display:none" title="Salva as alterações feitas no arquivo"><svg class="i">
+        <use href="#i-save" />
+      </svg>Salvar HTML</button>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
