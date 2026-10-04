@@ -68,7 +68,7 @@
 
   const go = (i) => {
     current = Math.max(0, Math.min(wraps.length - 1, i));
-    wraps[current].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    wraps[current].scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const btnPrev = document.getElementById('btn-prev');
