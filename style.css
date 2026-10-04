@@ -702,23 +702,33 @@ body.editing-mode .slide > *:hover {
    14B. VERSÃO MOBILE RESPONSIVA ADAPTADA (100vh · SLIDE POR SLIDE · STORIES)
    ========================================================================== */
 @media (max-width: 768px), (max-width: 900px) and (orientation: portrait) {
+  *, *::before, *::after {
+    box-sizing: border-box !important;
+  }
+
   html, body {
     height: 100%;
+    overflow-x: hidden !important;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+    width: 100vw !important;
+    max-width: 100vw !important;
   }
 
   .deck {
     padding: 0 !important;
     gap: 0 !important;
     width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
     display: block !important;
   }
 
   .slide-wrap {
     width: 100vw !important;
+    max-width: 100vw !important;
     height: 100dvh !important;
     min-height: 100dvh !important;
     max-height: 100dvh !important;
@@ -727,7 +737,8 @@ body.editing-mode .slide > *:hover {
     box-shadow: none !important;
     scroll-snap-align: start !important;
     scroll-snap-stop: always !important;
-    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
     position: relative !important;
   }
 
@@ -735,18 +746,24 @@ body.editing-mode .slide > *:hover {
     position: relative !important;
     inset: auto !important;
     width: 100% !important;
+    max-width: 100vw !important;
     height: 100% !important;
     min-height: 100% !important;
     transform: none !important;
     box-sizing: border-box !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    padding: 24px 20px 80px !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 16px 76px !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     align-items: center !important;
   }
+
+  /* Centering suave sem bugar scroll no topo */
+  .slide > *:first-child { margin-top: auto !important; }
+  .slide > *:last-child  { margin-bottom: auto !important; }
 
   .slide .abs {
     position: relative !important;
@@ -755,6 +772,29 @@ body.editing-mode .slide > *:hover {
     top: auto !important;
     bottom: auto !important;
     translate: none !important;
+    max-width: 100% !important;
+  }
+
+  .slide h1, .slide h2, .slide h3, .slide p, .slide span, .slide blockquote, .slide figcaption {
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    max-width: 100% !important;
+  }
+
+  /* Ocultar monstros decorativos gigantes do desktop em todos os slides */
+  .ghost-by,
+  .arch-outline,
+  .fade-portrait,
+  .corner,
+  .doodle-wrap,
+  .bg-block,
+  .bg-arch,
+  .panel,
+  .glow,
+  .script,
+  .a1,
+  .a2 {
+    display: none !important;
   }
 
   @keyframes rise {
@@ -766,34 +806,28 @@ body.editing-mode .slide > *:hover {
     to { opacity: 1; transform: translateX(0); }
   }
 
-  /* --- SLIDE 01: CAPA (EDITORIAL & HARMÔNICA) --- */
+  /* --- SLIDE 01: CAPA --- */
   .s-cover {
-    justify-content: center !important;
-    align-items: center !important;
     text-align: center !important;
     gap: 0 !important;
-    padding: 24px 20px 80px !important;
   }
-  .s-cover .ghost-by,
-  .s-cover .arch-outline { display: none !important; }
-  
   .s-cover .ig {
     position: absolute !important;
-    right: 20px !important;
-    top: 20px !important;
+    right: 16px !important;
+    top: 16px !important;
     display: flex !important;
-    gap: 12px !important;
-    font-size: 20px !important;
+    gap: 10px !important;
+    font-size: 18px !important;
   }
   .s-cover .arch {
-    width: 160px !important;
-    height: 220px !important;
+    width: 140px !important;
+    height: 190px !important;
     border-radius: 999px 999px 0 0 !important;
-    border: 3.5px solid var(--pimenta) !important;
+    border: 3px solid var(--pimenta) !important;
     overflow: hidden !important;
     flex-shrink: 0 !important;
-    margin: 0 auto 14px !important;
-    box-shadow: 0 16px 40px rgba(194, 59, 42, 0.35) !important;
+    margin: 0 auto 10px !important;
+    box-shadow: 0 14px 32px rgba(194, 59, 42, 0.35) !important;
   }
   .s-cover .arch img {
     width: 100% !important;
@@ -801,58 +835,63 @@ body.editing-mode .slide > *:hover {
     object-fit: cover !important;
   }
   .s-cover .by {
-    font-size: 20px !important;
+    font-size: 18px !important;
     font-family: var(--f-serif) !important;
     font-style: italic !important;
     color: var(--pimenta-2) !important;
     margin: 0 0 2px 0 !important;
   }
   .s-cover h1 {
-    font-size: 38px !important;
+    font-size: 32px !important;
     font-weight: 900 !important;
     line-height: 1 !important;
     letter-spacing: -.03em !important;
-    margin: 0 0 6px 0 !important;
+    margin: 0 0 4px 0 !important;
+  }
+  .s-cover h1 .o {
+    -webkit-text-stroke: 1.5px var(--paper) !important;
   }
   .s-cover .roles {
-    font-size: 12px !important;
+    font-size: 11px !important;
     font-weight: 700 !important;
-    letter-spacing: .08em !important;
+    letter-spacing: .06em !important;
     text-transform: uppercase !important;
     color: var(--paper-2) !important;
-    margin: 0 0 14px 0 !important;
+    max-width: 280px !important;
+    margin: 0 auto 10px !important;
+    line-height: 1.3 !important;
   }
   .s-cover .tools {
     display: flex !important;
     flex-direction: row !important;
     justify-content: center !important;
-    gap: 14px !important;
-    font-size: 12px !important;
-    margin: 0 0 14px 0 !important;
+    gap: 12px !important;
+    font-size: 11px !important;
+    margin: 0 auto 10px !important;
     padding: 0 !important;
   }
-  .s-cover .tools li { gap: 6px !important; }
-  .s-cover .tools svg { font-size: 16px !important; }
+  .s-cover .tools li { gap: 5px !important; }
+  .s-cover .tools svg { font-size: 15px !important; }
   .s-cover .dots {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    gap: 8px !important;
-    margin: 0 0 8px 0 !important;
+    gap: 6px !important;
+    margin: 0 auto 6px !important;
   }
   .s-cover .dots span {
-    width: 9px !important;
-    height: 9px !important;
+    width: 8px !important;
+    height: 8px !important;
     border-radius: 50% !important;
   }
   .s-cover .dots span:nth-child(3) {
-    width: 13px !important;
-    height: 13px !important;
+    width: 11px !important;
+    height: 11px !important;
     box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--pimenta) !important;
     border: 2px solid var(--ink) !important;
   }
   .s-cover .handle {
-    font-size: 11px !important;
+    font-size: 10px !important;
     letter-spacing: .2em !important;
     color: var(--muted) !important;
     text-transform: uppercase !important;
@@ -861,102 +900,100 @@ body.editing-mode .slide > *:hover {
 
   /* --- SLIDE 02: APRESENTAÇÃO --- */
   .s-about {
-    justify-content: center !important;
-    align-items: stretch !important;
-    gap: 12px !important;
-    padding: 24px 20px 80px !important;
+    gap: 8px !important;
+    align-items: center !important;
   }
-  .s-about .fade-portrait,
-  .s-about .corner { display: none !important; }
-  
   .s-about h2 {
-    font-size: 28px !important;
+    font-size: 24px !important;
     font-weight: 900 !important;
     letter-spacing: -.03em !important;
-    margin: 0 0 2px 0 !important;
+    margin: 0 !important;
     text-align: left !important;
+    width: 100% !important;
+    max-width: 320px !important;
   }
   .s-about .id-card {
     width: 100% !important;
+    max-width: 320px !important;
     height: auto !important;
-    padding: 12px 14px !important;
-    border-radius: 16px !important;
-    gap: 12px !important;
+    padding: 10px 12px !important;
+    border-radius: 14px !important;
+    gap: 10px !important;
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     background: var(--ink) !important;
     color: var(--paper) !important;
     margin: 0 !important;
-    box-shadow: 0 10px 25px -10px rgba(15, 14, 14, 0.4) !important;
+    box-shadow: 0 8px 20px -8px rgba(15, 14, 14, 0.4) !important;
   }
   .s-about .id-card .photo {
-    width: 82px !important;
-    height: 115px !important;
-    border-radius: 10px !important;
+    width: 72px !important;
+    height: 100px !important;
+    border-radius: 8px !important;
     flex-shrink: 0 !important;
   }
   .s-about .id-card dl {
     flex: 1 !important;
     padding: 0 !important;
-    gap: 5px !important;
+    gap: 4px !important;
   }
   .s-about .id-card .row {
-    grid-template-columns: 70px 1fr !important;
-    font-size: 11px !important;
+    grid-template-columns: 65px 1fr !important;
+    font-size: 10.5px !important;
   }
   .s-about .id-card dt { font-weight: 700 !important; }
-  .s-about .id-card dd { font-size: 11px !important; padding: 0 0 2px 4px !important; }
-  .s-about .id-card .kit-title { font-size: 10px !important; margin-top: 5px !important; font-weight: 700 !important; }
-  .s-about .id-card .kit { gap: 6px !important; font-size: 16px !important; margin-top: 2px !important; }
-  .s-about .id-card .kit span { font-size: 7.5px !important; gap: 2px !important; }
-  .s-about .id-card .kit svg { font-size: 14px !important; }
+  .s-about .id-card dd { font-size: 10.5px !important; padding: 0 0 1px 3px !important; }
+  .s-about .id-card .kit-title { font-size: 9.5px !important; margin-top: 4px !important; font-weight: 700 !important; }
+  .s-about .id-card .kit { gap: 5px !important; font-size: 14px !important; margin-top: 2px !important; }
+  .s-about .id-card .kit span { font-size: 7px !important; gap: 2px !important; }
+  .s-about .id-card .kit svg { font-size: 13px !important; }
   .s-about .text {
-    font-size: 13px !important;
-    line-height: 1.45 !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    font-size: 11.5px !important;
+    line-height: 1.4 !important;
     color: #2c2725 !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
   }
-  .s-about .text p + p { margin-top: 5px !important; }
+  .s-about .text p + p { margin-top: 4px !important; }
   .s-about .quote {
+    width: 100% !important;
+    max-width: 320px !important;
     font-family: var(--f-serif) !important;
     font-style: italic !important;
-    font-size: 14px !important;
-    line-height: 1.35 !important;
-    padding-left: 10px !important;
-    border-left: 3px solid var(--pimenta) !important;
+    font-size: 12.5px !important;
+    line-height: 1.3 !important;
+    padding-left: 8px !important;
+    border-left: 2.5px solid var(--pimenta) !important;
     color: var(--pimenta) !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
   }
-  .s-about .quote small { font-size: 11px !important; display: block !important; margin-top: 3px !important; color: #555 !important; }
-  .s-about .skills { margin: 0 !important; }
-  .s-about .skills h3 { font-size: 10.5px !important; letter-spacing: .15em !important; margin-bottom: 5px !important; }
-  .s-about .chips { gap: 6px !important; }
-  .s-about .chip { padding: 4px 10px !important; font-size: 11px !important; }
+  .s-about .quote small { font-size: 10px !important; display: block !important; margin-top: 2px !important; color: #555 !important; }
+  .s-about .skills { width: 100% !important; max-width: 320px !important; margin: 0 auto !important; }
+  .s-about .skills h3 { font-size: 9.5px !important; letter-spacing: .12em !important; margin-bottom: 4px !important; }
+  .s-about .chips { gap: 5px !important; }
+  .s-about .chip { padding: 3px 8px !important; font-size: 10px !important; }
 
-  /* --- SLIDE 03: O QUE EU FAÇO (PROPORCIONAL & PREVIEW REAL) --- */
+  /* --- SLIDE 03: O QUE EU FAÇO --- */
   .s-services {
-    justify-content: center !important;
-    align-items: center !important;
     text-align: center !important;
-    gap: 8px !important;
-    padding: 20px 20px 80px !important;
+    gap: 6px !important;
   }
-  .s-services .fade-portrait { display: none !important; }
   .s-services h2 {
-    font-size: 26px !important;
+    font-size: 24px !important;
     line-height: 1.1 !important;
     letter-spacing: -.03em !important;
     margin: 0 !important;
   }
   .s-services .phone {
     display: block !important;
-    width: 130px !important;
-    height: 235px !important;
-    border-radius: 26px !important;
-    padding: 6px !important;
+    width: 115px !important;
+    height: 200px !important;
+    border-radius: 22px !important;
+    padding: 5px !important;
     background: #121111 !important;
-    box-shadow: 0 0 0 2px #2b2928 inset, 0 16px 36px -10px rgba(0, 0, 0, 0.6) !important;
+    box-shadow: 0 0 0 2px #2b2928 inset, 0 12px 28px -8px rgba(0, 0, 0, 0.6) !important;
     margin: 2px auto !important;
     rotate: 0deg !important;
     flex-shrink: 0 !important;
@@ -967,7 +1004,7 @@ body.editing-mode .slide > *:hover {
     display: block !important;
     width: 100% !important;
     height: 100% !important;
-    border-radius: 20px !important;
+    border-radius: 17px !important;
     overflow: hidden !important;
     position: relative !important;
     background: #000 !important;
@@ -981,8 +1018,8 @@ body.editing-mode .slide > *:hover {
     position: absolute !important;
     inset: 0 !important;
     margin: auto !important;
-    width: 48px !important;
-    height: 48px !important;
+    width: 42px !important;
+    height: 42px !important;
     border-radius: 50% !important;
     display: grid !important;
     place-items: center !important;
@@ -990,41 +1027,41 @@ body.editing-mode .slide > *:hover {
     backdrop-filter: blur(6px) !important;
     border: 2px solid rgba(255, 255, 255, 0.7) !important;
     color: #fff !important;
-    font-size: 18px !important;
+    font-size: 16px !important;
   }
   .s-services .phone::before { display: none !important; }
   
   .s-services .cols {
     display: flex !important;
     flex-direction: column !important;
-    gap: 5px !important;
+    gap: 4px !important;
     width: 100% !important;
-    max-width: 320px !important;
+    max-width: 310px !important;
     margin: 2px auto 0 !important;
   }
   .s-services .col {
     display: flex !important;
     flex-direction: row !important;
     align-items: baseline !important;
-    gap: 8px !important;
-    padding: 6px 10px !important;
+    gap: 6px !important;
+    padding: 5px 8px !important;
     background: rgba(0, 0, 0, 0.03) !important;
-    border-left: 3px solid var(--pimenta) !important;
+    border-left: 2.5px solid var(--pimenta) !important;
     border-top: none !important;
-    border-radius: 8px !important;
+    border-radius: 6px !important;
     text-align: left !important;
   }
   .s-services .col .tri { display: none !important; }
   .s-services .col h3 {
-    font-size: 11.5px !important;
+    font-size: 10.5px !important;
     font-weight: 800 !important;
     white-space: nowrap !important;
     color: var(--ink) !important;
     margin: 0 !important;
   }
   .s-services .col p {
-    font-size: 10px !important;
-    line-height: 1.25 !important;
+    font-size: 9.5px !important;
+    line-height: 1.2 !important;
     color: #4a4442 !important;
     margin: 0 !important;
   }
@@ -1033,13 +1070,14 @@ body.editing-mode .slide > *:hover {
     flex-direction: column !important;
     align-items: center !important;
     width: 100% !important;
+    max-width: 310px !important;
     margin: 2px auto 0 !important;
   }
   .s-services .dif h4 { display: none !important; }
   .s-services .dif .pill {
-    font-size: 10.5px !important;
-    padding: 5px 14px !important;
-    line-height: 1.3 !important;
+    font-size: 9.5px !important;
+    padding: 4px 12px !important;
+    line-height: 1.25 !important;
     text-align: center !important;
     border-radius: 999px !important;
     margin: 0 !important;
@@ -1047,243 +1085,233 @@ body.editing-mode .slide > *:hover {
 
   /* --- SLIDES 04 E 07: DIVISORES --- */
   .s-divider {
-    justify-content: center !important;
-    align-items: center !important;
     text-align: center !important;
-    gap: 12px !important;
-    padding: 24px 20px 80px !important;
+    gap: 8px !important;
   }
   .s-divider .num {
-    font-size: 110px !important;
+    font-size: 90px !important;
     line-height: 1 !important;
     color: transparent !important;
     -webkit-text-stroke: 2px var(--ink-3) !important;
     margin: 0 !important;
   }
-  .s-divider .tri { margin: 0 auto !important; }
+  .s-divider .tri {
+    margin: 0 auto !important;
+    border-left-width: 18px !important;
+    border-right-width: 18px !important;
+    border-top-width: 18px !important;
+  }
   .s-divider h2 {
-    font-size: 32px !important;
+    font-size: 26px !important;
     letter-spacing: -.02em !important;
     text-transform: uppercase !important;
     margin: 0 !important;
   }
   .s-divider .sub {
-    font-size: 14px !important;
-    line-height: 1.4 !important;
-    max-width: 290px !important;
+    font-size: 12.5px !important;
+    line-height: 1.35 !important;
+    width: 100% !important;
+    max-width: 280px !important;
     margin: 0 auto !important;
     color: rgba(243, 240, 235, 0.85) !important;
   }
   .s-divider .by {
     font-family: var(--f-serif) !important;
     font-style: italic !important;
-    font-size: 20px !important;
+    font-size: 18px !important;
     color: var(--pimenta-2) !important;
     margin: 0 !important;
-  }
-  .s-divider .doodle-wrap {
-    opacity: 0.12 !important;
-    width: 100% !important;
-    height: 100% !important;
   }
 
   /* --- SLIDES 05 E 06: VÍDEOS REELS --- */
   .s-videos {
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 8px !important;
-    padding: 20px 20px 80px !important;
+    gap: 6px !important;
+    text-align: center !important;
   }
-  .s-videos .bg-block, .s-videos .bg-arch { display: none !important; }
   .s-videos .tag {
     display: inline-flex !important;
     align-items: center !important;
-    font-size: 11px !important;
+    font-size: 10px !important;
     font-weight: 800 !important;
     color: var(--pimenta) !important;
     margin: 0 !important;
   }
   .s-videos .tag .tri { display: none !important; }
   .s-videos h2 {
-    font-size: 26px !important;
+    font-size: 22px !important;
     line-height: 1.05 !important;
     letter-spacing: -.03em !important;
     text-align: center !important;
     margin: 0 !important;
   }
   .s-videos .lead {
-    font-size: 12px !important;
-    line-height: 1.35 !important;
+    font-size: 11px !important;
+    line-height: 1.3 !important;
     text-align: center !important;
-    max-width: 310px !important;
+    max-width: 290px !important;
     color: #4a4442 !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
   }
   .s-videos .pill {
-    font-size: 11px !important;
-    padding: 5px 12px !important;
+    font-size: 10px !important;
+    padding: 4px 10px !important;
     display: inline-flex !important;
     align-items: center !important;
-    gap: 6px !important;
-    margin: 0 !important;
+    gap: 5px !important;
+    margin: 0 auto !important;
   }
-  .s-videos .pill svg { font-size: 14px !important; }
+  .s-videos .pill svg { font-size: 13px !important; }
   .reels-row {
     display: flex !important;
     flex-direction: row !important;
-    gap: 16px !important;
+    gap: 12px !important;
     overflow-x: auto !important;
     overflow-y: hidden !important;
     scroll-snap-type: x mandatory !important;
-    padding: 8px 10px 14px !important;
-    width: 100vw !important;
-    margin-left: -20px !important;
-    margin-right: -20px !important;
-    padding-left: calc(50vw - 90px) !important;
-    padding-right: calc(50vw - 90px) !important;
+    padding: 4px 16px 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 4px 0 0 0 !important;
     -webkit-overflow-scrolling: touch;
   }
-  .reels-row::-webkit-scrollbar { height: 4px; }
+  .reels-row::-webkit-scrollbar { height: 3px; }
   .reels-row::-webkit-scrollbar-thumb { background: var(--pimenta); border-radius: 999px; }
   .reels-row .reel {
-    flex: 0 0 180px !important;
+    flex: 0 0 150px !important;
+    width: 150px !important;
+    max-width: 150px !important;
     scroll-snap-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 8px !important;
+    gap: 5px !important;
   }
   .reels-row .reel .phone {
-    width: 180px !important;
-    height: 320px !important;
-    border-radius: 24px !important;
-    box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.45) !important;
-    padding: 6px !important;
+    width: 150px !important;
+    height: 270px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.45) !important;
+    padding: 5px !important;
     background: #121111 !important;
   }
   .reels-row .reel .phone .screen {
-    border-radius: 18px !important;
+    border-radius: 15px !important;
   }
   .reels-row .reel .phone .play {
-    width: 54px !important;
-    height: 54px !important;
-    font-size: 22px !important;
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 18px !important;
   }
   .reels-row .reel figcaption {
-    font-size: 11.5px !important;
-    line-height: 1.25 !important;
+    font-size: 10px !important;
+    line-height: 1.2 !important;
     color: #4a4442 !important;
     text-align: center !important;
+    max-width: 150px !important;
   }
   .reels-row .reel figcaption b {
     display: block !important;
-    font-size: 12.5px !important;
+    font-size: 11px !important;
     color: var(--ink) !important;
   }
 
   /* --- SLIDE 08: CASO STORE PHONE --- */
   .s-store {
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 8px !important;
-    padding: 20px 20px 80px !important;
+    gap: 6px !important;
+    text-align: center !important;
   }
-  .s-store .panel { display: none !important; }
-  .s-store .tag { font-size: 11px !important; margin: 0 !important; }
+  .s-store .tag { font-size: 10px !important; margin: 0 !important; }
   .s-store .client {
-    font-size: 11px !important;
-    padding: 4px 10px !important;
+    font-size: 10px !important;
+    padding: 3px 8px !important;
     margin: 0 !important;
     display: inline-flex !important;
   }
   .s-store h2 {
-    font-size: 24px !important;
+    font-size: 22px !important;
     line-height: 1.05 !important;
     text-align: center !important;
     margin: 0 !important;
   }
   .s-store h2 small {
     display: block !important;
-    font-size: 11px !important;
+    font-size: 10px !important;
     color: var(--muted) !important;
     margin-bottom: 2px !important;
   }
   .s-store .text {
-    font-size: 11.5px !important;
-    line-height: 1.35 !important;
+    font-size: 10.5px !important;
+    line-height: 1.3 !important;
     text-align: center !important;
-    max-width: 310px !important;
+    max-width: 300px !important;
     color: #4a4442 !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
   }
   .s-store .metrics-row {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: space-around !important;
-    gap: 12px !important;
+    gap: 8px !important;
     width: 100% !important;
-    max-width: 310px !important;
-    padding: 8px 12px !important;
+    max-width: 300px !important;
+    padding: 6px 10px !important;
     background: rgba(0, 0, 0, 0.03) !important;
-    border-radius: 14px !important;
-    margin: 0 !important;
+    border-radius: 12px !important;
+    margin: 0 auto !important;
   }
   .s-store .donut-box {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 4px !important;
+    gap: 3px !important;
   }
-  .s-store .donut { width: 66px !important; height: 66px !important; }
-  .s-store .donut .val { font-size: 13px !important; }
-  .s-store .legend { font-size: 9px !important; gap: 2px !important; }
+  .s-store .donut { width: 54px !important; height: 54px !important; }
+  .s-store .donut .val { font-size: 11px !important; }
+  .s-store .legend { font-size: 8px !important; gap: 2px !important; }
   .s-store .growth {
     display: flex !important;
     align-items: flex-end !important;
-    gap: 5px !important;
+    gap: 4px !important;
     margin: 0 !important;
   }
-  .s-store .growth .n small { font-size: 8.5px !important; }
-  .s-store .growth .n strong { font-size: 24px !important; line-height: 1 !important; }
-  .s-store .growth .arrow { font-size: 16px !important; margin-bottom: 2px !important; }
-  .s-store .growth .delta { font-size: 9.5px !important; padding: 2px 5px !important; margin-bottom: 2px !important; }
+  .s-store .growth .n small { font-size: 8px !important; }
+  .s-store .growth .n strong { font-size: 20px !important; line-height: 1 !important; }
+  .s-store .growth .arrow { font-size: 14px !important; margin-bottom: 2px !important; }
+  .s-store .growth .delta { font-size: 8.5px !important; padding: 2px 4px !important; margin-bottom: 2px !important; }
   .s-store .ig-post {
     width: 100% !important;
-    max-width: 180px !important;
-    margin: 0 auto !important;
-    border-radius: 12px !important;
-    box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.35) !important;
+    max-width: 145px !important;
+    margin: 2px auto !important;
+    border-radius: 10px !important;
+    box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.35) !important;
   }
-  .s-store .ig-post header { padding: 5px 8px !important; font-size: 10.5px !important; gap: 6px !important; }
-  .s-store .ig-post header img { width: 22px !important; height: 22px !important; }
-  .s-store .ig-post footer { padding: 5px 8px !important; font-size: 14px !important; gap: 8px !important; }
-  .s-store .caption { font-size: 10.5px !important; text-align: center !important; margin: 0 !important; color: #4a4442 !important; }
-  .s-store .caption b { font-size: 12px !important; }
+  .s-store .ig-post header { padding: 4px 6px !important; font-size: 9.5px !important; gap: 5px !important; }
+  .s-store .ig-post header img { width: 18px !important; height: 18px !important; }
+  .s-store .ig-post footer { padding: 4px 6px !important; font-size: 12px !important; gap: 6px !important; }
+  .s-store .caption { font-size: 10px !important; text-align: center !important; margin: 2px auto 0 !important; color: #4a4442 !important; }
+  .s-store .caption b { font-size: 11px !important; }
 
   /* --- SLIDE 09: CASO VIRAL TIKTOK --- */
   .s-viral {
-    justify-content: center !important;
-    align-items: center !important;
     text-align: center !important;
-    gap: 6px !important;
-    padding: 20px 20px 80px !important;
+    gap: 5px !important;
   }
-  .s-viral .tag { order: 1 !important; font-size: 11px !important; margin: 0 !important; }
-  .s-viral .obj { order: 2 !important; font-size: 11px !important; color: var(--paper-2) !important; margin: 0 !important; }
-  .s-viral h2.big { order: 3 !important; font-size: 42px !important; line-height: 0.95 !important; margin: 0 !important; }
-  .s-viral .big-sub { order: 4 !important; font-size: 11.5px !important; line-height: 1.35 !important; color: var(--paper-2) !important; margin: 0 !important; }
+  .s-viral .tag { order: 1 !important; font-size: 10px !important; margin: 0 !important; }
+  .s-viral .obj { order: 2 !important; font-size: 10px !important; color: var(--paper-2) !important; margin: 0 !important; }
+  .s-viral h2.big { order: 3 !important; font-size: 36px !important; line-height: 0.95 !important; margin: 0 !important; }
+  .s-viral .big-sub { order: 4 !important; font-size: 10.5px !important; line-height: 1.3 !important; max-width: 290px !important; color: var(--paper-2) !important; margin: 0 auto !important; }
   
-  /* Celular Preview centralizado com ordem 5 */
   .s-viral .phone {
     order: 5 !important;
     display: block !important;
-    width: 130px !important;
-    height: 235px !important;
-    border-radius: 26px !important;
-    padding: 6px !important;
+    width: 115px !important;
+    height: 200px !important;
+    border-radius: 22px !important;
+    padding: 5px !important;
     background: #121111 !important;
-    box-shadow: 0 0 0 2px #2b2928 inset, 0 16px 36px -10px rgba(0, 0, 0, 0.7) !important;
+    box-shadow: 0 0 0 2px #2b2928 inset, 0 12px 28px -8px rgba(0, 0, 0, 0.7) !important;
     margin: 2px auto !important;
     flex-shrink: 0 !important;
     transition: transform 0.2s ease !important;
@@ -1293,7 +1321,7 @@ body.editing-mode .slide > *:hover {
     display: block !important;
     width: 100% !important;
     height: 100% !important;
-    border-radius: 20px !important;
+    border-radius: 17px !important;
     overflow: hidden !important;
     position: relative !important;
     background: #000 !important;
@@ -1307,8 +1335,8 @@ body.editing-mode .slide > *:hover {
     position: absolute !important;
     inset: 0 !important;
     margin: auto !important;
-    width: 48px !important;
-    height: 48px !important;
+    width: 42px !important;
+    height: 42px !important;
     border-radius: 50% !important;
     display: grid !important;
     place-items: center !important;
@@ -1316,7 +1344,7 @@ body.editing-mode .slide > *:hover {
     backdrop-filter: blur(6px) !important;
     border: 2px solid rgba(255, 255, 255, 0.7) !important;
     color: #fff !important;
-    font-size: 18px !important;
+    font-size: 16px !important;
   }
   .s-viral .phone::before { display: none !important; }
   
@@ -1324,82 +1352,77 @@ body.editing-mode .slide > *:hover {
     order: 6 !important;
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 5px !important;
+    gap: 4px !important;
     width: 100% !important;
-    max-width: 320px !important;
-    margin: 2px auto 0 !important;
+    max-width: 300px !important;
+    margin: 3px auto 0 !important;
   }
   .s-viral .stat {
-    padding: 5px 6px !important;
-    border-radius: 8px !important;
+    padding: 4px 5px !important;
+    border-radius: 6px !important;
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     text-align: center !important;
   }
-  .s-viral .stat strong { font-size: 12.5px !important; }
-  .s-viral .stat span { font-size: 8px !important; margin-top: 1px !important; }
+  .s-viral .stat strong { font-size: 11px !important; }
+  .s-viral .stat span { font-size: 7.5px !important; margin-top: 1px !important; }
   .s-viral .side { display: none !important; }
   .s-viral .badge {
     order: 7 !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 6px !important;
-    padding: 3px 12px !important;
-    font-size: 10px !important;
+    gap: 5px !important;
+    padding: 2px 8px !important;
+    font-size: 9px !important;
     margin: 2px auto 0 !important;
     background: rgba(255, 255, 255, 0.08) !important;
     border-radius: 999px !important;
   }
   .s-viral .foot {
     order: 8 !important;
-    font-size: 9px !important;
-    line-height: 1.35 !important;
+    font-size: 8.5px !important;
+    line-height: 1.25 !important;
     text-align: center !important;
     color: var(--muted) !important;
+    max-width: 290px !important;
     margin: 2px auto 0 !important;
   }
 
   /* --- SLIDE 10: CLIENTES ATENDIDOS --- */
   .s-clients {
-    justify-content: center !important;
-    align-items: center !important;
     text-align: center !important;
-    gap: 10px !important;
-    padding: 24px 20px 80px !important;
+    gap: 8px !important;
   }
-  .s-clients .a1,
-  .s-clients .a2,
-  .s-clients .doodle-wrap { display: none !important; }
   .s-clients .tag {
     display: inline-flex !important;
     align-items: center !important;
-    gap: 6px !important;
-    font-size: 11px !important;
+    gap: 5px !important;
+    font-size: 10px !important;
     font-weight: 800 !important;
     color: var(--pimenta) !important;
     margin: 0 !important;
   }
   .s-clients .tag .tri { display: none !important; }
   .s-clients h2 {
-    font-size: 28px !important;
+    font-size: 24px !important;
     line-height: 1.05 !important;
     letter-spacing: -.03em !important;
     margin: 0 !important;
   }
   .s-clients .lead {
-    font-size: 12.5px !important;
-    line-height: 1.35 !important;
-    max-width: 300px !important;
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+    max-width: 280px !important;
     color: #4a4442 !important;
     margin: 0 auto !important;
   }
   .s-clients .grid {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
+    gap: 8px !important;
     width: 100% !important;
-    max-width: 320px !important;
+    max-width: 290px !important;
     margin: 4px auto 0 !important;
   }
   .s-clients .client-logo {
@@ -1407,20 +1430,20 @@ body.editing-mode .slide > *:hover {
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 8px !important;
-    padding: 12px 10px !important;
+    gap: 6px !important;
+    padding: 8px 6px !important;
     background: #ffffff !important;
-    border-radius: 16px !important;
+    border-radius: 12px !important;
     border: 1px solid rgba(0, 0, 0, 0.07) !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05) !important;
     text-decoration: none !important;
   }
   .s-clients .client-logo .c {
-    width: 70px !important;
-    height: 70px !important;
+    width: 58px !important;
+    height: 58px !important;
     border-radius: 50% !important;
     overflow: hidden !important;
-    box-shadow: 0 0 0 3px var(--pimenta-2), 0 4px 10px rgba(0,0,0,0.12) !important;
+    box-shadow: 0 0 0 2.5px var(--pimenta-2), 0 3px 8px rgba(0,0,0,0.12) !important;
   }
   .s-clients .client-logo .c img {
     width: 100% !important;
@@ -1428,33 +1451,25 @@ body.editing-mode .slide > *:hover {
     object-fit: cover !important;
   }
   .s-clients .client-logo span {
-    font-size: 11.5px !important;
+    font-size: 10px !important;
     font-weight: 700 !important;
     color: var(--ink) !important;
   }
 
   /* --- SLIDE 11: CONTATO --- */
   .s-contact {
-    justify-content: center !important;
-    align-items: center !important;
     text-align: center !important;
-    gap: 8px !important;
-    padding: 24px 20px 80px !important;
+    gap: 6px !important;
   }
-  .s-contact .arch-outline,
-  .s-contact .script,
-  .s-contact .glow,
-  .s-contact .doodle-wrap { display: none !important; }
-  
   .s-contact .arch {
     order: 1 !important;
-    width: 135px !important;
-    height: 180px !important;
-    border-radius: 999px 999px 24px 24px !important;
+    width: 120px !important;
+    height: 160px !important;
+    border-radius: 999px 999px 20px 20px !important;
     margin: 0 auto 2px !important;
-    border: 3.5px solid var(--pimenta) !important;
+    border: 3px solid var(--pimenta) !important;
     overflow: hidden !important;
-    box-shadow: 0 16px 36px rgba(194, 59, 42, 0.4) !important;
+    box-shadow: 0 12px 28px rgba(194, 59, 42, 0.4) !important;
     flex-shrink: 0 !important;
   }
   .s-contact .arch img {
@@ -1467,69 +1482,69 @@ body.editing-mode .slide > *:hover {
     order: 2 !important;
     font-family: var(--f-serif) !important;
     font-style: italic !important;
-    font-size: 18px !important;
+    font-size: 15px !important;
     color: var(--pimenta-2) !important;
     margin: 0 !important;
   }
   .s-contact h2 {
     order: 3 !important;
-    font-size: 28px !important;
+    font-size: 24px !important;
     line-height: 1.05 !important;
     letter-spacing: -.03em !important;
     margin: 0 !important;
   }
   .s-contact .lead {
     order: 4 !important;
-    font-size: 12.5px !important;
-    line-height: 1.35 !important;
+    font-size: 11px !important;
+    line-height: 1.3 !important;
     color: var(--paper-2) !important;
-    max-width: 300px !important;
+    max-width: 280px !important;
     margin: 0 auto !important;
   }
   .s-contact .boxes {
     order: 5 !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 8px !important;
+    gap: 6px !important;
     width: 100% !important;
-    max-width: 320px !important;
+    max-width: 290px !important;
     margin: 4px auto 0 !important;
   }
   .s-contact .c-box {
     width: 100% !important;
-    padding: 12px 16px !important;
-    border-radius: 14px !important;
-    font-size: 14px !important;
+    padding: 10px 14px !important;
+    border-radius: 12px !important;
+    font-size: 12.5px !important;
     font-weight: 700 !important;
-    gap: 10px !important;
+    gap: 8px !important;
     background: var(--ink-2) !important;
     border: 1px solid var(--ink-3) !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
     transition: transform .2s, background .2s !important;
   }
   .s-contact .c-box:active {
     transform: scale(0.98) !important;
     background: var(--pimenta) !important;
   }
-  .s-contact .c-box svg { font-size: 20px !important; color: var(--pimenta-2) !important; }
-  .s-contact .c-box.email { font-size: 12.5px !important; }
+  .s-contact .c-box svg { font-size: 18px !important; color: var(--pimenta-2) !important; }
+  .s-contact .c-box.email { font-size: 11px !important; }
 
   /* --- DOCK FLUTUANTE NO MOBILE --- */
   .dock {
-    bottom: 10px !important;
-    padding: 4px 8px !important;
+    bottom: 8px !important;
+    padding: 3px 6px !important;
     gap: 2px !important;
-    max-width: 95vw !important;
+    max-width: 92vw !important;
   }
   .dock button {
-    height: 34px !important;
-    padding: 0 8px !important;
-    font-size: 11px !important;
-    gap: 4px !important;
+    height: 32px !important;
+    padding: 0 6px !important;
+    font-size: 10.5px !important;
+    gap: 3px !important;
   }
   .dock .count {
-    font-size: 12px !important;
-    min-width: 50px !important;
+    font-size: 11.5px !important;
+    min-width: 44px !important;
   }
 }
 
