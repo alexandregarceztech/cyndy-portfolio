@@ -740,10 +740,10 @@ body.editing-mode .slide > *:hover {
     box-sizing: border-box !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    padding: 24px 20px 88px !important;
+    padding: 20px 20px 76px !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
   }
 
   .slide .abs {
@@ -756,15 +756,19 @@ body.editing-mode .slide > *:hover {
   }
 
   @keyframes rise {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(18px); }
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes fromLeft {
-    from { opacity: 0; transform: translateX(-20px); }
+    from { opacity: 0; transform: translateX(-18px); }
     to { opacity: 1; transform: translateX(0); }
   }
 
   /* --- SLIDE 01: CAPA --- */
+  .s-cover {
+    justify-content: center !important;
+    padding-top: 20px !important;
+  }
   .s-cover .ghost-by { display: none !important; }
   .s-cover .arch-outline { display: none !important; }
   .s-cover .ig {
@@ -776,16 +780,16 @@ body.editing-mode .slide > *:hover {
     font-size: 20px !important;
   }
   .s-cover .arch {
-    width: 160px !important;
-    height: 220px !important;
+    width: 155px !important;
+    height: 215px !important;
     border-radius: 999px 999px 0 0 !important;
-    margin: 0 auto 16px !important;
+    margin: 0 auto 14px !important;
     border: 3px solid var(--pimenta) !important;
     overflow: hidden !important;
     flex-shrink: 0 !important;
   }
   .s-cover h1 {
-    font-size: 48px !important;
+    font-size: 46px !important;
     font-weight: 900 !important;
     text-align: center !important;
     line-height: 1 !important;
@@ -795,23 +799,23 @@ body.editing-mode .slide > *:hover {
   .s-cover .by {
     font-size: 24px !important;
     text-align: center !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 10px !important;
   }
   .s-cover .roles {
-    font-size: 14px !important;
+    font-size: 13.5px !important;
     font-weight: 700 !important;
     text-align: center !important;
-    line-height: 1.4 !important;
+    line-height: 1.35 !important;
     color: var(--paper-2) !important;
-    margin-bottom: 14px !important;
+    margin-bottom: 12px !important;
   }
   .s-cover .tools {
     display: flex !important;
     flex-direction: row !important;
     justify-content: center !important;
     gap: 16px !important;
-    font-size: 13px !important;
-    margin-bottom: 14px !important;
+    font-size: 12.5px !important;
+    margin-bottom: 12px !important;
     padding: 0 !important;
   }
   .s-cover .tools li { gap: 6px !important; }
@@ -821,7 +825,7 @@ body.editing-mode .slide > *:hover {
     justify-content: center !important;
     align-items: center !important;
     gap: 8px !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 10px !important;
   }
   .s-cover .dots span {
     width: 10px !important;
@@ -836,89 +840,97 @@ body.editing-mode .slide > *:hover {
   }
   .s-cover .handle {
     text-align: center !important;
-    font-size: 12px !important;
+    font-size: 11.5px !important;
     letter-spacing: .2em !important;
     color: var(--muted) !important;
     text-transform: uppercase !important;
   }
 
   /* --- SLIDE 02: APRESENTAÇÃO --- */
+  .s-about {
+    justify-content: flex-start !important;
+    padding-top: 18px !important;
+  }
   .s-about .fade-portrait { display: none !important; }
   .s-about .corner { display: none !important; }
   .s-about h2 {
-    font-size: 32px !important;
+    font-size: 30px !important;
     font-weight: 900 !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 10px !important;
     text-align: left !important;
   }
   .s-about .id-card {
     width: 100% !important;
     height: auto !important;
-    padding: 16px !important;
-    border-radius: 20px !important;
-    gap: 16px !important;
+    padding: 14px 16px !important;
+    border-radius: 18px !important;
+    gap: 14px !important;
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    margin-bottom: 14px !important;
+    margin-bottom: 12px !important;
     box-shadow: 0 10px 25px -10px rgba(15, 14, 14, 0.4) !important;
   }
   .s-about .id-card .photo {
-    width: 95px !important;
-    height: 130px !important;
-    border-radius: 14px !important;
+    width: 90px !important;
+    height: 125px !important;
+    border-radius: 12px !important;
     flex-shrink: 0 !important;
   }
   .s-about .id-card dl {
     flex: 1 !important;
     padding: 0 !important;
-    gap: 8px !important;
+    gap: 6px !important;
   }
   .s-about .id-card .row {
     grid-template-columns: 75px 1fr !important;
-    font-size: 12px !important;
+    font-size: 11.5px !important;
   }
   .s-about .id-card dt { font-weight: 700 !important; }
-  .s-about .id-card dd { font-size: 12px !important; padding: 0 0 2px 6px !important; }
-  .s-about .id-card .kit-title { font-size: 11px !important; margin-top: 8px !important; font-weight: 700 !important; }
-  .s-about .id-card .kit { gap: 10px !important; font-size: 20px !important; margin-top: 4px !important; }
-  .s-about .id-card .kit span { font-size: 8px !important; gap: 4px !important; }
-  .s-about .id-card .kit svg { font-size: 18px !important; }
+  .s-about .id-card dd { font-size: 11.5px !important; padding: 0 0 2px 6px !important; }
+  .s-about .id-card .kit-title { font-size: 10.5px !important; margin-top: 6px !important; font-weight: 700 !important; }
+  .s-about .id-card .kit { gap: 8px !important; font-size: 18px !important; margin-top: 3px !important; }
+  .s-about .id-card .kit span { font-size: 8px !important; gap: 3px !important; }
+  .s-about .id-card .kit svg { font-size: 16px !important; }
   .s-about .text {
-    font-size: 14px !important;
+    font-size: 13.5px !important;
     line-height: 1.45 !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 10px !important;
     width: 100% !important;
     color: #2c2725 !important;
   }
   .s-about .text p + p { margin-top: 6px !important; }
   .s-about .quote {
-    font-size: 15px !important;
+    font-size: 14.5px !important;
     line-height: 1.35 !important;
     padding-left: 12px !important;
     border-left: 3px solid var(--pimenta) !important;
-    margin-bottom: 14px !important;
+    margin-bottom: 12px !important;
     width: 100% !important;
   }
-  .s-about .quote small { font-size: 12px !important; margin-top: 4px !important; }
+  .s-about .quote small { font-size: 11.5px !important; margin-top: 4px !important; }
   .s-about .skills { width: 100% !important; }
   .s-about .skills h3 { font-size: 11px !important; letter-spacing: .2em !important; margin-bottom: 6px !important; }
   .s-about .chips { gap: 6px !important; }
-  .s-about .chip { padding: 6px 14px !important; font-size: 12px !important; }
+  .s-about .chip { padding: 5px 12px !important; font-size: 11.5px !important; }
 
   /* --- SLIDE 03: O QUE EU FAÇO --- */
+  .s-services {
+    justify-content: flex-start !important;
+    padding-top: 18px !important;
+  }
   .s-services .fade-portrait { display: none !important; }
   .s-services h2 {
-    font-size: 32px !important;
+    font-size: 30px !important;
     text-align: center !important;
-    margin-bottom: 14px !important;
+    margin-bottom: 12px !important;
   }
   .s-services .cols {
     display: flex !important;
     flex-direction: column !important;
-    gap: 10px !important;
+    gap: 9px !important;
     width: 100% !important;
-    margin-bottom: 14px !important;
+    margin-bottom: 12px !important;
   }
   .s-services .col {
     display: flex !important;
@@ -932,26 +944,26 @@ body.editing-mode .slide > *:hover {
     border-radius: 12px !important;
   }
   .s-services .col .tri { display: none !important; }
-  .s-services .col h3 { font-size: 16px !important; font-weight: 800 !important; }
+  .s-services .col h3 { font-size: 15px !important; font-weight: 800 !important; }
   .s-services .col p { font-size: 12px !important; line-height: 1.35 !important; color: #4a4442 !important; }
   .s-services .dif {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 6px !important;
+    gap: 5px !important;
     width: 100% !important;
     text-align: center !important;
   }
   .s-services .dif h4 {
-    font-size: 15px !important;
+    font-size: 14px !important;
     font-weight: 800 !important;
     text-transform: uppercase !important;
     color: var(--pimenta) !important;
     text-decoration: none !important;
   }
   .s-services .dif .pill {
-    font-size: 12px !important;
-    padding: 10px 18px !important;
+    font-size: 11.5px !important;
+    padding: 9px 16px !important;
     line-height: 1.35 !important;
     text-align: center !important;
   }
@@ -960,7 +972,7 @@ body.editing-mode .slide > *:hover {
     align-items: center !important;
     justify-content: center !important;
     gap: 8px !important;
-    padding: 10px 18px !important;
+    padding: 9px 16px !important;
     border-radius: 999px !important;
     background: var(--pimenta) !important;
     color: #fff !important;
@@ -969,13 +981,16 @@ body.editing-mode .slide > *:hover {
     rotate: 0deg !important;
     width: fit-content !important;
     height: auto !important;
-    margin: 12px auto 0 !important;
+    margin: 10px auto 0 !important;
     box-shadow: 0 4px 15px rgba(194, 59, 42, 0.3) !important;
   }
   .s-services .phone .screen { display: none !important; }
   .s-services .phone::before { content: "▶ Assistir vídeo no TikTok"; }
 
   /* --- SLIDES 04 E 07: DIVISORES --- */
+  .s-divider {
+    justify-content: center !important;
+  }
   .s-divider .num {
     font-size: 110px !important;
     line-height: 1 !important;
@@ -1011,31 +1026,45 @@ body.editing-mode .slide > *:hover {
     height: 100% !important;
   }
 
-  /* --- SLIDES 05 E 06: VÍDEOS REELS (CARROSSEL HORIZONTAL TOUCH) --- */
+  /* --- SLIDES 05 E 06: VÍDEOS REELS (PARTE SUPERIOR ALINHADA AO TOPO) --- */
+  .s-videos {
+    justify-content: flex-start !important;
+    padding-top: 16px !important;
+  }
   .s-videos .bg-block, .s-videos .bg-arch { display: none !important; }
-  .s-videos .tag { margin-bottom: 4px !important; font-size: 12px !important; }
+  .s-videos .tag {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    color: var(--pimenta) !important;
+    margin-bottom: 4px !important;
+  }
+  .s-videos .tag .tri { display: none !important; }
   .s-videos h2 {
-    font-size: 30px !important;
+    font-size: 28px !important;
     line-height: 1.05 !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
     letter-spacing: -.03em !important;
   }
   .s-videos .lead {
-    font-size: 13px !important;
+    font-size: 12.5px !important;
     line-height: 1.35 !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important;
     width: 100% !important;
     color: #4a4442 !important;
   }
   .s-videos .pill {
-    font-size: 12px !important;
+    font-size: 11.5px !important;
     padding: 6px 14px !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 10px !important;
     display: inline-flex !important;
     width: fit-content !important;
     gap: 6px !important;
   }
-  .s-videos .pill svg { font-size: 16px !important; }
+  .s-videos .pill svg { font-size: 15px !important; }
   .reels-row {
     display: flex !important;
     flex-direction: row !important;
@@ -1050,7 +1079,7 @@ body.editing-mode .slide > *:hover {
   .reels-row::-webkit-scrollbar { height: 4px; }
   .reels-row::-webkit-scrollbar-thumb { background: var(--pimenta); border-radius: 999px; }
   .reels-row .reel {
-    flex: 0 0 170px !important;
+    flex: 0 0 175px !important;
     scroll-snap-align: center !important;
     display: flex !important;
     flex-direction: column !important;
@@ -1058,15 +1087,15 @@ body.editing-mode .slide > *:hover {
     gap: 8px !important;
   }
   .reels-row .reel .phone {
-    width: 170px !important;
-    height: 310px !important;
+    width: 175px !important;
+    height: 315px !important;
     border-radius: 20px !important;
-    box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 8px 22px -8px rgba(0, 0, 0, 0.4) !important;
   }
   .reels-row .reel .phone .play {
-    width: 60px !important;
-    height: 60px !important;
-    font-size: 24px !important;
+    width: 58px !important;
+    height: 58px !important;
+    font-size: 22px !important;
   }
   .reels-row .reel figcaption {
     font-size: 12px !important;
@@ -1079,21 +1108,25 @@ body.editing-mode .slide > *:hover {
   }
 
   /* --- SLIDE 08: CASO STORE PHONE --- */
+  .s-store {
+    justify-content: flex-start !important;
+    padding-top: 18px !important;
+  }
   .s-store .panel { display: none !important; }
   .s-store .tag { font-size: 12px !important; margin-bottom: 4px !important; }
   .s-store .client {
-    font-size: 12px !important;
-    padding: 6px 12px !important;
-    margin-bottom: 8px !important;
+    font-size: 11.5px !important;
+    padding: 5px 12px !important;
+    margin-bottom: 6px !important;
     display: inline-flex !important;
     width: fit-content !important;
   }
-  .s-store h2 { font-size: 28px !important; line-height: 1.05 !important; margin-bottom: 6px !important; }
+  .s-store h2 { font-size: 26px !important; line-height: 1.05 !important; margin-bottom: 6px !important; }
   .s-store h2 small { font-size: 11px !important; margin-bottom: 2px !important; }
   .s-store .text {
-    font-size: 13px !important;
+    font-size: 12.5px !important;
     line-height: 1.35 !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 10px !important;
     width: 100% !important;
     color: #4a4442 !important;
   }
@@ -1102,9 +1135,9 @@ body.editing-mode .slide > *:hover {
     flex-direction: row !important;
     align-items: center !important;
     justify-content: space-around !important;
-    gap: 12px !important;
+    gap: 10px !important;
     width: 100% !important;
-    padding: 10px 14px !important;
+    padding: 10px 12px !important;
     background: rgba(0, 0, 0, 0.03) !important;
     border-radius: 16px !important;
     margin-bottom: 10px !important;
@@ -1113,11 +1146,11 @@ body.editing-mode .slide > *:hover {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 6px !important;
+    gap: 5px !important;
   }
-  .s-store .donut { width: 80px !important; height: 80px !important; }
-  .s-store .donut .val { font-size: 16px !important; }
-  .s-store .legend { font-size: 10px !important; gap: 4px !important; }
+  .s-store .donut { width: 76px !important; height: 76px !important; }
+  .s-store .donut .val { font-size: 15px !important; }
+  .s-store .legend { font-size: 9.5px !important; gap: 3px !important; }
   .s-store .growth {
     display: flex !important;
     align-items: flex-end !important;
@@ -1125,26 +1158,30 @@ body.editing-mode .slide > *:hover {
     margin: 0 !important;
   }
   .s-store .growth .n small { font-size: 9px !important; }
-  .s-store .growth .n strong { font-size: 28px !important; line-height: 1 !important; }
+  .s-store .growth .n strong { font-size: 26px !important; line-height: 1 !important; }
   .s-store .growth .arrow { font-size: 18px !important; margin-bottom: 2px !important; }
   .s-store .growth .delta { font-size: 10px !important; padding: 3px 6px !important; margin-bottom: 2px !important; }
   .s-store .ig-post {
     width: 100% !important;
-    max-width: 200px !important;
+    max-width: 190px !important;
     margin: 0 auto !important;
     border-radius: 14px !important;
     box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.4) !important;
   }
-  .s-store .ig-post header { padding: 8px 10px !important; font-size: 11px !important; gap: 8px !important; }
-  .s-store .ig-post header img { width: 28px !important; height: 28px !important; }
-  .s-store .ig-post footer { padding: 8px 10px !important; font-size: 18px !important; gap: 10px !important; }
+  .s-store .ig-post header { padding: 7px 10px !important; font-size: 11px !important; gap: 8px !important; }
+  .s-store .ig-post header img { width: 26px !important; height: 26px !important; }
+  .s-store .ig-post footer { padding: 7px 10px !important; font-size: 17px !important; gap: 10px !important; }
   .s-store .caption { font-size: 11px !important; text-align: center !important; margin-top: 4px !important; color: #4a4442 !important; }
   .s-store .caption b { font-size: 13px !important; }
 
   /* --- SLIDE 09: CASO VIRAL TIKTOK --- */
+  .s-viral {
+    justify-content: flex-start !important;
+    padding-top: 16px !important;
+  }
   .s-viral .tag { font-size: 12px !important; margin-bottom: 2px !important; }
-  .s-viral .obj { font-size: 12px !important; margin-bottom: 2px !important; color: var(--paper-2) !important; }
-  .s-viral h2.big { font-size: 54px !important; line-height: 0.95 !important; margin-bottom: 2px !important; }
+  .s-viral .obj { font-size: 11.5px !important; margin-bottom: 2px !important; color: var(--paper-2) !important; }
+  .s-viral h2.big { font-size: 52px !important; line-height: 0.95 !important; margin-bottom: 2px !important; }
   .s-viral .big-sub { font-size: 12px !important; line-height: 1.35 !important; margin-bottom: 10px !important; color: var(--paper-2) !important; }
   .s-viral .stats {
     display: grid !important;
@@ -1154,17 +1191,17 @@ body.editing-mode .slide > *:hover {
     margin-bottom: 10px !important;
   }
   .s-viral .stat {
-    padding: 8px 10px !important;
+    padding: 7px 10px !important;
     border-radius: 10px !important;
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
   }
-  .s-viral .stat strong { font-size: 16px !important; }
+  .s-viral .stat strong { font-size: 15.5px !important; }
   .s-viral .stat span { font-size: 9px !important; }
   .s-viral .phone {
     width: 100% !important;
-    max-width: 240px !important;
-    height: 46px !important;
+    max-width: 230px !important;
+    height: 44px !important;
     border-radius: 999px !important;
     margin: 0 auto 8px !important;
     background: var(--pimenta) !important;
@@ -1187,77 +1224,166 @@ body.editing-mode .slide > *:hover {
     justify-content: center !important;
     gap: 6px !important;
     padding: 4px 12px !important;
-    font-size: 11px !important;
+    font-size: 10.5px !important;
     margin: 0 auto 6px !important;
     background: rgba(255, 255, 255, 0.08) !important;
     border-radius: 999px !important;
   }
   .s-viral .foot { font-size: 9.5px !important; line-height: 1.35 !important; text-align: center !important; color: var(--muted) !important; }
 
-  /* --- SLIDE 10: CLIENTES ATENDIDOS --- */
-  .s-clients .tag { font-size: 12px !important; margin-bottom: 4px !important; }
-  .s-clients h2 { font-size: 30px !important; line-height: 1 !important; margin-bottom: 6px !important; }
-  .s-clients .lead { font-size: 13px !important; line-height: 1.35 !important; margin-bottom: 14px !important; color: #4a4442 !important; }
+  /* --- SLIDE 10: CLIENTES ATENDIDOS (100% CORRIGIDO E ELEGANTE) --- */
+  .s-clients {
+    justify-content: flex-start !important;
+    padding-top: 18px !important;
+  }
+  .s-clients .a1,
+  .s-clients .a2,
+  .s-clients .doodle-wrap {
+    display: none !important;
+  }
+  .s-clients .tag {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    color: var(--pimenta) !important;
+    margin-bottom: 4px !important;
+  }
+  .s-clients .tag .tri { display: none !important; }
+  .s-clients h2 {
+    font-size: 30px !important;
+    line-height: 1.05 !important;
+    margin-bottom: 6px !important;
+    letter-spacing: -.03em !important;
+  }
+  .s-clients .lead {
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 14px !important;
+    color: #4a4442 !important;
+  }
   .s-clients .grid {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
+    gap: 12px !important;
     width: 100% !important;
   }
   .s-clients .client-logo {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 8px !important;
-    padding: 12px 8px !important;
-    background: rgba(0, 0, 0, 0.03) !important;
-    border-radius: 16px !important;
-    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    gap: 10px !important;
+    padding: 16px 12px !important;
+    background: #ffffff !important;
+    border-radius: 18px !important;
+    border: 1px solid rgba(0, 0, 0, 0.07) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
+    text-decoration: none !important;
   }
   .s-clients .client-logo .c {
-    width: 60px !important;
-    height: 60px !important;
+    width: 74px !important;
+    height: 74px !important;
     border-radius: 50% !important;
     overflow: hidden !important;
+    box-shadow: 0 0 0 3px var(--pimenta-2), 0 4px 10px rgba(0,0,0,0.12) !important;
+  }
+  .s-clients .client-logo .c img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
   }
   .s-clients .client-logo span {
-    font-size: 11px !important;
+    font-size: 12px !important;
     font-weight: 700 !important;
     color: var(--ink) !important;
+    text-align: center !important;
   }
 
-  /* --- SLIDE 11: CONTATO --- */
-  .s-contact .small-by { font-size: 15px !important; margin-bottom: 4px !important; color: var(--pimenta-2) !important; }
-  .s-contact h2 { font-size: 30px !important; line-height: 1.05 !important; margin-bottom: 6px !important; }
-  .s-contact .lead { font-size: 13px !important; line-height: 1.35 !important; margin-bottom: 14px !important; color: var(--paper-2) !important; }
+  /* --- SLIDE 11: CONTATO (ESTÉTICA PREMIUM COM FOTO EM DESTAQUE) --- */
+  .s-contact {
+    justify-content: flex-start !important;
+    padding-top: 18px !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .s-contact .arch-outline { display: none !important; }
   .s-contact .script { display: none !important; }
+  .s-contact .glow { display: none !important; }
+  .s-contact .doodle-wrap { display: none !important; }
+
+  /* Foto em moldura clássica de arco (não mais círculo pequeno comprimido) */
+  .s-contact .arch {
+    order: 1 !important;
+    width: 135px !important;
+    height: 175px !important;
+    border-radius: 999px 999px 24px 24px !important;
+    margin: 0 auto 12px !important;
+    border: 3px solid var(--pimenta) !important;
+    overflow: hidden !important;
+    box-shadow: 0 12px 28px rgba(194, 59, 42, 0.35) !important;
+    flex-shrink: 0 !important;
+  }
+  .s-contact .arch img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 22% !important;
+  }
+
+  .s-contact .small-by {
+    order: 2 !important;
+    font-family: var(--f-serif) !important;
+    font-style: italic !important;
+    font-size: 18px !important;
+    margin-bottom: 2px !important;
+    color: var(--pimenta-2) !important;
+  }
+  .s-contact h2 {
+    order: 3 !important;
+    font-size: 30px !important;
+    line-height: 1.05 !important;
+    margin-bottom: 6px !important;
+    letter-spacing: -.03em !important;
+  }
+  .s-contact .lead {
+    order: 4 !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 14px !important;
+    color: var(--paper-2) !important;
+    max-width: 320px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
   .s-contact .boxes {
+    order: 5 !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 8px !important;
+    gap: 9px !important;
     width: 100% !important;
-    margin-bottom: 14px !important;
+    max-width: 340px !important;
+    margin: 0 auto !important;
   }
   .s-contact .c-box {
     width: 100% !important;
-    padding: 10px 14px !important;
-    border-radius: 12px !important;
-    font-size: 14px !important;
+    padding: 12px 18px !important;
+    border-radius: 14px !important;
+    font-size: 14.5px !important;
     font-weight: 700 !important;
-    gap: 10px !important;
+    gap: 12px !important;
+    background: var(--ink-2) !important;
+    border: 1px solid var(--ink-3) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+    transition: transform .2s, background .2s !important;
   }
-  .s-contact .c-box svg { font-size: 22px !important; }
-  .s-contact .c-box.email { font-size: 12px !important; }
-  .s-contact .arch-outline { display: none !important; }
-  .s-contact .arch {
-    width: 80px !important;
-    height: 80px !important;
-    border-radius: 50% !important;
-    margin: 0 auto !important;
-    border: 3px solid var(--pimenta) !important;
-    overflow: hidden !important;
+  .s-contact .c-box:active {
+    transform: scale(0.98) !important;
+    background: var(--pimenta) !important;
   }
-  .s-contact .arch img { object-position: 50% 25% !important; }
+  .s-contact .c-box svg { font-size: 22px !important; color: var(--pimenta-2) !important; }
+  .s-contact .c-box.email { font-size: 12.5px !important; }
 
   /* --- DOCK FLUTUANTE NO MOBILE --- */
   .dock {
