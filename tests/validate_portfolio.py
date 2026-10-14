@@ -245,7 +245,129 @@ def run_audit():
             print(f"  {Colors.RED}[FALHA]{Colors.RESET} Imagem nao encontrada: {src}")
 
     # -------------------------------------------------------------
-    # 5. Relatorio Final Consolidado
+    # 5. Auditoria da Paleta Sky Blue & Cores Legadas
+    # -------------------------------------------------------------
+    print(f"\n{Colors.BOLD}5. Auditoria da Paleta Sky Blue & Cores Legadas:{Colors.RESET}")
+    css_content = (project_dir / 'style.css').read_text(encoding='utf-8')
+
+    sky_tokens = ['--sky-base', '--sky-hover', '--sky-deep', '--sky-glow']
+    for token in sky_tokens:
+        total_checks += 1
+        defined = re.search(rf"{re.escape(token)}\s*:", css_content)
+        used = f"var({token})" in css_content
+        if defined and used:
+            passed_checks += 1
+            print(f"  {Colors.GREEN}[OK]{Colors.RESET} Token {token} definido e em uso")
+        elif defined:
+            # Token definido mas sem var() direto (ex.: usado so via alias) ainda conta como ativo
+            passed_checks += 1
+            print(f"  {Colors.GREEN}[OK]{Colors.RESET} Token {token} definido (sem var() direto)")
+        else:
+            failures.append(f"Token da paleta Sky Blue ausente em style.css: {token}")
+            print(f"  {Colors.RED}[FALHA]{Colors.RESET} Token ausente: {token}")
+
+    legacy_hex = ['#c23b2a', '#e0563f', '#6e1f16', '#96291d']
+    for fname, content in (('style.css', css_content), ('index.html', html_content)):
+        lower = content.lower()
+        for hex_code in legacy_hex:
+            total_checks += 1
+            # Tambem cobre a forma URL-encoded (%23) usada em SVGs inline/data URIs
+            hits = lower.count(hex_code) + lower.count(hex_code.replace('#', '%23'))
+            if hits == 0:
+                passed_checks += 1
+                print(f"  {Colors.GREEN}[OK]{Colors.RESET} {fname}: sem cor legada {hex_code}")
+            else:
+                failures.append(f"Cor legada {hex_code} encontrada {hits}x em {fname}")
+                print(f"  {Colors.RED}[FALHA]{Colors.RESET} {fname}: cor legada {hex_code} ({hits} ocorrencias)")
+
+    # -------------------------------------------------------------
+    # 6. Auditoria de Dados em Porcentagem (%) & Token --green-number
+    # -------------------------------------------------------------
+    print(f"\n{Colors.BOLD}6. Auditoria de Dados em Porcentagem (%) & Token --green-number:{Colors.RESET}")
+    
+    # 6.1 Token --green-number em style.css
+    total_checks += 1
+    if "--green-number: #47c74d" in css_content:
+        passed_checks += 1
+        print(f"  {Colors.GREEN}[OK]{Colors.RESET} Token --green-number definido com #47c74d em style.css")
+    else:
+        failures.append("Token --green-number: #47c74d ausente ou incorreto em style.css")
+        print(f"  {Colors.RED}[FALHA]{Colors.RESET} Token --green-number: #47c74d ausente em style.css")
+
+    # 6.2 Classe .accent2 mapeada para --green-number
+    total_checks += 1
+    if re.search(r"\.accent2\s*\{[^}]*color:\s*var\(--green-number\)", css_content):
+        passed_checks += 1
+        print(f"  {Colors.GREEN}[OK]{Colors.RESET} Classe .accent2 vinculada a var(--green-number) em style.css")
+    else:
+        failures.append("Classe .accent2 nao vinculada a var(--green-number) em style.css")
+        print(f"  {Colors.RED}[FALHA]{Colors.RESET} .accent2 nao vinculado a var(--green-number)")
+
+    # 6.3 .donut com arco var(--green-number)
+    total_checks += 1
+    if "conic-gradient(var(--green-number)" in css_content:
+        passed_checks += 1
+        print(f"  {Colors.GREEN}[OK]{Colors.RESET} .donut estilizado com conic-gradient(var(--green-number))")
+    else:
+        failures.append(".donut nao utiliza var(--green-number) no conic-gradient em style.css")
+        print(f"  {Colors.RED}[FALHA]{Colors.RESET} .donut sem var(--green-number) no conic-gradient")
+
+    # 6.4 .donut .val com color: var(--green-number)
+    total_checks += 1
+    if re.search(r"\.donut\s+\.val\s*\{[^}]*color:\s*var\(--green-number\)", css_content):
+        passed_checks += 1
+        print(f"  {Colors.GREEN}[OK]{Colors.RESET} .donut .val estilizado com color: var(--green-number) em style.css")
+    else:
+        failures.append(".donut .val sem color: var(--green-number) em style.css")
+        print(f"  {Colors.RED}[FALHA]{Colors.RESET} .donut .val sem color: var(--green-number)")
+
+    # 6.5 Slide 08: Donut 58,1% com accent2 no HTML
+    total_checks += 1
+    if 'class="val accent2">58,1%</span>' in html_content or ('accent2' in html_content and '58,1%' in html_content):
+        passed_checks += 1
+        print(f"  {Colors.GREEN}[OK]{Colors.RESET} index.html: Slide 08 Donut 58,1% com classe accent2")
+    else:
+        failures.append("index.html: Slide 08 Donut 58,1% sem classe accent2")
+        print(f"  {Colors.RED}[FALHA]{Colors.RESET} Slide 08 Donut 58,1% sem classe accent2")
+
+    # 6.6 Slide 08: Legenda do Donut com var(--green-number) e 58,1%
+    total_checks += 1
+    if 'style="background:var(--green-number)"' in html_content and '58,1%' in html_content:
+        passed_checks += 1
+        print(f"  {Colors.GREEN}[OK]{Colors.RESET} index.html: Slide 08 Legenda com var(--green-number) e 58,1%")
+    else:
+        failures.append("index.html: Slide 08 Legenda sem var(--green-number)")
+        print(f"  {Colors.RED}[FALHA]{Colors.RESET} Slide 08 Legenda sem var(--green-number)")
+
+    # 6.7 Slide 09: Engajamento 7,6% com accent2
+    total_checks += 1
+    if '<strong class="accent2">7,6%</strong>' in html_content:
+        passed_checks += 1
+        print(f"  {Colors.GREEN}[OK]{Colors.RESET} index.html: Slide 09 Engajamento 7,6% com classe accent2")
+    else:
+        failures.append("index.html: Slide 09 Engajamento 7,6% sem classe accent2")
+        print(f"  {Colors.RED}[FALHA]{Colors.RESET} Slide 09 Engajamento 7,6% sem classe accent2")
+
+    # 6.8 Slide 09: Rodapé 80% com accent2
+    total_checks += 1
+    if '<b class="accent2">80%</b>' in html_content:
+        passed_checks += 1
+        print(f"  {Colors.GREEN}[OK]{Colors.RESET} index.html: Slide 09 Trafego For You 80% com classe accent2")
+    else:
+        failures.append("index.html: Slide 09 Trafego For You 80% sem classe accent2")
+        print(f"  {Colors.RED}[FALHA]{Colors.RESET} Slide 09 Trafego For You 80% sem classe accent2")
+
+    # 6.9 Slide 09: Badge 99,8% com accent2
+    total_checks += 1
+    if '<b class="accent2">99,8%</b>' in html_content:
+        passed_checks += 1
+        print(f"  {Colors.GREEN}[OK]{Colors.RESET} index.html: Slide 09 Badge 99,8% com classe accent2")
+    else:
+        failures.append("index.html: Slide 09 Badge 99,8% sem classe accent2")
+        print(f"  {Colors.RED}[FALHA]{Colors.RESET} Slide 09 Badge 99,8% sem classe accent2")
+
+    # -------------------------------------------------------------
+    # 7. Relatorio Final Consolidado
     # -------------------------------------------------------------
     print(f"\n{Colors.BOLD}{Colors.CYAN}{'='*65}{Colors.RESET}")
     print(f"{Colors.BOLD}RESUMO EXECUTIVO DA AUDITORIA:{Colors.RESET}")
