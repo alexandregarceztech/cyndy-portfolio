@@ -783,9 +783,9 @@ a.phone:hover .play {
 
 .s-about .text {
   left: 1140px;
-  top: 380px;
+  top: 354px;
   width: 700px;
-  font-size: 33px;
+  font-size: 30px;
   line-height: 1.48;
   color: #1e1b1a;
 }
@@ -799,18 +799,6 @@ a.phone:hover .play {
   text-decoration-thickness: 3px;
   text-underline-offset: 8px;
 }
-  border-radius: 999px;
-  border: 2px solid var(--ink);
-  font-size: 26px;
-  font-weight: 600;
-  transition: background .3s, color .3s, border-color .3s;
-}
-
-.chip:hover,
-.chip.on {
-  background: var(--pimenta);
-  border-color: var(--pimenta);
-  color: var(--paper);
 }
 
 
@@ -1406,11 +1394,21 @@ a.phone:hover .play {
 }
 
 .stat span {
-  display: block;
-  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
   font-size: 21px;
-  color: rgba(243, 240, 235, .7);
+  color: rgba(243, 240, 235, .8);
   font-weight: 500;
+}
+
+.stat span svg.stat-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .s-viral .foot {
@@ -3092,6 +3090,17 @@ body.editing-mode .slide>*:hover {
   .s-viral .stat span {
     font-size: 7.5px !important;
     margin-top: 1px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+  }
+
+  .s-viral .stat span svg.stat-icon {
+    width: 9px !important;
+    height: 9px !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
   }
 
   .s-viral .side {

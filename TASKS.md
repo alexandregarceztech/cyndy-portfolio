@@ -48,6 +48,24 @@
   - [x] **Slide 02 (Apresentação)**: Contraste da citação (`.quote`) intensificado com preto profundo (`var(--ink)`), peso semibold e autoria em destaque com `var(--sky-base)` (desktop e mobile).
   - [x] **Slide 02 (Apresentação)**: Bio descritiva reposicionada e expandida com tipografia fluida para preenchimento harmonioso da lateral direita.
   - [x] **QA & Testes**: Suíte automatizada re-executada com **70/70 verificações aprovadas (100% de conformidade técnica)**.
+- [x] **Sprint 05 — Atualização de Vídeos (Slides 05 e 06) e Métricas Reais do TikTok (Slide 09) (Agente 1)**:
+  - [x] **Slide 05 (Edição de Vídeos - Parte 1)**: 3 novos vídeos atualizados com links do Instagram, thumbnails 9:16 verticais e legendas:
+    - Reel 1: Honda Motobel — HR-V (`DcRreoRh6B5`)
+    - Reel 2: Honda Nippon — Peças Genuínas & Revisão (`Dac_Pm4AYhp`)
+    - Reel 3: Giga Motos Bajaj — Condições Especiais & Modelos (`DeNSMxNh4e4`)
+  - [x] **Slide 06 (Edição de Vídeos - Parte 2)**: 3 novos vídeos comerciais atualizados com links do Instagram, thumbnails 9:16 e legendas:
+    - Reel 4: Só Letrados — Comunicação, Língua & Cultura (`DRa8JF4EXNG`)
+    - Reel 5: Mônaco Motocenter — Lançamento Biz Kuromi (`DdjMBk-oSbl`)
+    - Reel 6: Mônaco Dream — Honda CBR1000RR-R dos Sonhos (`Dd4L7VcI6zZ`)
+  - [x] **Slide 09 (Caso Real: TikTok Viral)**:
+    - Acesso e extração dos dados reais da publicação do TikTok: views atualizadas para **21,4 mi** (com animação decimal no `script.js`).
+    - Curtidas atualizadas para **530,7 mil**.
+    - Comentários atualizados para **3,8 mil**.
+    - Compartilhamentos atualizados para **23,8 mil**.
+    - Substituição do card de visitas ao perfil pelo card de **Salvos** (**29,9 mil** salvamentos).
+    - Ícones visuais representativos do TikTok integrados ao lado de cada identificação (❤️ curtidas, 💬 comentários, ↗️ compartilhamentos, 🎯 engajamento, 👤+ seguidores, 🔖 salvos).
+    - Contador lateral da tela do celular sincronizado (530K, 3,8K, 29,9K, 23,8K).
+  - [x] **QA & Testes**: Suíte automatizada re-executada com **70/70 verificações aprovadas (100% de conformidade técnica)**.
 - [x] **Documentação (`README.md`)**:
   - [x] Atualizado guia de uso com novas funções de apresentação, atalhos rápidos e gestos swipe.
 

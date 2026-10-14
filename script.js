@@ -242,6 +242,7 @@
     const target = parseFloat(el.dataset.count);
     if (isNaN(target)) return;
     const suffix = el.dataset.suffix || '';
+    const decimals = el.dataset.decimals !== undefined ? parseInt(el.dataset.decimals, 10) : (target % 1 !== 0 ? 1 : 0);
     const duration = CONFIG.ANIM_DURATION;
     const startTime = performance.now();
 
@@ -249,7 +250,10 @@
       const progress = Math.min((currentTime - startTime) / duration, 1);
       // Easing cúbico para desaceleração natural
       const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-      const currentVal = Math.round(target * easeOutCubic);
+      const rawVal = target * easeOutCubic;
+      const currentVal = decimals > 0
+        ? rawVal.toFixed(decimals).replace('.', ',')
+        : Math.round(rawVal);
       el.textContent = currentVal + suffix;
       if (progress < 1) {
         requestAnimationFrame(step);
