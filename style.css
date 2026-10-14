@@ -669,22 +669,22 @@ a.phone:hover .play {
 }
 
 .id-card {
-  left: 190px;
-  top: 380px;
-  width: 880px;
-  height: 440px;
+  left: 170px;
+  top: 360px;
+  width: 920px;
+  height: 480px;
   display: flex;
-  gap: 44px;
-  padding: 44px;
-  border-radius: 48px;
+  gap: 36px;
+  padding: 38px 40px;
+  border-radius: 44px;
   background: var(--ink);
   color: var(--paper);
   box-shadow: 0 40px 60px -30px rgba(15, 14, 14, .55);
 }
 
 .id-card .photo {
-  width: 230px;
-  height: 312px;
+  width: 210px;
+  height: 350px;
   border-radius: 20px;
   overflow: hidden;
   flex-shrink: 0;
@@ -700,88 +700,93 @@ a.phone:hover .play {
 .id-card dl {
   flex: 1;
   display: grid;
-  gap: 16px;
+  gap: 12px;
   align-content: start;
-  padding-top: 18px;
+  padding-top: 4px;
 }
 
 .id-card .row {
   display: grid;
-  grid-template-columns: 160px 1fr;
-  align-items: end;
-  font-size: 24px;
-  white-space: nowrap;
+  grid-template-columns: 140px 1fr;
+  align-items: baseline;
+  font-size: 20px;
+  line-height: 1.25;
 }
 
 .id-card dt {
   font-weight: 700;
+  color: var(--sky-base);
+  font-size: 19px;
 }
 
 .id-card dd {
-  border-bottom: 1.5px solid rgba(243, 240, 235, .6);
-  padding: 0 0 4px 14px;
-  font-weight: 400;
+  border-bottom: 1.5px solid rgba(243, 240, 235, .3);
+  padding: 0 0 3px 8px;
+  font-weight: 500;
+  font-size: 19.5px;
 }
 
 .id-card .kit-title {
   font-weight: 700;
-  font-size: 26px;
-  margin-top: 22px;
+  font-size: 21px;
+  margin-top: 14px;
+  color: var(--paper);
 }
 
 .id-card .kit {
   display: flex;
-  gap: 30px;
-  font-size: 52px;
+  flex-wrap: wrap;
+  gap: 18px;
   margin-top: 4px;
 }
 
 .id-card .kit span {
-  display: grid;
-  justify-items: center;
-  gap: 8px;
-  font-size: 15px;
-  letter-spacing: .08em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  letter-spacing: .06em;
   text-transform: uppercase;
-  color: rgba(243, 240, 235, .65);
+  color: rgba(243, 240, 235, .8);
+  font-weight: 600;
 }
 
 .id-card .kit svg {
-  font-size: 52px;
-  color: var(--paper);
-  stroke-width: 1.4;
+  font-size: 20px;
+  color: var(--sky-base);
+  stroke-width: 1.8;
 }
 
 .s-about .quote {
-  left: 200px;
-  top: 860px;
-  width: 760px;
-  padding-left: 36px;
+  left: 170px;
+  top: 865px;
+  width: 900px;
+  padding-left: 32px;
   border-left: 4px solid var(--pimenta);
   font-family: var(--f-serif);
   font-style: italic;
-  font-size: 42px;
-  line-height: 1.2;
+  font-size: 33px;
+  line-height: 1.25;
   color: #3a3533;
 }
 
 .s-about .quote small {
   display: block;
-  margin-top: 12px;
-  font-size: 26px;
+  margin-top: 8px;
+  font-size: 22px;
   color: var(--muted);
 }
 
 .s-about .text {
-  left: 1170px;
+  left: 1140px;
   top: 350px;
-  width: 650px;
-  font-size: 35px;
-  line-height: 1.3;
+  width: 680px;
+  font-size: 30px;
+  line-height: 1.38;
 }
 
 .s-about .text p+p {
-  margin-top: 34px;
+  margin-top: 24px;
 }
 
 .s-about .text u {
@@ -791,7 +796,7 @@ a.phone:hover .play {
 }
 
 .s-about .skills {
-  left: 1170px;
+  left: 1140px;
   top: 830px;
   width: 700px;
 }
@@ -2457,7 +2462,7 @@ body.editing-mode .slide>*:hover {
 
   .s-about .id-card {
     width: 100% !important;
-    max-width: 320px !important;
+    max-width: 330px !important;
     height: auto !important;
     padding: 10px 12px !important;
     border-radius: 14px !important;
@@ -2472,8 +2477,8 @@ body.editing-mode .slide>*:hover {
   }
 
   .s-about .id-card .photo {
-    width: 72px !important;
-    height: 100px !important;
+    width: 76px !important;
+    height: 125px !important;
     border-radius: 8px !important;
     flex-shrink: 0 !important;
   }
@@ -2481,42 +2486,48 @@ body.editing-mode .slide>*:hover {
   .s-about .id-card dl {
     flex: 1 !important;
     padding: 0 !important;
-    gap: 4px !important;
+    gap: 3px !important;
   }
 
   .s-about .id-card .row {
-    grid-template-columns: 65px 1fr !important;
-    font-size: 10.5px !important;
+    grid-template-columns: 70px 1fr !important;
+    font-size: 9px !important;
+    line-height: 1.2 !important;
   }
 
   .s-about .id-card dt {
     font-weight: 700 !important;
+    color: var(--sky-base) !important;
   }
 
   .s-about .id-card dd {
-    font-size: 10.5px !important;
+    font-size: 9px !important;
     padding: 0 0 1px 3px !important;
   }
 
   .s-about .id-card .kit-title {
-    font-size: 9.5px !important;
-    margin-top: 4px !important;
+    font-size: 8.5px !important;
+    margin-top: 3px !important;
     font-weight: 700 !important;
   }
 
   .s-about .id-card .kit {
-    gap: 5px !important;
-    font-size: 14px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 3px 6px !important;
     margin-top: 2px !important;
   }
 
   .s-about .id-card .kit span {
-    font-size: 7px !important;
+    font-size: 6.5px !important;
     gap: 2px !important;
+    display: inline-flex !important;
+    align-items: center !important;
   }
 
   .s-about .id-card .kit svg {
-    font-size: 13px !important;
+    font-size: 9px !important;
+    color: var(--sky-base) !important;
   }
 
   .s-about .text {

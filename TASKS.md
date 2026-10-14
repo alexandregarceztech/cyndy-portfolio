@@ -37,7 +37,17 @@
   - [x] Recalibração de todos os halos, sombras e anéis de foco para o espectro `#1A3D63`.
   - [x] Atualização vetorial do Favicon SVG e `<meta name="theme-color">` em `index.html` para `#1A3D63`.
   - [x] Validação de compatibilidade e aprovação com 100% dos testes de regressão executados (63/63 aprovados).
-  - [x] Unificação da seleção global (`::selection`), scrollbars personalizadas e animações do Dock.
+- [x] **Sprint 04 — Atualização de Conteúdo do Slide 02 & Limpeza do Slide 03 (Agente 1)**:
+  - [x] **Slide 02 (Apresentação)**: Nome atualizado para **Cyndy Cryssy**.
+  - [x] **Slide 02**: Formação atualizada para **Publicidade e Propaganda — Uninter**.
+  - [x] **Slide 02**: Experiência atualizada para **Marketing, mídias sociais e produção audiovisual**.
+  - [x] **Slide 02**: Novo campo adicionado no ID Card: **Atuação: Encarregada de Marketing | Social Media | Videomaker**.
+  - [x] **Slide 02**: Kit de criação expandido para 6 itens: **Celular • Microfone de lapela • Iluminação portátil • Gimbal • CapCut Pro • Canva**.
+  - [x] **Slide 02**: Citação atualizada: *“Toda marca tem uma história. Meu trabalho é transformar essa história em conteúdo que conecta pessoas e gera resultados.” — Cyndy Cryssy*.
+  - [x] **Slide 02**: Bio descritiva reformulada em 2 parágrafos densos e estratégicos.
+  - [x] **Slide 03 (Serviços)**: Removido mockup de celular com link para o TikTok, deixando a composição centralizada e limpa.
+  - [x] **CSS**: Recalibração de dimensões, grid, respiro e tipografia fluida do ID Card e citação (desktop e mobile).
+  - [x] **QA & Testes**: Suíte automatizada executada com **70/70 verificações aprovadas (100% de conformidade técnica)**.
 - [x] **Documentação (`README.md`)**:
   - [x] Atualizado guia de uso com novas funções de apresentação, atalhos rápidos e gestos swipe.
 
