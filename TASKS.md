@@ -44,10 +44,10 @@
   - [x] **Slide 02**: Novo campo adicionado no ID Card: **Atuação: Encarregada de Marketing | Social Media | Videomaker**.
   - [x] **Slide 02**: Kit de criação expandido para 6 itens: **Celular • Microfone de lapela • Iluminação portátil • Gimbal • CapCut Pro • Canva**.
   - [x] **Slide 02**: Citação atualizada: *“Toda marca tem uma história. Meu trabalho é transformar essa história em conteúdo que conecta pessoas e gera resultados.” — Cyndy Cryssy*.
-  - [x] **Slide 02**: Bio descritiva reformulada em 2 parágrafos densos e estratégicos.
-  - [x] **Slide 03 (Serviços)**: Removido mockup de celular com link para o TikTok, deixando a composição centralizada e limpa.
-  - [x] **CSS**: Recalibração de dimensões, grid, respiro e tipografia fluida do ID Card e citação (desktop e mobile).
-  - [x] **QA & Testes**: Suíte automatizada executada com **70/70 verificações aprovadas (100% de conformidade técnica)**.
+  - [x] **Slide 02 (Apresentação)**: Remoção do bloco de "Principais skills" conforme solicitação.
+  - [x] **Slide 02 (Apresentação)**: Contraste da citação (`.quote`) intensificado com preto profundo (`var(--ink)`), peso semibold e autoria em destaque com `var(--sky-base)` (desktop e mobile).
+  - [x] **Slide 02 (Apresentação)**: Bio descritiva reposicionada e expandida com tipografia fluida para preenchimento harmonioso da lateral direita.
+  - [x] **QA & Testes**: Suíte automatizada re-executada com **70/70 verificações aprovadas (100% de conformidade técnica)**.
 - [x] **Documentação (`README.md`)**:
   - [x] Atualizado guia de uso com novas funções de apresentação, atalhos rápidos e gestos swipe.
 
