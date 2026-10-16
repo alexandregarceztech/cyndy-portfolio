@@ -80,3 +80,40 @@ O código foi inteiramente organizado para que você encontre qualquer coisa em 
    * **Margens:** Nenhuma (None)
    * **Gráficos de segundo plano:** Marcado (Checked)
 4. Clique em **Salvar**. Cada slide será gerado perfeitamente em 1 página sem quebras indesejadas.
+
+---
+
+## 🛠️ Ferramentas & Engenharia Local (Backend & Mídia)
+
+Para desenvolvimento local de alta fidelidade e preparação de mídias cinematográficas, utilize as ferramentas automatizadas:
+
+- **Servidor Local com Range Requests (HTTP 206):**
+  ```bash
+  python tools/serve.py
+  ```
+  Inicia servidor multithread com streaming nativo de vídeos e cabeçalhos anti-cache em `http://localhost:3000`.
+
+- **Otimização de Mídias & Geração de Posters WebP (< 25 KB):**
+  ```bash
+  # Executa pipeline completo (posters, demonstrações e auditoria)
+  python tools/optimize_media.py --all
+
+  # Gera/atualiza apenas os posters WebP adaptativos (< 25 KB)
+  python tools/optimize_media.py --posters
+
+  # Executa auditoria estrita de Performance Budget
+  python tools/optimize_media.py --check
+  ```
+
+- **Suíte de Testes Automatizados:**
+  ```bash
+  # Validação de integridade do portfólio
+  python tests/validate_portfolio.py
+
+  # Teste de conformidade de Range Requests (HTTP 206)
+  python tests/test_serve_range.py
+
+  # Teste automatizado de mídias e performance budget
+  python tests/test_optimize_media.py
+  ```
+
