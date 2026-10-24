@@ -1,17 +1,16 @@
 /**
  * ============================================================================
- * CYNDY PIMENTEL PORTFOLIO — HAUTE-COUTURE INTERACTIVE ENGINE
+ * CYNDY PIMENTEL — PORTFÓLIO EDITORIAL 2026 (BEHANCE ENGINE)
  * ============================================================================
- * Módulos:
- *  1. Data de Vídeos & Configuração dos Reels
- *  2. Reel Theater Modal (Player 9:16 com controles e atalhos)
- *  3. Hover & Touch Video Preview nos Cards
- *  4. Filtros de Categorias com Transição Fluida
- *  5. Contadores Numéricos Animados & Donut Chart
- *  6. Cursor Glow Dinâmico & Efeito 3D Tilt no iPhone da Hero
- *  7. Mobile Navigation Drawer
- *  8. Copiar E-mail & Toast System
- *  9. Active Link Highlight no Scroll
+ * Módulos Integrados:
+ *  1. Base de dados dos 6 Reels & Casos
+ *  2. Reel Theater Modal (Player 9:16 com atalhos e dots)
+ *  3. Video Preview Dinâmico nos Mockups de Smartphone
+ *  4. Filtros por Nicho (Automotivo, Duas Rodas, Educação/Vendas)
+ *  5. Contadores Numéricos Animados & Gráfico Donut de Seguidores
+ *  6. Mobile Navigation Drawer (Painel Lateral Editorial)
+ *  7. Copiar E-mail Profissional & Sistema de Toast
+ *  8. Active Link Highlight no Scroll
  * ============================================================================
  */
 
@@ -19,7 +18,7 @@
   'use strict';
 
   /* ==========================================================================
-     01. BASE DE DADOS DOS REELS (MÍDIAS & LINKS ORIGINAIS PRESERVADOS)
+     01. BASE DE DADOS DOS REELS (6 VÍDEOS REAIS & METADADOS PRESERVADOS)
      ========================================================================== */
   const REELS_DATA = [
     {
@@ -150,35 +149,28 @@
     currentReelIndex = index;
     const reel = REELS_DATA[index];
 
-    // Atualiza título e informações
     if (theaterTitle) theaterTitle.textContent = reel.title;
     if (theaterDesc) theaterDesc.textContent = `[${reel.niche}] — ${reel.desc}`;
     if (theaterInstagramBtn) theaterInstagramBtn.href = reel.instagram;
 
-    // Reseta fallback
     if (theaterFallback) theaterFallback.style.display = 'none';
 
-    // Carrega vídeo e poster
     theaterVideo.poster = reel.poster;
     theaterVideo.src = reel.src;
     theaterVideo.currentTime = 0;
 
-    // Atualiza dots
     updateTheaterDots(index);
 
-    // Abre modal
     modalTheater.classList.add('active');
     modalTheater.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
 
-    // Foco no fechar para acessibilidade
     if (btnCloseTheater) btnCloseTheater.focus();
 
-    // Reproduz com tratamento suave
     const playPromise = theaterVideo.play();
     if (playPromise !== undefined) {
       playPromise.catch(() => {
-        // Bloqueio de autoplay do navegador aguardando clique
+        // Bloqueio de autoplay do navegador aguardando clique explícito
       });
     }
   }
@@ -234,72 +226,72 @@
   initTheaterDots();
 
   /* ==========================================================================
-     04. HOVER VIDEO PREVIEW NOS CARDS
+     04. HOVER & CLIQUE NOS REEL FIGURES
      ========================================================================== */
-  const reelCards = Array.from(document.querySelectorAll('.reel-card'));
+  const reelFigures = Array.from(document.querySelectorAll('.reel-figure'));
 
-  reelCards.forEach(card => {
-    const index = parseInt(card.dataset.index, 10);
-    const ambientVideo = card.querySelector('.reel-ambient-video');
+  reelFigures.forEach(fig => {
+    const index = parseInt(fig.dataset.index, 10);
+    const videoPreview = fig.querySelector('.reel-video-preview');
 
-    // Desktop hover
-    card.addEventListener('mouseenter', () => {
-      if (ambientVideo) {
-        ambientVideo.currentTime = 0;
-        const p = ambientVideo.play();
+    // Desktop hover preview
+    fig.addEventListener('mouseenter', () => {
+      if (videoPreview) {
+        videoPreview.currentTime = 0;
+        const p = videoPreview.play();
         if (p !== undefined) p.catch(() => {});
       }
     });
 
-    card.addEventListener('mouseleave', () => {
-      if (ambientVideo) {
-        ambientVideo.pause();
+    fig.addEventListener('mouseleave', () => {
+      if (videoPreview) {
+        videoPreview.pause();
       }
     });
 
-    // Clique abre o modal cinematográfico
-    card.addEventListener('click', (e) => {
-      if (e.target.closest('.reel-external-link')) return;
+    // Clique abre o Reel Theater
+    fig.addEventListener('click', (e) => {
+      if (e.target.closest('.link-ig-corner')) return;
       openReelTheater(index);
     });
   });
 
   /* ==========================================================================
-     05. FILTROS DE CATEGORIA DE REELS
+     05. FILTROS POR NICHO DE REELS
      ========================================================================== */
-  const filterTabs = Array.from(document.querySelectorAll('.filter-tab'));
+  const filterPills = Array.from(document.querySelectorAll('.f-pill'));
 
-  filterTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      filterTabs.forEach(t => {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
+  filterPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      filterPills.forEach(p => {
+        p.classList.remove('active');
+        p.setAttribute('aria-selected', 'false');
       });
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
+      pill.classList.add('active');
+      pill.setAttribute('aria-selected', 'true');
 
-      const filter = tab.dataset.filter;
+      const filter = pill.dataset.filter;
 
-      reelCards.forEach(card => {
-        const cat = card.dataset.category;
+      reelFigures.forEach(fig => {
+        const cat = fig.dataset.category;
         if (filter === 'all' || cat === filter) {
-          card.classList.remove('hidden');
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(16px)';
+          fig.classList.remove('hidden');
+          fig.style.opacity = '0';
+          fig.style.transform = 'translateY(14px)';
           setTimeout(() => {
-            card.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-          }, 35);
+            fig.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+            fig.style.opacity = '1';
+            fig.style.transform = 'translateY(0)';
+          }, 30);
         } else {
-          card.classList.add('hidden');
+          fig.classList.add('hidden');
         }
       });
     });
   });
 
   /* ==========================================================================
-     06. CONTADORES NUMÉRICOS ANIMADOS
+     06. CONTADORES NUMÉRICOS ANIMADOS & DONUT SVG
      ========================================================================== */
   const countElements = Array.from(document.querySelectorAll('[data-count]'));
 
@@ -342,70 +334,49 @@
 
   countElements.forEach(el => counterObserver.observe(el));
 
-  /* ==========================================================================
-     07. CURSOR GLOW SEGUIDOR & EFEITO 3D PERSPECTIVE TILT NO IPHONE DA HERO
-     ========================================================================== */
-  const cursorGlow = document.getElementById('cursor-glow');
-  const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+  // Animação do Gráfico Donut (58,1% novos seguidores)
+  const donutFill = document.querySelector('.donut-svg .d-fill');
+  if (donutFill) {
+    const donutObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Raio = 48 -> Perímetro = 2 * PI * 48 ≈ 301.6
+          // 58.1% preenchido -> offset = 301.6 * (1 - 0.581) ≈ 126
+          donutFill.style.strokeDashoffset = '126';
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
 
-  if (cursorGlow && isFinePointer) {
-    window.addEventListener('mousemove', (e) => {
-      cursorGlow.style.opacity = '1';
-      cursorGlow.style.left = e.clientX + 'px';
-      cursorGlow.style.top = e.clientY + 'px';
-    }, { passive: true });
-
-    document.addEventListener('mouseleave', () => {
-      cursorGlow.style.opacity = '0';
-    });
-  }
-
-  const iphoneFrame = document.querySelector('.iphone-titanium-frame');
-  const heroStage = document.querySelector('.hero-stage');
-
-  if (iphoneFrame && heroStage && isFinePointer) {
-    heroStage.addEventListener('mousemove', (e) => {
-      const rect = heroStage.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      iphoneFrame.style.transform = `rotateY(${x * 18}deg) rotateX(${-y * 18}deg) scale(1.03)`;
-    });
-
-    heroStage.addEventListener('mouseleave', () => {
-      iphoneFrame.style.transform = 'rotateY(-6deg) rotateX(4deg) scale(1)';
-    });
+    donutObserver.observe(donutFill);
   }
 
   /* ==========================================================================
-     08. MOBILE NAVIGATION DRAWER
+     07. PAINEL DE NAVEGAÇÃO MOBILE
      ========================================================================== */
-  const btnMobileToggle = document.getElementById('btn-mobile-toggle');
-  const btnDrawerClose = document.getElementById('btn-drawer-close');
-  const mobileDrawer = document.getElementById('mobile-drawer');
-  const drawerLinks = Array.from(document.querySelectorAll('.drawer-item'));
+  const btnBurger = document.getElementById('btn-burger');
+  const btnClosePanel = document.getElementById('btn-close-panel');
+  const mobileNavPanel = document.getElementById('mobile-nav-panel');
+  const mobileLinks = Array.from(document.querySelectorAll('.mobile-nav-links .m-link'));
 
-  function openDrawer() {
-    if (!mobileDrawer) return;
-    mobileDrawer.classList.add('active');
-    mobileDrawer.setAttribute('aria-hidden', 'false');
-    btnMobileToggle?.setAttribute('aria-expanded', 'true');
+  function openMobileNav() {
+    if (!mobileNavPanel) return;
+    mobileNavPanel.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
 
-  function closeDrawer() {
-    if (!mobileDrawer) return;
-    mobileDrawer.classList.remove('active');
-    mobileDrawer.setAttribute('aria-hidden', 'true');
-    btnMobileToggle?.setAttribute('aria-expanded', 'false');
+  function closeMobileNav() {
+    if (!mobileNavPanel) return;
+    mobileNavPanel.classList.remove('active');
     document.body.style.overflow = '';
   }
 
-  if (btnMobileToggle) btnMobileToggle.addEventListener('click', openDrawer);
-  if (btnDrawerClose) btnDrawerClose.addEventListener('click', closeDrawer);
-  drawerLinks.forEach(link => link.addEventListener('click', closeDrawer));
+  if (btnBurger) btnBurger.addEventListener('click', openMobileNav);
+  if (btnClosePanel) btnClosePanel.addEventListener('click', closeMobileNav);
+  mobileLinks.forEach(link => link.addEventListener('click', closeMobileNav));
 
   /* ==========================================================================
-     09. COPIAR E-MAIL COM FEEDBACK TOAST
+     08. COPIAR E-MAIL COM FEEDBACK TOAST
      ========================================================================== */
   const btnCopyEmail = document.getElementById('btn-copy-email');
   const labelCopyEmail = document.getElementById('label-copy-email');
@@ -415,9 +386,9 @@
       const email = 'pimentelcryssy@gmail.com';
       navigator.clipboard.writeText(email).then(() => {
         if (labelCopyEmail) labelCopyEmail.textContent = 'Copiado!';
-        showToast('✓ E-mail copiado para a área de transferência: ' + email);
+        showToast('✓ E-mail copiado: ' + email);
         setTimeout(() => {
-          if (labelCopyEmail) labelCopyEmail.textContent = 'Copiar E-mail';
+          if (labelCopyEmail) labelCopyEmail.textContent = 'Copiar';
         }, 3000);
       }).catch(() => {
         showToast('E-mail: ' + email);
@@ -434,7 +405,7 @@
   }
 
   /* ==========================================================================
-     10. ATALHOS DE TECLADO (CINEMA MODAL)
+     09. ATALHOS DE TECLADO (PLAYER THEATER)
      ========================================================================== */
   document.addEventListener('keydown', (e) => {
     if (modalTheater && modalTheater.classList.contains('active')) {
@@ -469,10 +440,10 @@
   });
 
   /* ==========================================================================
-     11. ACTIVE LINK HIGHLIGHT NO SCROLL
+     10. ACTIVE LINK HIGHLIGHT NO SCROLL
      ========================================================================== */
-  const navItems = Array.from(document.querySelectorAll('.nav-links .nav-item'));
-  const trackedSections = navItems
+  const headerLinks = Array.from(document.querySelectorAll('.header-menu .menu-link'));
+  const trackedSections = headerLinks
     .map(link => {
       const id = link.getAttribute('href')?.replace('#', '');
       return id ? document.getElementById(id) : null;
@@ -480,14 +451,14 @@
     .filter(Boolean);
 
   window.addEventListener('scroll', () => {
-    const scrollPos = window.scrollY + 220;
+    const scrollPos = window.scrollY + 180;
     trackedSections.forEach(section => {
       const top = section.offsetTop;
       const height = section.offsetHeight;
       const id = section.getAttribute('id');
 
       if (scrollPos >= top && scrollPos < top + height) {
-        navItems.forEach(item => {
+        headerLinks.forEach(item => {
           const href = item.getAttribute('href');
           item.classList.toggle('active', href === `#${id}`);
         });
@@ -495,5 +466,5 @@
     });
   }, { passive: true });
 
-  console.log('[Cyndy Portfolio] Master Engine carregado com sucesso.');
+  console.log('[Cyndy Portfolio 2026] Behance Editorial Engine ativo com sucesso.');
 })();
