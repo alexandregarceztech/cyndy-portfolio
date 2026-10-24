@@ -1,16 +1,17 @@
 /**
  * ============================================================================
- * CYNDY PIMENTEL PORTFOLIO — INTERACTIVE ENGINE
+ * CYNDY PIMENTEL PORTFOLIO — HAUTE-COUTURE INTERACTIVE ENGINE
  * ============================================================================
  * Módulos:
  *  1. Data de Vídeos & Configuração dos Reels
  *  2. Reel Theater Modal (Player 9:16 com controles e atalhos)
- *  3. Hover Video Preview nos Cards
- *  4. Filtros de Categorias de Reels
- *  5. Animated Number Counters (Estatísticas & Casos Reais)
- *  6. Mobile Navigation Drawer
- *  7. Copiar E-mail & Toast System
- *  8. Active Link Highlight no Scroll
+ *  3. Hover & Touch Video Preview nos Cards
+ *  4. Filtros de Categorias com Transição Fluida
+ *  5. Contadores Numéricos Animados & Donut Chart
+ *  6. Cursor Glow Dinâmico & Efeito 3D Tilt no iPhone da Hero
+ *  7. Mobile Navigation Drawer
+ *  8. Copiar E-mail & Toast System
+ *  9. Active Link Highlight no Scroll
  * ============================================================================
  */
 
@@ -26,7 +27,7 @@
       title: 'Honda Motobel — Que tal subir de nível? (HR-V)',
       niche: 'Automotivo',
       category: 'auto',
-      desc: 'Lançamento SUV Honda HR-V · Roteiro de desejo e cortes no ritmo da trilha',
+      desc: 'Lançamento SUV Honda HR-V · Roteiro de desejo e cortes no ritmo da trilha sonora',
       src: 'assets/videos/video-01.mp4',
       poster: 'assets/img/video-01-new.jpg',
       instagram: 'https://www.instagram.com/reel/DcRreoRh6B5/'
@@ -36,7 +37,7 @@
       title: 'Honda Nippon — Peças genuínas & revisão',
       niche: 'Pós-Venda',
       category: 'auto',
-      desc: 'Pós-venda e credibilidade · Humanização e valorização de autorizada',
+      desc: 'Pós-venda e credibilidade autorizada · Humanização e valorização de marca',
       src: 'assets/videos/video-02.mp4',
       poster: 'assets/img/video-02-new.jpg',
       instagram: 'https://www.instagram.com/reel/Dac_Pm4AYhp/'
@@ -46,7 +47,7 @@
       title: 'Giga Motos Bajaj — Condições especiais & modelos',
       niche: 'Duas Rodas',
       category: 'motos',
-      desc: 'Campanha de ofertas e lançamentos · Ritmo ágil para conversão no WhatsApp',
+      desc: 'Campanha comercial e ofertas · Ritmo ágil para conversão direta no WhatsApp',
       src: 'assets/videos/video-03.mp4',
       poster: 'assets/img/video-03-new.jpg',
       instagram: 'https://www.instagram.com/reel/DeNSMxNh4e4/'
@@ -56,7 +57,7 @@
       title: 'Só Letrados — Comunicação, língua & cultura',
       niche: 'Educação',
       category: 'vendas',
-      desc: 'Educação e storytelling de autoridade · Humanização e didática envolvente',
+      desc: 'Educação e storytelling de autoridade · Didática envolvente e humanização',
       src: 'assets/videos/video-04.mp4',
       poster: 'assets/img/video-04-new.jpg',
       instagram: 'https://www.instagram.com/reel/DRa8JF4EXNG/'
@@ -87,7 +88,7 @@
   let lastFocusedElement = null;
 
   /* ==========================================================================
-     02. TOAST SYSTEM
+     02. TOAST NOTIFICATION SYSTEM
      ========================================================================== */
   const toastContainer = document.getElementById('toast-container');
 
@@ -100,8 +101,8 @@
 
     setTimeout(() => {
       toast.style.opacity = '0';
-      toast.style.transform = 'translateY(10px)';
-      toast.style.transition = 'all 0.3s ease';
+      toast.style.transform = 'translateY(12px)';
+      toast.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
       setTimeout(() => toast.remove(), 300);
     }, duration);
   }
@@ -121,7 +122,6 @@
   const theaterFallback = document.getElementById('theater-fallback');
   const theaterFallbackLink = document.getElementById('theater-fallback-link');
 
-  // Inicializa indicadores de dots no modal
   function initTheaterDots() {
     if (!theaterDotsContainer) return;
     theaterDotsContainer.innerHTML = '';
@@ -150,7 +150,7 @@
     currentReelIndex = index;
     const reel = REELS_DATA[index];
 
-    // Atualiza metadados
+    // Atualiza título e informações
     if (theaterTitle) theaterTitle.textContent = reel.title;
     if (theaterDesc) theaterDesc.textContent = `[${reel.niche}] — ${reel.desc}`;
     if (theaterInstagramBtn) theaterInstagramBtn.href = reel.instagram;
@@ -171,14 +171,14 @@
     modalTheater.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
 
-    // Foco no fechar
+    // Foco no fechar para acessibilidade
     if (btnCloseTheater) btnCloseTheater.focus();
 
-    // Inicia reprodução
+    // Reproduz com tratamento suave
     const playPromise = theaterVideo.play();
     if (playPromise !== undefined) {
       playPromise.catch(() => {
-        // Autoplay silenciado ou aguardando interação do usuário
+        // Bloqueio de autoplay do navegador aguardando clique
       });
     }
   }
@@ -215,14 +215,12 @@
   if (btnTheaterPrev) btnTheaterPrev.addEventListener('click', prevReel);
   if (btnTheaterNext) btnTheaterNext.addEventListener('click', nextReel);
 
-  // Fecha clicando no backdrop
   if (modalTheater) {
     modalTheater.addEventListener('click', (e) => {
       if (e.target === modalTheater) closeReelTheater();
     });
   }
 
-  // Tratamento de erro caso falte codec local
   if (theaterVideo) {
     theaterVideo.addEventListener('error', () => {
       const reel = REELS_DATA[currentReelIndex];
@@ -236,7 +234,7 @@
   initTheaterDots();
 
   /* ==========================================================================
-     04. HOVER VIDEO PREVIEW & TRIGGER DE REEL
+     04. HOVER VIDEO PREVIEW NOS CARDS
      ========================================================================== */
   const reelCards = Array.from(document.querySelectorAll('.reel-card'));
 
@@ -244,7 +242,7 @@
     const index = parseInt(card.dataset.index, 10);
     const ambientVideo = card.querySelector('.reel-ambient-video');
 
-    // Hover preview (desktop)
+    // Desktop hover
     card.addEventListener('mouseenter', () => {
       if (ambientVideo) {
         ambientVideo.currentTime = 0;
@@ -259,10 +257,9 @@
       }
     });
 
-    // Clique abre o Theater
+    // Clique abre o modal cinematográfico
     card.addEventListener('click', (e) => {
-      // Evita abrir se clicou direto no link do instagram
-      if (e.target.closest('.reel-ext-btn')) return;
+      if (e.target.closest('.reel-external-link')) return;
       openReelTheater(index);
     });
   });
@@ -288,12 +285,12 @@
         if (filter === 'all' || cat === filter) {
           card.classList.remove('hidden');
           card.style.opacity = '0';
-          card.style.transform = 'translateY(15px)';
+          card.style.transform = 'translateY(16px)';
           setTimeout(() => {
             card.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
             card.style.opacity = '1';
             card.style.transform = 'translateY(0)';
-          }, 30);
+          }, 35);
         } else {
           card.classList.add('hidden');
         }
@@ -302,7 +299,7 @@
   });
 
   /* ==========================================================================
-     06. ANIMATED NUMBER COUNTERS (ESTATÍSTICAS & CASOS REAIS)
+     06. CONTADORES NUMÉRICOS ANIMADOS
      ========================================================================== */
   const countElements = Array.from(document.querySelectorAll('[data-count]'));
 
@@ -317,7 +314,6 @@
 
     function update(currentTime) {
       const elapsed = Math.min((currentTime - startTime) / duration, 1);
-      // Easing cubic out
       const ease = 1 - Math.pow(1 - elapsed, 3);
       const current = target * ease;
 
@@ -347,7 +343,41 @@
   countElements.forEach(el => counterObserver.observe(el));
 
   /* ==========================================================================
-     07. MOBILE NAVIGATION DRAWER
+     07. CURSOR GLOW SEGUIDOR & EFEITO 3D PERSPECTIVE TILT NO IPHONE DA HERO
+     ========================================================================== */
+  const cursorGlow = document.getElementById('cursor-glow');
+  const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+
+  if (cursorGlow && isFinePointer) {
+    window.addEventListener('mousemove', (e) => {
+      cursorGlow.style.opacity = '1';
+      cursorGlow.style.left = e.clientX + 'px';
+      cursorGlow.style.top = e.clientY + 'px';
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', () => {
+      cursorGlow.style.opacity = '0';
+    });
+  }
+
+  const iphoneFrame = document.querySelector('.iphone-titanium-frame');
+  const heroStage = document.querySelector('.hero-stage');
+
+  if (iphoneFrame && heroStage && isFinePointer) {
+    heroStage.addEventListener('mousemove', (e) => {
+      const rect = heroStage.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      iphoneFrame.style.transform = `rotateY(${x * 18}deg) rotateX(${-y * 18}deg) scale(1.03)`;
+    });
+
+    heroStage.addEventListener('mouseleave', () => {
+      iphoneFrame.style.transform = 'rotateY(-6deg) rotateX(4deg) scale(1)';
+    });
+  }
+
+  /* ==========================================================================
+     08. MOBILE NAVIGATION DRAWER
      ========================================================================== */
   const btnMobileToggle = document.getElementById('btn-mobile-toggle');
   const btnDrawerClose = document.getElementById('btn-drawer-close');
@@ -375,7 +405,7 @@
   drawerLinks.forEach(link => link.addEventListener('click', closeDrawer));
 
   /* ==========================================================================
-     08. COPIAR E-MAIL COM TOAST
+     09. COPIAR E-MAIL COM FEEDBACK TOAST
      ========================================================================== */
   const btnCopyEmail = document.getElementById('btn-copy-email');
   const labelCopyEmail = document.getElementById('label-copy-email');
@@ -404,7 +434,7 @@
   }
 
   /* ==========================================================================
-     09. ATALHOS DE TECLADO (CINEMA THEATER & ESC)
+     10. ATALHOS DE TECLADO (CINEMA MODAL)
      ========================================================================== */
   document.addEventListener('keydown', (e) => {
     if (modalTheater && modalTheater.classList.contains('active')) {
@@ -439,7 +469,7 @@
   });
 
   /* ==========================================================================
-     10. ACTIVE LINK HIGHLIGHT NO SCROLL
+     11. ACTIVE LINK HIGHLIGHT NO SCROLL
      ========================================================================== */
   const navItems = Array.from(document.querySelectorAll('.nav-links .nav-item'));
   const trackedSections = navItems
@@ -450,7 +480,7 @@
     .filter(Boolean);
 
   window.addEventListener('scroll', () => {
-    const scrollPos = window.scrollY + 200;
+    const scrollPos = window.scrollY + 220;
     trackedSections.forEach(section => {
       const top = section.offsetTop;
       const height = section.offsetHeight;
@@ -465,5 +495,5 @@
     });
   }, { passive: true });
 
-  console.log('[Cyndy Portfolio] Haute Luxe Engine inicializado com sucesso.');
+  console.log('[Cyndy Portfolio] Master Engine carregado com sucesso.');
 })();
