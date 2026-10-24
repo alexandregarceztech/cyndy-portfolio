@@ -3217,6 +3217,9 @@ body.editing-mode .slide>*:hover {
     line-height: 1.05 !important;
     letter-spacing: -.03em !important;
     margin: 0 !important;
+    /* Neutraliza width/height inline gravados pelo Modo Edição (desktop) */
+    height: auto !important;
+    min-height: 0 !important;
   }
 
   .s-clients .lead {
@@ -3237,6 +3240,11 @@ body.editing-mode .slide>*:hover {
     justify-content: center !important;
     width: calc(50% - 4px) !important;
     max-width: 145px !important;
+    /* Neutraliza width/height/inset inline gravados pelo Modo Edição (desktop) */
+    height: auto !important;
+    min-height: 0 !important;
+    inset: auto !important;
+    margin: 0 !important;
     gap: 4px !important;
     padding: 6px 4px !important;
     background: #ffffff !important;
