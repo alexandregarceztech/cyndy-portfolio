@@ -736,7 +736,7 @@
       return;
     }
 
-    const target = e.target.closest('.abs, figure, article, blockquote, .phone, .cols, .slide > *');
+    const target = e.target.closest('.client-logo, .c-box, .badge, .stat, .card, .abs, figure, article, blockquote, .phone, .cols, .slide > *');
     if (target && target !== slide && !target.classList.contains('editor-gizmo')) {
       selectElement(target);
     } else {
