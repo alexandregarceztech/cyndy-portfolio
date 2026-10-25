@@ -2482,16 +2482,16 @@ body.editing-mode .slide>*:hover {
     margin: 0 !important;
     text-align: left !important;
     width: 100% !important;
-    max-width: 320px !important;
+    max-width: 350px !important;
   }
 
   .s-about .id-card {
     width: 100% !important;
-    max-width: 330px !important;
+    max-width: 350px !important;
     height: auto !important;
-    padding: 10px 12px !important;
-    border-radius: 14px !important;
-    gap: 10px !important;
+    padding: 12px 14px !important;
+    border-radius: 16px !important;
+    gap: 12px !important;
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
@@ -2499,41 +2499,73 @@ body.editing-mode .slide>*:hover {
     color: var(--paper) !important;
     margin: 0 !important;
     box-shadow: 0 8px 20px -8px rgba(15, 14, 14, 0.4) !important;
+    box-sizing: border-box !important;
   }
 
   .s-about .id-card .photo {
-    width: 76px !important;
-    height: 125px !important;
-    border-radius: 8px !important;
+    width: 82px !important;
+    height: 136px !important;
+    border-radius: 10px !important;
     flex-shrink: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .s-about .id-card .photo img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 30% !important;
   }
 
   .s-about .id-card dl {
     flex: 1 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
     padding: 0 !important;
-    gap: 3px !important;
+    gap: 4px !important;
+    margin: 0 !important;
   }
 
   .s-about .id-card .row {
-    grid-template-columns: 70px 1fr !important;
-    font-size: 9px !important;
-    line-height: 1.2 !important;
+    display: grid !important;
+    grid-template-columns: 72px 1fr !important;
+    column-gap: 5px !important;
+    align-items: baseline !important;
+    font-size: 9.5px !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
   }
 
   .s-about .id-card dt {
+    font-size: 9.5px !important;
     font-weight: 700 !important;
     color: var(--sky-base) !important;
+    white-space: nowrap !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
   }
 
   .s-about .id-card dd {
     font-size: 9px !important;
-    padding: 0 0 1px 3px !important;
+    font-weight: 500 !important;
+    color: var(--paper) !important;
+    line-height: 1.25 !important;
+    padding: 0 0 1px 2px !important;
+    margin: 0 !important;
+    border-bottom: 1px solid rgba(243, 240, 235, 0.25) !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
   }
 
   .s-about .id-card .kit-title {
-    font-size: 8.5px !important;
-    margin-top: 3px !important;
+    font-size: 9px !important;
     font-weight: 700 !important;
+    color: var(--paper) !important;
+    margin-top: 4px !important;
+    margin-bottom: 2px !important;
+    letter-spacing: 0.02em !important;
   }
 
   .s-about .id-card .kit {
@@ -2544,20 +2576,26 @@ body.editing-mode .slide>*:hover {
   }
 
   .s-about .id-card .kit span {
-    font-size: 6.5px !important;
-    gap: 2px !important;
+    font-size: 7px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+    color: rgba(243, 240, 235, 0.85) !important;
     display: inline-flex !important;
     align-items: center !important;
+    gap: 2.5px !important;
   }
 
   .s-about .id-card .kit svg {
-    font-size: 9px !important;
+    font-size: 9.5px !important;
+    width: 9.5px !important;
+    height: 9.5px !important;
     color: var(--sky-base) !important;
+    flex-shrink: 0 !important;
   }
 
   .s-about .text {
     width: 100% !important;
-    max-width: 320px !important;
+    max-width: 350px !important;
     font-size: 11.5px !important;
     line-height: 1.4 !important;
     color: #2c2725 !important;
@@ -2570,7 +2608,7 @@ body.editing-mode .slide>*:hover {
 
   .s-about .quote {
     width: 100% !important;
-    max-width: 320px !important;
+    max-width: 350px !important;
     font-family: var(--f-serif) !important;
     font-style: italic !important;
     font-weight: 600 !important;
