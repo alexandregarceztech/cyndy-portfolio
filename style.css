@@ -707,7 +707,8 @@ a.phone:hover .play {
 
 .id-card .row {
   display: grid;
-  grid-template-columns: 140px 1fr;
+  grid-template-columns: max-content 1fr;
+  column-gap: 16px;
   align-items: baseline;
   font-size: 20px;
   line-height: 1.25;
@@ -717,6 +718,7 @@ a.phone:hover .play {
   font-weight: 700;
   color: var(--sky-base);
   font-size: 19px;
+  white-space: nowrap;
 }
 
 .id-card dd {
@@ -2530,8 +2532,8 @@ body.editing-mode .slide>*:hover {
 
   .s-about .id-card .row {
     display: grid !important;
-    grid-template-columns: 72px 1fr !important;
-    column-gap: 5px !important;
+    grid-template-columns: max-content 1fr !important;
+    column-gap: 6px !important;
     align-items: baseline !important;
     font-size: 9.5px !important;
     line-height: 1.25 !important;
