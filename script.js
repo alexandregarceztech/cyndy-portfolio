@@ -64,18 +64,6 @@
   const modalShortcuts = document.getElementById('modal-shortcuts');
   const btnCloseShortcuts = document.getElementById('btn-close-shortcuts');
 
-  // Elementos do Reel Theater Modal
-  const modalReelTheater = document.getElementById('modal-reel-theater');
-  const reelVideoPlayer = document.getElementById('reel-video-player');
-  const reelTheaterTitle = document.getElementById('reel-theater-title');
-  const reelTheaterDesc = document.getElementById('reel-theater-desc');
-  const reelInstagramLink = document.getElementById('reel-instagram-link');
-  const btnCloseReel = document.getElementById('btn-close-reel');
-  const btnReelPrev = document.getElementById('btn-reel-prev');
-  const btnReelNext = document.getElementById('btn-reel-next');
-  const reelFallback = document.getElementById('reel-fallback');
-  const reelFallbackLink = document.getElementById('reel-fallback-link');
-  const reelPillsContainer = document.getElementById('reel-pills');
 
   // Elementos do Overlay Mobile de Orientação Paisagem (Tarefa #020)
   const orientationOverlay = document.getElementById('orientation-overlay');
@@ -161,11 +149,6 @@
     STATE.current = targetIndex;
     updateCounter(targetIndex);
 
-    // Pausa e fecha o Reel Theater caso esteja aberto para não vazar áudio
-    if (typeof closeReelTheater === 'function' && modalReelTheater && modalReelTheater.classList.contains('active')) {
-      closeReelTheater();
-    }
-
     const targetWrap = wraps[targetIndex];
     if (targetWrap) {
       targetWrap.scrollIntoView({
@@ -181,11 +164,6 @@
         } catch (e) {
           // Ignora silenciosamente em ambientes restritos
         }
-      }
-
-      // Look-ahead prefetch no slide divisor de vídeos (índice 3)
-      if (targetIndex === 3 && typeof prefetchFirstReel === 'function') {
-        prefetchFirstReel();
       }
     }
   }
@@ -224,9 +202,6 @@
             try {
               window.history.replaceState(null, '', window.location.pathname + window.location.search + '#' + entry.target.id);
             } catch (e) {}
-          }
-          if (index === 3 && typeof prefetchFirstReel === 'function') {
-            prefetchFirstReel();
           }
         }
       }
@@ -351,44 +326,12 @@
 
     // 3. Tecla Escape: fecha modais ou desseleciona elemento
     if (e.key === 'Escape') {
-      if (modalReelTheater && modalReelTheater.classList.contains('active')) {
-        closeReelTheater();
-        return;
-      }
       if (modalShortcuts && modalShortcuts.classList.contains('active')) {
         closeShortcutsModal();
         return;
       }
       if (STATE.isEditing) {
         deselectElement();
-        return;
-      }
-    }
-
-    // 3.1 Teclas com Reel Theater ativo (Play/Pause com espaço, Mudo com M, Anterior/Próximo)
-    if (modalReelTheater && modalReelTheater.classList.contains('active')) {
-      if (e.key === ' ' || e.code === 'Space') {
-        e.preventDefault();
-        toggleReelPlayback();
-        return;
-      }
-      if (e.key === 'm' || e.key === 'M') {
-        e.preventDefault();
-        toggleReelMute();
-        return;
-      }
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-        e.preventDefault();
-        prevReel();
-        return;
-      }
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-        e.preventDefault();
-        nextReel();
-        return;
-      }
-      if (['PageDown', 'PageUp', 'Home', 'End'].includes(e.key)) {
-        e.preventDefault();
         return;
       }
     }
@@ -484,24 +427,6 @@
 
     // Descarta gestos muito longos (> 550ms)
     if (deltaTime > 550) return;
-
-    // Se o Reel Theater estiver ativo, gestos de swipe navegam entre os vídeos verticais
-    if (modalReelTheater && modalReelTheater.classList.contains('active')) {
-      if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > CONFIG.SWIPE_THRESHOLD) {
-        if (deltaY < 0) {
-          nextReel();
-        } else {
-          prevReel();
-        }
-      } else if (Math.abs(deltaX) > CONFIG.SWIPE_THRESHOLD * 1.5) {
-        if (deltaX < 0) {
-          nextReel();
-        } else {
-          prevReel();
-        }
-      }
-      return;
-    }
 
     // Detecta swipe vertical com mais ênfase que horizontal
     if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > CONFIG.SWIPE_THRESHOLD) {
@@ -806,8 +731,16 @@
     }
   });
 
+  // O editor só existe com ?edit na URL (ex.: index.html?edit); visitantes não veem os botões
+  const EDIT_ENABLED = new URLSearchParams(window.location.search).has('edit');
+  if (EDIT_ENABLED) {
+    if (btnEdit) btnEdit.hidden = false;
+    document.body.classList.add('edit-enabled');
+  }
+
   // Alternar Modo Edição
   function toggleEditing() {
+    if (!EDIT_ENABLED) return;
     STATE.isEditing = !STATE.isEditing;
     document.body.classList.toggle('editing-mode', STATE.isEditing);
 
@@ -930,256 +863,6 @@
       }
     });
   }
-
-  /* ==========================================================================
-     9. REEL THEATER CONTROLLER (Player Vertical 9:16 com Streaming HTTP 206)
-     ========================================================================== */
-  const REELS_DATA = [
-    {
-      id: 'video-01',
-      title: 'Honda Motobel — Que tal subir de nível? (HR-V)',
-      desc: 'Campanha institucional HR-V · Ganchos dinâmicos e cortes rápidos',
-      src: 'assets/videos/video-01.mp4',
-      poster: 'assets/img/video-01-poster.webp',
-      instagram: 'https://www.instagram.com/reel/DcRreoRh6B5/'
-    },
-    {
-      id: 'video-02',
-      title: 'Honda Nippon — Peças genuínas & revisão',
-      desc: 'Pós-venda & manutenção autorizada · Credibilidade e confiança',
-      src: 'assets/videos/video-02.mp4',
-      poster: 'assets/img/video-02-poster.webp',
-      instagram: 'https://www.instagram.com/reel/Dac_Pm4AYhp/'
-    },
-    {
-      id: 'video-03',
-      title: 'Giga Motos Bajaj — Condições especiais & modelos',
-      desc: 'Ofertas comerciais & lançamento · Ritmo acelerado para conversão',
-      src: 'assets/videos/video-03.mp4',
-      poster: 'assets/img/video-03-poster.webp',
-      instagram: 'https://www.instagram.com/reel/DeNSMxNh4e4/'
-    },
-    {
-      id: 'video-04',
-      title: 'Só Letrados — Comunicação, língua & cultura',
-      desc: 'Educação & storytelling envolvente · Humanização e autoridade',
-      src: 'assets/videos/video-04.mp4',
-      poster: 'assets/img/video-04-poster.webp',
-      instagram: 'https://www.instagram.com/reel/DRa8JF4EXNG/'
-    },
-    {
-      id: 'video-05',
-      title: 'Mônaco Motocenter — Lançamento Biz Kuromi',
-      desc: 'Edição especial Kuromi · Estética jovem, moderna e trendy',
-      src: 'assets/videos/video-05.mp4',
-      poster: 'assets/img/video-05-poster.webp',
-      instagram: 'https://www.instagram.com/reel/DdjMBk-oSbl/'
-    },
-    {
-      id: 'video-06',
-      title: 'Mônaco Dream — CBR1000RR-R a moto dos sonhos',
-      desc: 'Superesportiva premium · Cinematografia, adrenalina e alto impacto',
-      src: 'assets/videos/video-06.mp4',
-      poster: 'assets/img/video-06-poster.webp',
-      instagram: 'https://www.instagram.com/reel/Dd4L7VcI6zZ/'
-    }
-  ];
-
-  let currentReelIndex = 0;
-  let lastFocusedElement = null;
-  const prefetchedMediaUrls = new Set();
-
-  function prefetchReelMedia(url) {
-    if (!url || prefetchedMediaUrls.has(url)) return;
-    prefetchedMediaUrls.add(url);
-    try {
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.as = 'fetch';
-      link.href = url;
-      document.head.appendChild(link);
-    } catch (e) {}
-  }
-
-  let hasPrefetchedFirstReel = false;
-  function prefetchFirstReel() {
-    if (hasPrefetchedFirstReel) return;
-    hasPrefetchedFirstReel = true;
-    prefetchReelMedia('assets/videos/video-01.mp4');
-  }
-
-  function updateReelPills(activeIndex) {
-    if (!reelPillsContainer) return;
-    const dots = reelPillsContainer.querySelectorAll('.reel-dot');
-    dots.forEach((dot, i) => {
-      const isActive = (i === activeIndex);
-      dot.classList.toggle('active', isActive);
-      dot.setAttribute('aria-selected', String(isActive));
-    });
-  }
-
-  function openReelTheater(reelIdOrIndex) {
-    if (!modalReelTheater || !reelVideoPlayer) return;
-
-    let index = -1;
-    if (typeof reelIdOrIndex === 'number') {
-      index = reelIdOrIndex;
-    } else if (!isNaN(Number(reelIdOrIndex)) && reelIdOrIndex !== '') {
-      index = Number(reelIdOrIndex);
-    } else {
-      index = REELS_DATA.findIndex(r => r.id === reelIdOrIndex);
-    }
-
-    if (index < 0 || index >= REELS_DATA.length) {
-      console.warn('Reel não encontrado:', reelIdOrIndex);
-      return;
-    }
-
-    currentReelIndex = index;
-    const reel = REELS_DATA[index];
-
-    // Guarda o elemento com foco atual para restaurar na saída
-    if (document.activeElement && typeof document.activeElement.focus === 'function') {
-      lastFocusedElement = document.activeElement;
-    }
-
-    if (reelTheaterTitle) reelTheaterTitle.textContent = reel.title;
-    if (reelTheaterDesc) {
-      reelTheaterDesc.textContent = `Reel ${String(index + 1).padStart(2, '0')} de ${String(REELS_DATA.length).padStart(2, '0')} · ${reel.desc}`;
-    }
-    if (reelInstagramLink) {
-      reelInstagramLink.href = reel.instagram;
-      reelInstagramLink.setAttribute('aria-label', `Ver publicação oficial de ${reel.title} no Instagram`);
-    }
-
-    // Oculta aviso de fallback anterior
-    if (reelFallback) reelFallback.style.display = 'none';
-
-    // Atualiza indicadores de pills
-    updateReelPills(index);
-
-    // Configura poster e fonte sem comprometer LCP
-    reelVideoPlayer.poster = reel.poster;
-    reelVideoPlayer.src = reel.src;
-    reelVideoPlayer.currentTime = 0;
-
-    modalReelTheater.classList.add('active');
-    modalReelTheater.setAttribute('aria-hidden', 'false');
-
-    // Foco acessível no botão fechar
-    if (btnCloseReel) {
-      setTimeout(() => btnCloseReel.focus(), 60);
-    }
-
-    // Prefetch especulativo do próximo reel da sequência
-    const nextIdx = (index + 1) % REELS_DATA.length;
-    prefetchReelMedia(REELS_DATA[nextIdx].src);
-
-    const playPromise = reelVideoPlayer.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(err => {
-        // Reprodução automática com áudio pausada pelo navegador até interação
-        console.log('Autoplay bloqueado pelo navegador, aguardando clique do usuário.');
-      });
-    }
-  }
-
-  function closeReelTheater() {
-    if (!modalReelTheater || !modalReelTheater.classList.contains('active')) return;
-
-    if (reelVideoPlayer) {
-      reelVideoPlayer.pause();
-      reelVideoPlayer.removeAttribute('src');
-      reelVideoPlayer.load();
-    }
-
-    if (reelFallback) {
-      reelFallback.style.display = 'none';
-    }
-
-    modalReelTheater.classList.remove('active');
-    modalReelTheater.setAttribute('aria-hidden', 'true');
-
-    // Restaura o foco para o elemento original
-    if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
-      try {
-        lastFocusedElement.focus();
-      } catch (e) {}
-      lastFocusedElement = null;
-    }
-  }
-
-  function nextReel() {
-    const nextIdx = (currentReelIndex + 1) % REELS_DATA.length;
-    openReelTheater(nextIdx);
-  }
-
-  function prevReel() {
-    const prevIdx = (currentReelIndex - 1 + REELS_DATA.length) % REELS_DATA.length;
-    openReelTheater(prevIdx);
-  }
-
-  function toggleReelPlayback() {
-    if (!reelVideoPlayer) return;
-    if (reelVideoPlayer.paused) {
-      reelVideoPlayer.play();
-      showToast('▶️ Reproduzindo', 1000);
-    } else {
-      reelVideoPlayer.pause();
-      showToast('⏸️ Pausado', 1000);
-    }
-  }
-
-  function toggleReelMute() {
-    if (!reelVideoPlayer) return;
-    reelVideoPlayer.muted = !reelVideoPlayer.muted;
-    showToast(reelVideoPlayer.muted ? '🔇 Áudio silenciado' : '🔊 Áudio ativado', 1500);
-  }
-
-  // Tratamento de falha de carregamento no vídeo
-  if (reelVideoPlayer) {
-    reelVideoPlayer.addEventListener('error', () => {
-      const currentReel = REELS_DATA[currentReelIndex];
-      if (reelFallback && currentReel) {
-        reelFallback.style.display = 'flex';
-        if (reelFallbackLink) {
-          reelFallbackLink.href = currentReel.instagram;
-        }
-      }
-    });
-  }
-
-  if (btnCloseReel) btnCloseReel.addEventListener('click', closeReelTheater);
-  if (btnReelPrev) btnReelPrev.addEventListener('click', prevReel);
-  if (btnReelNext) btnReelNext.addEventListener('click', nextReel);
-
-  if (modalReelTheater) {
-    modalReelTheater.addEventListener('click', (e) => {
-      if (e.target === modalReelTheater) {
-        closeReelTheater();
-      }
-    });
-  }
-
-  if (reelPillsContainer) {
-    reelPillsContainer.querySelectorAll('.reel-dot').forEach(dot => {
-      dot.addEventListener('click', () => {
-        const idx = dot.dataset.reelIndex;
-        if (idx !== undefined) {
-          openReelTheater(Number(idx));
-        }
-      });
-    });
-  }
-
-  // Desativado: o clique agora navega diretamente para o link externo (Instagram)
-  // document.querySelectorAll('a.phone[data-reel-id], a.phone[data-reel-index]').forEach(link => {
-  //   link.addEventListener('click', (e) => {
-  //     e.preventDefault();
-  //     const reelRef = link.dataset.reelId || link.dataset.reelIndex;
-  //     openReelTheater(reelRef);
-  //   });
-  // });
 
   /* ==========================================================================
      10. DEEP LINKING & QUICK SHARE CONTROLLER

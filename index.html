@@ -29,8 +29,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&amp;family=Inter:wght@400;500;600;700;800&amp;family=Italiana&amp;family=Montserrat:wght@400;500;600;700;800;900&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=2.5">
-<link rel="prefetch" as="fetch" href="assets/videos/video-01.mp4"><link rel="prefetch" as="fetch" href="assets/videos/video-01.mp4"></head>
+  <link rel="stylesheet" href="style.css?v=2.6">
+</head>
 
 <body class="">
 
@@ -771,7 +771,7 @@
     <button id="btn-pdf" title="Exportar portfólio como PDF" aria-label="Exportar portfólio como PDF"><svg class="i">
         <use href="#i-download"></use>
       </svg><span class="dock-txt">Baixar PDF</span></button>
-    <button id="btn-edit" title="Ativa o modo de edição visual na tela" aria-label="Ativar modo de edição visual" class=""><svg class="i">
+    <button id="btn-edit" hidden title="Ativa o modo de edição visual na tela" aria-label="Ativar modo de edição visual" class=""><svg class="i">
         <use href="#i-edit"></use>
       </svg><span id="txt-edit">Editar</span></button>
     <button id="btn-save" style="display: none;" title="Salva as alterações feitas no arquivo" aria-label="Salvar alterações no HTML"><svg class="i">
@@ -819,21 +819,17 @@
           <div class="keys"><kbd>Home</kbd> / <kbd>End</kbd></div>
           <div class="desc">Ir para o primeiro / último slide</div>
         </div>
-        <div class="shortcut-item">
+        <div class="shortcut-item edit-only">
           <div class="keys"><kbd>✏️ Editar</kbd></div>
           <div class="desc">Ativar modo de edição direta estilo Canva</div>
         </div>
-        <div class="shortcut-item">
+        <div class="shortcut-item edit-only">
           <div class="keys"><kbd>Duplo Clique</kbd></div>
           <div class="desc">Editar qualquer texto diretamente na tela</div>
         </div>
-        <div class="shortcut-item">
+        <div class="shortcut-item edit-only">
           <div class="keys"><kbd>Arrastar</kbd> + <kbd>Alças</kbd></div>
           <div class="desc">Mover ou redimensionar fotos e blocos</div>
-        </div>
-        <div class="shortcut-item">
-          <div class="keys"><kbd>Espaço</kbd> / <kbd>M</kbd> / <kbd>Esc</kbd></div>
-          <div class="desc">No Reel Theater: Play/Pausa, Mudo e Fechar</div>
         </div>
         <div class="shortcut-item">
           <div class="keys"><kbd>C</kbd></div>
@@ -842,72 +838,6 @@
       </div>
       <div class="modal-footer">
         <span>📱 Em celulares e tablets: <b>deslize o dedo na vertical</b> para trocar de slide.</span>
-      </div>
-    </div>
-  </aside>
-
-  <!-- ==========================================================================
-       REEL THEATER MODAL (PLAYER CINEMATOGRÁFICO 9:16)
-       ========================================================================== -->
-  <aside class="modal-backdrop modal-reel-theater" id="modal-reel-theater" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="reel-theater-title">
-    <div class="reel-theater-card">
-      <div class="reel-theater-header">
-        <div class="reel-theater-info">
-          <span class="reel-badge" id="reel-theater-badge">🎬 REEL THEATER · 9:16</span>
-          <h3 id="reel-theater-title">Honda Motobel — Que tal subir de nível? (HR-V)</h3>
-          <p id="reel-theater-desc" class="reel-desc">Reel 01 de 06 · Honda Motobel</p>
-        </div>
-        <button type="button" class="btn-close-modal" id="btn-close-reel" aria-label="Fechar vídeo">
-          <svg class="i">
-            <use href="#i-close"></use>
-          </svg>
-        </button>
-      </div>
-
-      <div class="reel-theater-player-wrap">
-        <div class="reel-screen-frame">
-          <video id="reel-video-player" class="reel-video-element" playsinline="" controls="" preload="none" poster="assets/img/video-01-poster.webp">
-            Seu navegador não suporta a tag de vídeo HTML5.
-          </video>
-          <div id="reel-fallback" class="reel-fallback-notice" style="display:none" aria-live="polite">
-            <p>Não foi possível reproduzir a prévia local deste vídeo.</p>
-            <a id="reel-fallback-link" href="https://www.instagram.com/reel/DcRreoRh6B5/" target="_blank" rel="noopener noreferrer" class="btn-reel-fallback">
-              Assistir Reel no Instagram ↗
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="reel-theater-footer">
-        <div class="reel-theater-actions">
-          <div class="reel-nav-group">
-            <button type="button" class="btn-reel-step" id="btn-reel-prev" aria-label="Reel anterior" title="Reel anterior (← / ↑)">
-              <svg class="i"><use href="#i-chevron-left"></use></svg>
-              <span>Anterior</span>
-            </button>
-            <div class="reel-pills" id="reel-pills" role="tablist" aria-label="Indicador dos reels">
-              <button type="button" class="reel-dot active" data-reel-index="0" role="tab" aria-selected="true" aria-label="Reel 01: Honda Motobel HR-V" title="Reel 01: Honda Motobel HR-V"></button>
-              <button type="button" class="reel-dot" data-reel-index="1" role="tab" aria-selected="false" aria-label="Reel 02: Honda Nippon" title="Reel 02: Honda Nippon"></button>
-              <button type="button" class="reel-dot" data-reel-index="2" role="tab" aria-selected="false" aria-label="Reel 03: Giga Motos Bajaj" title="Reel 03: Giga Motos Bajaj"></button>
-              <button type="button" class="reel-dot" data-reel-index="3" role="tab" aria-selected="false" aria-label="Reel 04: Só Letrados" title="Reel 04: Só Letrados"></button>
-              <button type="button" class="reel-dot" data-reel-index="4" role="tab" aria-selected="false" aria-label="Reel 05: Mônaco Motocenter" title="Reel 05: Mônaco Motocenter"></button>
-              <button type="button" class="reel-dot" data-reel-index="5" role="tab" aria-selected="false" aria-label="Reel 06: Mônaco Dream" title="Reel 06: Mônaco Dream"></button>
-            </div>
-            <button type="button" class="btn-reel-step" id="btn-reel-next" aria-label="Próximo reel" title="Próximo reel (→ / ↓)">
-              <span>Próximo</span>
-              <svg class="i"><use href="#i-chevron-right"></use></svg>
-            </button>
-          </div>
-          <a id="reel-instagram-link" href="https://www.instagram.com/reel/DcRreoRh6B5/" target="_blank" rel="noopener noreferrer" class="btn-reel-external" title="Ver publicação oficial no Instagram">
-            <svg class="i">
-              <use href="#i-reel"></use>
-            </svg>
-            <span>Ver Reel Oficial no Instagram</span>
-            <svg class="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M7 17L17 7M17 7H7M17 7V17"></path>
-            </svg>
-          </a>
-        </div>
       </div>
     </div>
   </aside>
@@ -933,7 +863,7 @@
     </div>
   </aside>
 
-  <script src="script.js?v=2.5" defer=""></script>
+  <script src="script.js?v=2.6" defer=""></script>
 
 
 </body></html>

@@ -2111,6 +2111,19 @@ body.editing-mode .slide>*:hover {
   cursor: move;
 }
 
+/* Editor só aparece com ?edit na URL (ver script.js) */
+#btn-edit[hidden] {
+  display: none !important;
+}
+
+.edit-only {
+  display: none;
+}
+
+body.edit-enabled .edit-only {
+  display: block;
+}
+
 /* Seleção múltipla: só mover (sem alças de resize) e contorno nos itens */
 .editor-gizmo.multi .gizmo-handle,
 .editor-gizmo.multi .gizmo-btn[data-act="text"] {
@@ -3541,7 +3554,7 @@ body.editing-mode .slide>*:hover {
 }
 
 /* ==========================================================================
-   13. SISTEMA DE MODAIS & REEL THEATER CINEMATOGRÁFICO 9:16
+   16. SISTEMA DE MODAIS (atalhos)
    ========================================================================== */
 .modal-backdrop {
   position: fixed;
@@ -3564,69 +3577,6 @@ body.editing-mode .slide>*:hover {
   pointer-events: auto;
 }
 
-/* --- REEL THEATER CARD --- */
-.reel-theater-card {
-  position: relative;
-  width: 100%;
-  max-width: 440px;
-  max-height: 94vh;
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(150deg, rgba(26, 45, 72, 0.95), rgba(10, 20, 35, 0.98));
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 22px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 50px rgba(26, 61, 99, 0.45);
-  overflow: hidden;
-  transform: scale(0.93) translateY(18px);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.modal-backdrop.active .reel-theater-card {
-  transform: scale(1) translateY(0);
-}
-
-.reel-theater-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 18px 22px 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.reel-theater-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.reel-badge {
-  display: inline-block;
-  align-self: flex-start;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.14);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  padding: 3px 9px;
-  border-radius: 999px;
-}
-
-.reel-theater-header h3 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #fff;
-  margin: 0;
-  letter-spacing: -0.01em;
-}
-
-.reel-theater-header .reel-desc {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.65);
-  margin: 0;
-}
-
 .btn-close-modal {
   display: flex;
   align-items: center;
@@ -3646,213 +3596,6 @@ body.editing-mode .slide>*:hover {
   border-color: rgba(56, 189, 248, 0.45);
   color: #38bdf8;
   transform: rotate(90deg);
-}
-
-.reel-theater-player-wrap {
-  position: relative;
-  padding: 14px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #000;
-}
-
-.reel-screen-frame {
-  position: relative;
-  width: 100%;
-  max-width: 330px;
-  aspect-ratio: 9 / 16;
-  max-height: 64vh;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.12);
-  background: #080808;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.reel-screen-frame::before {
-  content: '';
-  position: absolute;
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 44px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.22);
-  border-radius: 999px;
-  z-index: 5;
-  pointer-events: none;
-}
-
-.reel-video-element {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 16px;
-  background: #000;
-  display: block;
-}
-
-.reel-fallback-notice {
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 20, 35, 0.92);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  text-align: center;
-  color: #fff;
-}
-
-.reel-theater-footer {
-  padding: 14px 20px 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(0, 0, 0, 0.25);
-}
-
-.reel-theater-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
-.reel-nav-group {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-}
-
-.btn-reel-step {
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 9px 14px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #e2e8f0;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-reel-step .i {
-  width: 16px;
-  height: 16px;
-}
-
-.btn-reel-step:hover {
-  background: rgba(56, 189, 248, 0.15);
-  border-color: rgba(56, 189, 248, 0.4);
-  color: #38bdf8;
-  transform: translateY(-1px);
-}
-
-.btn-reel-step:focus-visible {
-  outline: 2px solid #38bdf8;
-  outline-offset: 2px;
-}
-
-/* --- REEL PILLS & INDICADORES --- */
-.reel-pills {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  padding: 0 4px;
-}
-
-.reel-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.22);
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reel-dot:hover {
-  background: rgba(56, 189, 248, 0.7);
-  transform: scale(1.25);
-}
-
-.reel-dot:focus-visible {
-  outline: 2px solid #38bdf8;
-  outline-offset: 2px;
-}
-
-.reel-dot.active {
-  width: 22px;
-  background: #38bdf8;
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
-}
-
-.btn-reel-external {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 12px 20px;
-  font-size: 14px;
-  font-weight: 700;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #1A3D63, #0284c7);
-  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.35);
-  transition: transform 0.25s, box-shadow 0.25s, filter 0.25s;
-}
-
-.btn-reel-external:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.12);
-  box-shadow: 0 12px 28px rgba(2, 132, 199, 0.5);
-}
-
-.btn-reel-external .i {
-  width: 18px;
-  height: 18px;
-}
-
-.btn-reel-external .i-arrow {
-  width: 16px;
-  height: 16px;
-  transition: transform 0.2s;
-}
-
-.btn-reel-external:hover .i-arrow {
-  transform: translate(2px, -2px);
-}
-
-.btn-reel-fallback {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  background: #0284c7;
-  color: #fff;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 700;
-  transition: background 0.2s, transform 0.2s;
-}
-
-.btn-reel-fallback:hover {
-  background: #0369a1;
-  transform: translateY(-1px);
 }
 
 /* --- SHORTCUTS MODAL CARD --- */
@@ -3932,42 +3675,6 @@ body.editing-mode .slide>*:hover {
   font-size: 13px;
   color: rgba(255, 255, 255, 0.6);
   text-align: center;
-}
-
-/* --- REEL THEATER RESPONSIVIDADE MOBILE --- */
-@media (max-width: 600px), (max-height: 720px) {
-  .reel-theater-card {
-    max-width: 95vw;
-    max-height: 96vh;
-    border-radius: 16px;
-  }
-  .reel-theater-header {
-    padding: 12px 16px 10px;
-  }
-  .reel-theater-header h3 {
-    font-size: 15px;
-  }
-  .reel-theater-header .reel-desc {
-    font-size: 11px;
-  }
-  .reel-theater-player-wrap {
-    padding: 8px 12px;
-  }
-  .reel-screen-frame {
-    max-height: 52vh;
-    border-radius: 14px;
-  }
-  .reel-theater-footer {
-    padding: 10px 14px 14px;
-  }
-  .btn-reel-step {
-    padding: 7px 10px;
-    font-size: 12px;
-  }
-  .btn-reel-external {
-    padding: 10px 14px;
-    font-size: 13px;
-  }
 }
 
 /* ==========================================================================
@@ -4161,7 +3868,6 @@ body.editing-mode .slide>*:hover {
     transition: none;
   }
 
-  .reel-theater-card,
   .modal-card {
     transform: none !important;
     transition: none !important;
