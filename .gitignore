@@ -1,3 +1,10 @@
+__pycache__/
+*.py[cod]
+*$py.class
 .DS_Store
 Thumbs.db
-*.log
+
+# Lixeira e Deepwork
+lixeira/
+.deepwork/
+.claude/
