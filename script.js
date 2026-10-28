@@ -11,7 +11,7 @@
  *  4. FullscreenController (Modo Apresentação Cinematográfica)
  *  5. Animation & CounterEngine (Micro-interações e Estatísticas)
  *  6. Keyboard & TouchGestures (Atalhos e Gestos Swipe Mobile)
- *  7. VisualEditorEngine (Mover, Redimensionar, Editar Texto e Salvar)
+ *  7. Layout salvo (layout.js) + carga sob demanda do editor visual (editor.js)
  *  8. ShortcutsModalController (Modal Informativo de Atalhos)
  * ============================================================================
  */
@@ -34,12 +34,6 @@
     current: 0,
     isEditing: false,
     isEditingText: false,
-    selectedEl: null,
-    group: [], // seleção múltipla: [{ el, off }] (off = origem do bloco de referência)
-    selectedSlide: null,
-    dragMode: null, // 'move' ou alças: 'nw', 'ne', 'se', 'sw', 'n', 's', 'e', 'w'
-    dragStart: { x: 0, y: 0 },
-    initialBox: { left: 0, top: 0, width: 0, height: 0, scale: 1 },
     touchStart: { x: 0, y: 0, time: 0 },
     isPresentationMode: false
   };
@@ -115,7 +109,7 @@
     if (scaleRafId) cancelAnimationFrame(scaleRafId);
     scaleRafId = requestAnimationFrame(() => {
       wraps.forEach(applySlideScale);
-      if (STATE.isEditing) syncGizmo();
+      if (STATE.isEditing && DECK.editor) DECK.editor.sync();
     });
   }
 
@@ -123,7 +117,7 @@
     for (const entry of entries) {
       applySlideScale(entry.target);
     }
-    if (STATE.isEditing) syncGizmo();
+    if (STATE.isEditing && DECK.editor) DECK.editor.sync();
   });
 
   wraps.forEach(wrap => {
@@ -330,8 +324,8 @@
         closeShortcutsModal();
         return;
       }
-      if (STATE.isEditing) {
-        deselectElement();
+      if (STATE.isEditing && DECK.editor) {
+        DECK.editor.deselect();
         return;
       }
     }
@@ -357,26 +351,8 @@
       }
     }
 
-    // 5. Ajuste fino de posição no Modo Edição com as setas
-    if (STATE.isEditing && STATE.selectedEl) {
-      const step = e.shiftKey ? 10 : 2;
-      let handled = false;
-      const delta = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[e.key];
-
-      if (delta) {
-        STATE.group.forEach(({ el }) => {
-          el.style.left = ((parseInt(el.style.left) || 0) + delta[0]) + 'px';
-          el.style.top = ((parseInt(el.style.top) || 0) + delta[1]) + 'px';
-        });
-        handled = true;
-      }
-
-      if (handled) {
-        e.preventDefault();
-        syncGizmo();
-        return;
-      }
-    }
+    // 5. Ajuste fino de posição no Modo Edição com as setas (editor.js)
+    if (STATE.isEditing && DECK.editor && DECK.editor.handleKey(e)) return;
 
     // 6. Navegação entre slides por teclado (Apresentação 16:9 completa)
     if (['ArrowDown', 'ArrowRight', 'PageDown'].includes(e.key) || (e.key === ' ' && !e.shiftKey)) {
@@ -446,385 +422,71 @@
   }, { passive: true });
 
   /* ==========================================================================
-     7. VISUAL EDITOR ENGINE (Gizmo, Drag & Drop, Resize, Inline Text & Save)
+     7. LAYOUT SALVO + CARGA DO EDITOR VISUAL (o editor em si está em editor.js)
      ========================================================================== */
 
-  // Criação do Gizmo de controle com alças de redimensionamento
-  const gizmo = document.createElement('div');
-  gizmo.className = 'editor-gizmo';
-  gizmo.style.display = 'none';
-  gizmo.innerHTML = `
-    <div class="gizmo-bar">
-      <span class="gizmo-name">Elemento</span>
-      <span class="gizmo-coords">X: 0 Y: 0</span>
-      <button type="button" class="gizmo-btn" data-act="up" title="Trazer para frente">▲ Frente</button>
-      <button type="button" class="gizmo-btn" data-act="down" title="Enviar para trás">▼ Trás</button>
-      <button type="button" class="gizmo-btn" data-act="text" title="Editar texto">✏️ Texto</button>
-      <button type="button" class="gizmo-btn" data-act="close" title="Desmarcar">✕</button>
-    </div>
-    <div class="gizmo-handle handle-nw" data-handle="nw"></div>
-    <div class="gizmo-handle handle-ne" data-handle="ne"></div>
-    <div class="gizmo-handle handle-se" data-handle="se"></div>
-    <div class="gizmo-handle handle-sw" data-handle="sw"></div>
-    <div class="gizmo-handle handle-n"  data-handle="n"></div>
-    <div class="gizmo-handle handle-s"  data-handle="s"></div>
-    <div class="gizmo-handle handle-w"  data-handle="w"></div>
-    <div class="gizmo-handle handle-e"  data-handle="e"></div>
-  `;
+  /* --- Layout salvo (layout.js): só o que foi mexido no editor, aplicado por cima do CSS --- */
+  const LAYOUT = window.CYNDY_LAYOUT || { styles: {}, text: {} };
+  LAYOUT.styles = LAYOUT.styles || {};
+  LAYOUT.text = LAYOUT.text || {};
 
-  const gizmoCoords = gizmo.querySelector('.gizmo-coords');
-  const gizmoName = gizmo.querySelector('.gizmo-name');
-
-  function getSlideScale(slide) {
-    if (!slide) return 1;
-    const rect = slide.getBoundingClientRect();
-    return rect.width / CONFIG.DESIGN_W || 1;
+  // Chave estável: id do slide + caminho de índices de filhos dentro do .slide
+  function elementKey(el) {
+    const wrap = el.closest('.slide-wrap');
+    const slide = el.closest('.slide');
+    if (!wrap || !slide || !wrap.id || el === slide) return null;
+    const path = [];
+    for (let n = el; n !== slide; n = n.parentElement) {
+      path.unshift(Array.prototype.indexOf.call(n.parentElement.children, n));
+    }
+    return wrap.id + ':' + path.join('/');
   }
 
-  function getDesignBox(el, slide) {
-    const sRect = slide.getBoundingClientRect();
-    const eRect = el.getBoundingClientRect();
-    const scale = getSlideScale(slide);
-    return {
-      left: Math.round((eRect.left - sRect.left) / scale),
-      top: Math.round((eRect.top - sRect.top) / scale),
-      width: Math.round(eRect.width / scale),
-      height: Math.round(eRect.height / scale),
-      scale
-    };
+  function resolveKey(key) {
+    const [id, path] = key.split(':');
+    let node = document.querySelector('#' + id + ' .slide');
+    if (!node || !path) return null;
+    for (const i of path.split('/')) {
+      node = node && node.children[Number(i)];
+    }
+    return node || null;
   }
 
-  // Origem (em px de design) do bloco que contém o elemento: left/top precisam ser relativos a ele
-  function getParentOffset(el, slide) {
-    const parent = el.offsetParent;
-    if (!parent || parent === slide || !slide.contains(parent)) return { left: 0, top: 0 };
-    const box = getDesignBox(parent, slide);
-    return { left: box.left, top: box.top };
+  function applyLayout() {
+    const rules = [];
+    Object.entries(LAYOUT.styles).forEach(([key, st]) => {
+      const el = resolveKey(key);
+      if (!el) return;
+      el.setAttribute('data-lk', key);
+      const decl = ['left', 'top', 'width', 'height']
+        .filter(k => st[k] !== undefined)
+        .map(k => `${k}: ${st[k]}px !important`);
+      if (decl.length) decl.push('position: absolute !important', 'right: auto !important', 'bottom: auto !important', 'margin: 0 !important');
+      if (st.zIndex !== undefined) decl.push(`z-index: ${st.zIndex} !important`);
+      rules.push(`[data-lk="${key}"] { ${decl.join('; ')} }`);
+    });
+    Object.entries(LAYOUT.text).forEach(([key, html]) => {
+      const el = resolveKey(key);
+      if (el) el.innerHTML = html;
+    });
+    if (!rules.length) return;
+    const style = document.createElement('style');
+    style.id = 'layout-overrides';
+    // Só no layout de computador: no celular o CSS responsivo manda
+    style.textContent = '@media (min-width: 901px), (min-width: 769px) and (orientation: landscape) {\n'
+      + rules.join('\n') + '\n}';
+    document.head.appendChild(style);
   }
+  applyLayout();
 
-  function syncGizmo() {
-    if (!STATE.selectedEl || !STATE.selectedSlide) {
-      gizmo.style.display = 'none';
-      return;
-    }
-    // Caixa envolvente de todos os itens selecionados
-    const boxes = (STATE.group.length ? STATE.group.map(g => g.el) : [STATE.selectedEl])
-      .map(el => getDesignBox(el, STATE.selectedSlide));
-    const left = Math.min(...boxes.map(b => b.left));
-    const top = Math.min(...boxes.map(b => b.top));
-    const width = Math.max(...boxes.map(b => b.left + b.width)) - left;
-    const height = Math.max(...boxes.map(b => b.top + b.height)) - top;
-    gizmo.classList.toggle('multi', boxes.length > 1);
-    gizmo.style.display = 'block';
-    gizmo.style.left = left + 'px';
-    gizmo.style.top = top + 'px';
-    gizmo.style.width = width + 'px';
-    gizmo.style.height = height + 'px';
-    if (gizmoCoords) {
-      gizmoCoords.textContent = `X: ${left} Y: ${top} | ${width}×${height}px`;
-    }
-  }
-
-  function selectElement(el) {
-    if (STATE.selectedEl === el) return;
-    deselectElement();
-    if (!el) return;
-
-    STATE.selectedEl = el;
-    STATE.selectedSlide = el.closest('.slide');
-    if (!STATE.selectedSlide) return;
-
-    if (gizmo.parentNode !== STATE.selectedSlide) {
-      STATE.selectedSlide.appendChild(gizmo);
-    }
-
-    const tag = el.tagName.toLowerCase();
-    const cls = el.className.split(' ').filter(c => c && !c.startsWith('elem-') && c !== 'abs')[0] || tag;
-    if (gizmoName) gizmoName.textContent = `<${tag}.${cls}>`;
-
-    STATE.group = [{ el, off: makeFreeform(el, STATE.selectedSlide) }];
-    syncGizmo();
-  }
-
-  // Posicionamento absoluto padrão para manipulação livre; devolve a origem do bloco de referência
-  function makeFreeform(el, slide) {
-    const box = getDesignBox(el, slide);
-    // Mede o bloco de referência antes de forçar position: absolute no elemento
-    const off = getParentOffset(el, slide);
-    el.style.position = 'absolute';
-    el.style.left = (box.left - off.left) + 'px';
-    el.style.top = (box.top - off.top) + 'px';
-    el.style.width = box.width + 'px';
-    el.style.height = box.height + 'px';
-    el.style.right = 'auto';
-    el.style.bottom = 'auto';
-    el.style.margin = '0';
-    return off;
-  }
-
-  // Shift+clique: adiciona/remove um item da seleção múltipla (mesmo slide)
-  function toggleInSelection(el) {
-    if (!STATE.selectedEl || el.closest('.slide') !== STATE.selectedSlide) {
-      selectElement(el);
-      return;
-    }
-    const idx = STATE.group.findIndex(g => g.el === el);
-    if (idx >= 0) {
-      if (STATE.group.length === 1) return;
-      STATE.group.splice(idx, 1);
-      el.classList.remove('elem-multi');
-      STATE.selectedEl = STATE.group[0].el;
-    } else {
-      STATE.group.push({ el, off: makeFreeform(el, STATE.selectedSlide) });
-    }
-    STATE.group.forEach(g => g.el.classList.toggle('elem-multi', STATE.group.length > 1));
-    if (gizmoName) {
-      gizmoName.textContent = STATE.group.length > 1 ? `${STATE.group.length} itens` : `<${STATE.selectedEl.tagName.toLowerCase()}>`;
-    }
-    syncGizmo();
-  }
-
-  function deselectElement() {
-    if (STATE.isEditingText && STATE.selectedEl) {
-      STATE.selectedEl.removeAttribute('contenteditable');
-      STATE.selectedEl.classList.remove('elem-editing-text');
-      STATE.isEditingText = false;
-    }
-    STATE.group.forEach(g => g.el.classList.remove('elem-multi'));
-    STATE.group = [];
-    STATE.selectedEl = null;
-    STATE.selectedSlide = null;
-    gizmo.style.display = 'none';
-    if (gizmo.parentNode) {
-      gizmo.parentNode.removeChild(gizmo);
-    }
-  }
-
-  function startTextEdit(el) {
-    if (!el) return;
-    STATE.isEditingText = true;
-    el.contentEditable = 'true';
-    el.classList.add('elem-editing-text');
-    el.focus();
-  }
-
-  // Operações nos botões do Gizmo
-  gizmo.addEventListener('click', (e) => {
-    const btn = e.target.closest('.gizmo-btn');
-    if (!btn || !STATE.selectedEl) return;
-    e.stopPropagation();
-
-    const act = btn.dataset.act;
-    const currentZ = parseInt(window.getComputedStyle(STATE.selectedEl).zIndex) || 1;
-
-    if (act === 'up') {
-      STATE.selectedEl.style.zIndex = currentZ + 1;
-      showToast(`Camada ajustada: z-index ${currentZ + 1}`, 1500);
-    } else if (act === 'down') {
-      const newZ = Math.max(0, currentZ - 1);
-      STATE.selectedEl.style.zIndex = newZ;
-      showToast(`Camada ajustada: z-index ${newZ}`, 1500);
-    } else if (act === 'text') {
-      startTextEdit(STATE.selectedEl);
-    } else if (act === 'close') {
-      deselectElement();
-    }
-  });
-
-  // Mover elemento e redimensionar via alças
-  gizmo.addEventListener('mousedown', (e) => {
-    if (e.target.closest('.gizmo-btn')) return;
-    if (!STATE.selectedEl || !STATE.selectedSlide) return;
-    e.preventDefault();
-    e.stopPropagation();
-
-    const handle = e.target.closest('.gizmo-handle');
-    STATE.dragMode = handle ? handle.dataset.handle : 'move';
-
-    const box = getDesignBox(STATE.selectedEl, STATE.selectedSlide);
-    STATE.initialBox = {
-      left: box.left,
-      top: box.top,
-      width: box.width,
-      height: box.height,
-      scale: box.scale
-    };
-    STATE.dragStart = { x: e.clientX, y: e.clientY };
-    STATE.initialGroup = STATE.group.map(g => ({ ...g, box: getDesignBox(g.el, STATE.selectedSlide) }));
-
-    document.addEventListener('mousemove', onGizmoMouseMove);
-    document.addEventListener('mouseup', onGizmoMouseUp);
-  });
-
-  function onGizmoMouseMove(e) {
-    if (!STATE.dragMode || !STATE.selectedEl) return;
-    const curScale = STATE.initialBox.scale || 1;
-    const dx = (e.clientX - STATE.dragStart.x) / curScale;
-    const dy = (e.clientY - STATE.dragStart.y) / curScale;
-
-    if (STATE.dragMode === 'move') {
-      STATE.initialGroup.forEach(({ el, off, box }) => {
-        el.style.left = (Math.round(box.left + dx) - off.left) + 'px';
-        el.style.top = (Math.round(box.top + dy) - off.top) + 'px';
-      });
-    } else {
-      let newW = STATE.initialBox.width;
-      let newH = STATE.initialBox.height;
-      let newL = STATE.initialBox.left;
-      let newT = STATE.initialBox.top;
-
-      if (STATE.dragMode.includes('e')) newW = Math.max(20, Math.round(STATE.initialBox.width + dx));
-      if (STATE.dragMode.includes('s')) newH = Math.max(20, Math.round(STATE.initialBox.height + dy));
-      if (STATE.dragMode.includes('w')) {
-        newW = Math.max(20, Math.round(STATE.initialBox.width - dx));
-        newL = Math.round(STATE.initialBox.left + (STATE.initialBox.width - newW));
-      }
-      if (STATE.dragMode.includes('n')) {
-        newH = Math.max(20, Math.round(STATE.initialBox.height - dy));
-        newT = Math.round(STATE.initialBox.top + (STATE.initialBox.height - newH));
-      }
-
-      STATE.selectedEl.style.width = newW + 'px';
-      STATE.selectedEl.style.height = newH + 'px';
-      const off = STATE.group[0].off;
-      STATE.selectedEl.style.left = (newL - off.left) + 'px';
-      STATE.selectedEl.style.top = (newT - off.top) + 'px';
-    }
-
-    syncGizmo();
-  }
-
-  function onGizmoMouseUp() {
-    STATE.dragMode = null;
-    document.removeEventListener('mousemove', onGizmoMouseMove);
-    document.removeEventListener('mouseup', onGizmoMouseUp);
-  }
-
-  // Clique nos slides para selecionar elementos
-  document.addEventListener('mousedown', (e) => {
-    if (!STATE.isEditing) return;
-    if (e.target.closest('.dock') || e.target.closest('.editor-gizmo') || e.target.closest('.edit-toast') || e.target.closest('.modal-backdrop') || e.target.closest('.orientation-overlay')) return;
-
-    const slide = e.target.closest('.slide');
-    if (!slide) {
-      deselectElement();
-      return;
-    }
-
-    const target = e.target.closest('.client-logo, .c-box, .badge, .stat, .card, .abs, figure, article, blockquote, .phone, .cols, .slide > *');
-    if (target && target !== slide && !target.classList.contains('editor-gizmo')) {
-      if (e.shiftKey) toggleInSelection(target);
-      else selectElement(target);
-    } else {
-      deselectElement();
-    }
-  });
-
-  // Duplo clique ativa edição direta de texto
-  document.addEventListener('dblclick', (e) => {
-    if (!STATE.isEditing) return;
-    if (e.target.closest('.dock') || e.target.closest('.editor-gizmo') || e.target.closest('.modal-backdrop') || e.target.closest('.orientation-overlay')) return;
-
-    const textTarget = e.target.closest('h1, h2, h3, h4, p, span, li, dt, dd, b, strong, small, blockquote, figcaption');
-    if (textTarget) {
-      startTextEdit(textTarget);
-    }
-  });
-
-  // O editor só existe com ?edit na URL (ex.: index.html?edit); visitantes não veem os botões
-  const EDIT_ENABLED = new URLSearchParams(window.location.search).has('edit');
-  if (EDIT_ENABLED) {
+  /* --- Editor visual: arquivo separado (editor.js), baixado só com ?edit na URL --- */
+  const DECK = window.CyndyDeck = { STATE, CONFIG, slides, showToast, LAYOUT, elementKey, btnEdit, btnSave, txtEdit, editor: null };
+  if (new URLSearchParams(window.location.search).has('edit')) {
     if (btnEdit) btnEdit.hidden = false;
     document.body.classList.add('edit-enabled');
-  }
-
-  // Alternar Modo Edição
-  function toggleEditing() {
-    if (!EDIT_ENABLED) return;
-    STATE.isEditing = !STATE.isEditing;
-    document.body.classList.toggle('editing-mode', STATE.isEditing);
-
-    if (btnEdit) btnEdit.classList.toggle('active', STATE.isEditing);
-    if (btnSave) btnSave.style.display = STATE.isEditing ? 'inline-flex' : 'none';
-    if (txtEdit) txtEdit.textContent = STATE.isEditing ? 'Concluir' : 'Editar';
-
-    if (STATE.isEditing) {
-      slides.forEach(s => s.classList.add('in'));
-      showToast('🎯 <b>Modo Edição Ativado!</b><br>• Clique para <b>Arrastar e Redimensionar</b>.<br>• <b>Duplo clique</b> em qualquer texto para escrever.<br>• <b>Setas do teclado</b> para ajuste fino.');
-    } else {
-      deselectElement();
-      showToast('Modo de edição finalizado.');
-    }
-  }
-
-  if (btnEdit) btnEdit.addEventListener('click', toggleEditing);
-
-  // Salvar Alterações
-  if (btnSave) {
-    btnSave.addEventListener('click', async () => {
-      deselectElement();
-      const wasEditing = STATE.isEditing;
-      if (wasEditing) toggleEditing();
-
-      // Limpa réplica do documento para salvar HTML limpo
-      const cloneDoc = document.documentElement.cloneNode(true);
-      cloneDoc.querySelectorAll('.editor-gizmo').forEach(g => g.remove());
-      cloneDoc.querySelectorAll('.edit-toast').forEach(t => t.remove());
-      cloneDoc.querySelectorAll('.modal-backdrop').forEach(m => m.classList.remove('active'));
-      cloneDoc.querySelectorAll('.orientation-overlay').forEach(o => {
-        o.classList.remove('dismissed');
-        o.removeAttribute('aria-hidden');
-      });
-      cloneDoc.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
-      cloneDoc.querySelectorAll('.elem-editing-text').forEach(el => el.classList.remove('elem-editing-text'));
-      cloneDoc.querySelectorAll('.elem-multi').forEach(el => el.classList.remove('elem-multi'));
-      cloneDoc.querySelectorAll('.editing-mode').forEach(el => el.classList.remove('editing-mode'));
-
-      const cloneBtnSave = cloneDoc.querySelector('#btn-save');
-      if (cloneBtnSave) cloneBtnSave.style.display = 'none';
-      const cloneBtnEdit = cloneDoc.querySelector('#btn-edit');
-      if (cloneBtnEdit) cloneBtnEdit.classList.remove('active');
-      const cloneTxtEdit = cloneDoc.querySelector('#txt-edit');
-      if (cloneTxtEdit) cloneTxtEdit.textContent = 'Editar';
-
-      const fullHtml = '<!DOCTYPE html>\n' + cloneDoc.outerHTML;
-
-      // Backup local no navegador
-      try {
-        localStorage.setItem('cyndy_deck_backup', fullHtml);
-      } catch (e) {
-        console.warn('Erro ao salvar no localStorage:', e);
-      }
-
-      // 1. Salvamento direto pelo seletor nativo do navegador
-      if (window.showSaveFilePicker) {
-        try {
-          const handle = await window.showSaveFilePicker({
-            suggestedName: 'index.html',
-            types: [{ description: 'Arquivo HTML', accept: { 'text/html': ['.html'] } }]
-          });
-          const writable = await handle.createWritable();
-          await writable.write(fullHtml);
-          await writable.close();
-          showToast('✅ <b>Alterações salvas com sucesso no arquivo!</b>');
-          return;
-        } catch (err) {
-          if (err.name !== 'AbortError') console.error(err);
-        }
-      }
-
-      // 2. Fallback por download
-      const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'index.html';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-      showToast('💾 <b>Download das alterações concluído!</b>');
-    });
+    const editorScript = document.createElement('script');
+    editorScript.src = 'editor.js' + (document.currentScript ? new URL(document.currentScript.src).search : '');
+    document.body.appendChild(editorScript);
   }
 
   /* ==========================================================================

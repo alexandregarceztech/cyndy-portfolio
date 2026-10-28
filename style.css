@@ -66,9 +66,7 @@
   --pimenta-light: var(--green-number);
   /* Famílias Tipográficas */
   --f-sans: "Montserrat", system-ui, sans-serif;
-  --f-inter: "Inter", var(--f-sans);
   --f-serif: "Cormorant Garamond", Georgia, serif;
-  --f-display: "Italiana", "Cormorant Garamond", serif;
   --f-script: "Pinyon Script", cursive;
 
   --ease: cubic-bezier(.2, .7, .2, 1);
@@ -3685,7 +3683,7 @@ body.edit-enabled .edit-only {
   background: rgba(56, 189, 248, 0.12);
   color: var(--sky-base, #38bdf8);
   border: 1px solid rgba(56, 189, 248, 0.3);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--f-sans);
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
