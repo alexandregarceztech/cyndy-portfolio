@@ -233,7 +233,7 @@ svg.i.fill {
 
 /* Títulos pesados e modernos */
 .h-black {
-  font-weight: 900;
+  font-weight: 730;
   letter-spacing: -.035em;
   line-height: .92;
 }
@@ -2109,6 +2109,17 @@ body.editing-mode .slide>*:hover {
   z-index: 9999;
   box-sizing: border-box;
   cursor: move;
+}
+
+/* Seleção múltipla: só mover (sem alças de resize) e contorno nos itens */
+.editor-gizmo.multi .gizmo-handle,
+.editor-gizmo.multi .gizmo-btn[data-act="text"] {
+  display: none;
+}
+
+.elem-multi {
+  outline: 2px dashed var(--pimenta-2) !important;
+  outline-offset: 4px;
 }
 
 .gizmo-bar {

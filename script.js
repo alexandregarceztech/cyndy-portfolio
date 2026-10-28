@@ -35,6 +35,7 @@
     isEditing: false,
     isEditingText: false,
     selectedEl: null,
+    group: [], // seleção múltipla: [{ el, off }] (off = origem do bloco de referência)
     selectedSlide: null,
     dragMode: null, // 'move' ou alças: 'nw', 'ne', 'se', 'sw', 'n', 's', 'e', 'w'
     dragStart: { x: 0, y: 0 },
@@ -417,13 +418,15 @@
     if (STATE.isEditing && STATE.selectedEl) {
       const step = e.shiftKey ? 10 : 2;
       let handled = false;
-      const currentLeft = parseInt(STATE.selectedEl.style.left) || 0;
-      const currentTop = parseInt(STATE.selectedEl.style.top) || 0;
+      const delta = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[e.key];
 
-      if (e.key === 'ArrowLeft')  { STATE.selectedEl.style.left = (currentLeft - step) + 'px'; handled = true; }
-      if (e.key === 'ArrowRight') { STATE.selectedEl.style.left = (currentLeft + step) + 'px'; handled = true; }
-      if (e.key === 'ArrowUp')    { STATE.selectedEl.style.top  = (currentTop - step) + 'px';  handled = true; }
-      if (e.key === 'ArrowDown')  { STATE.selectedEl.style.top  = (currentTop + step) + 'px';  handled = true; }
+      if (delta) {
+        STATE.group.forEach(({ el }) => {
+          el.style.left = ((parseInt(el.style.left) || 0) + delta[0]) + 'px';
+          el.style.top = ((parseInt(el.style.top) || 0) + delta[1]) + 'px';
+        });
+        handled = true;
+      }
 
       if (handled) {
         e.preventDefault();
@@ -579,14 +582,21 @@
       gizmo.style.display = 'none';
       return;
     }
-    const box = getDesignBox(STATE.selectedEl, STATE.selectedSlide);
+    // Caixa envolvente de todos os itens selecionados
+    const boxes = (STATE.group.length ? STATE.group.map(g => g.el) : [STATE.selectedEl])
+      .map(el => getDesignBox(el, STATE.selectedSlide));
+    const left = Math.min(...boxes.map(b => b.left));
+    const top = Math.min(...boxes.map(b => b.top));
+    const width = Math.max(...boxes.map(b => b.left + b.width)) - left;
+    const height = Math.max(...boxes.map(b => b.top + b.height)) - top;
+    gizmo.classList.toggle('multi', boxes.length > 1);
     gizmo.style.display = 'block';
-    gizmo.style.left = box.left + 'px';
-    gizmo.style.top = box.top + 'px';
-    gizmo.style.width = box.width + 'px';
-    gizmo.style.height = box.height + 'px';
+    gizmo.style.left = left + 'px';
+    gizmo.style.top = top + 'px';
+    gizmo.style.width = width + 'px';
+    gizmo.style.height = height + 'px';
     if (gizmoCoords) {
-      gizmoCoords.textContent = `X: ${box.left} Y: ${box.top} | ${box.width}×${box.height}px`;
+      gizmoCoords.textContent = `X: ${left} Y: ${top} | ${width}×${height}px`;
     }
   }
 
@@ -607,19 +617,45 @@
     const cls = el.className.split(' ').filter(c => c && !c.startsWith('elem-') && c !== 'abs')[0] || tag;
     if (gizmoName) gizmoName.textContent = `<${tag}.${cls}>`;
 
-    // Posicionamento absoluto padrão para manipulação livre
-    const box = getDesignBox(STATE.selectedEl, STATE.selectedSlide);
-    // Mede o bloco de referência antes de forçar position: absolute no elemento
-    STATE.parentOffset = getParentOffset(STATE.selectedEl, STATE.selectedSlide);
-    STATE.selectedEl.style.position = 'absolute';
-    STATE.selectedEl.style.left = (box.left - STATE.parentOffset.left) + 'px';
-    STATE.selectedEl.style.top = (box.top - STATE.parentOffset.top) + 'px';
-    STATE.selectedEl.style.width = box.width + 'px';
-    STATE.selectedEl.style.height = box.height + 'px';
-    STATE.selectedEl.style.right = 'auto';
-    STATE.selectedEl.style.bottom = 'auto';
-    STATE.selectedEl.style.margin = '0';
+    STATE.group = [{ el, off: makeFreeform(el, STATE.selectedSlide) }];
+    syncGizmo();
+  }
 
+  // Posicionamento absoluto padrão para manipulação livre; devolve a origem do bloco de referência
+  function makeFreeform(el, slide) {
+    const box = getDesignBox(el, slide);
+    // Mede o bloco de referência antes de forçar position: absolute no elemento
+    const off = getParentOffset(el, slide);
+    el.style.position = 'absolute';
+    el.style.left = (box.left - off.left) + 'px';
+    el.style.top = (box.top - off.top) + 'px';
+    el.style.width = box.width + 'px';
+    el.style.height = box.height + 'px';
+    el.style.right = 'auto';
+    el.style.bottom = 'auto';
+    el.style.margin = '0';
+    return off;
+  }
+
+  // Shift+clique: adiciona/remove um item da seleção múltipla (mesmo slide)
+  function toggleInSelection(el) {
+    if (!STATE.selectedEl || el.closest('.slide') !== STATE.selectedSlide) {
+      selectElement(el);
+      return;
+    }
+    const idx = STATE.group.findIndex(g => g.el === el);
+    if (idx >= 0) {
+      if (STATE.group.length === 1) return;
+      STATE.group.splice(idx, 1);
+      el.classList.remove('elem-multi');
+      STATE.selectedEl = STATE.group[0].el;
+    } else {
+      STATE.group.push({ el, off: makeFreeform(el, STATE.selectedSlide) });
+    }
+    STATE.group.forEach(g => g.el.classList.toggle('elem-multi', STATE.group.length > 1));
+    if (gizmoName) {
+      gizmoName.textContent = STATE.group.length > 1 ? `${STATE.group.length} itens` : `<${STATE.selectedEl.tagName.toLowerCase()}>`;
+    }
     syncGizmo();
   }
 
@@ -629,6 +665,8 @@
       STATE.selectedEl.classList.remove('elem-editing-text');
       STATE.isEditingText = false;
     }
+    STATE.group.forEach(g => g.el.classList.remove('elem-multi'));
+    STATE.group = [];
     STATE.selectedEl = null;
     STATE.selectedSlide = null;
     gizmo.style.display = 'none';
@@ -687,6 +725,7 @@
       scale: box.scale
     };
     STATE.dragStart = { x: e.clientX, y: e.clientY };
+    STATE.initialGroup = STATE.group.map(g => ({ ...g, box: getDesignBox(g.el, STATE.selectedSlide) }));
 
     document.addEventListener('mousemove', onGizmoMouseMove);
     document.addEventListener('mouseup', onGizmoMouseUp);
@@ -699,10 +738,10 @@
     const dy = (e.clientY - STATE.dragStart.y) / curScale;
 
     if (STATE.dragMode === 'move') {
-      const newL = Math.round(STATE.initialBox.left + dx);
-      const newT = Math.round(STATE.initialBox.top + dy);
-      STATE.selectedEl.style.left = (newL - STATE.parentOffset.left) + 'px';
-      STATE.selectedEl.style.top = (newT - STATE.parentOffset.top) + 'px';
+      STATE.initialGroup.forEach(({ el, off, box }) => {
+        el.style.left = (Math.round(box.left + dx) - off.left) + 'px';
+        el.style.top = (Math.round(box.top + dy) - off.top) + 'px';
+      });
     } else {
       let newW = STATE.initialBox.width;
       let newH = STATE.initialBox.height;
@@ -722,8 +761,9 @@
 
       STATE.selectedEl.style.width = newW + 'px';
       STATE.selectedEl.style.height = newH + 'px';
-      STATE.selectedEl.style.left = (newL - STATE.parentOffset.left) + 'px';
-      STATE.selectedEl.style.top = (newT - STATE.parentOffset.top) + 'px';
+      const off = STATE.group[0].off;
+      STATE.selectedEl.style.left = (newL - off.left) + 'px';
+      STATE.selectedEl.style.top = (newT - off.top) + 'px';
     }
 
     syncGizmo();
@@ -748,7 +788,8 @@
 
     const target = e.target.closest('.client-logo, .c-box, .badge, .stat, .card, .abs, figure, article, blockquote, .phone, .cols, .slide > *');
     if (target && target !== slide && !target.classList.contains('editor-gizmo')) {
-      selectElement(target);
+      if (e.shiftKey) toggleInSelection(target);
+      else selectElement(target);
     } else {
       deselectElement();
     }
@@ -803,6 +844,7 @@
       });
       cloneDoc.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
       cloneDoc.querySelectorAll('.elem-editing-text').forEach(el => el.classList.remove('elem-editing-text'));
+      cloneDoc.querySelectorAll('.elem-multi').forEach(el => el.classList.remove('elem-multi'));
       cloneDoc.querySelectorAll('.editing-mode').forEach(el => el.classList.remove('editing-mode'));
 
       const cloneBtnSave = cloneDoc.querySelector('#btn-save');
